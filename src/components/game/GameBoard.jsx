@@ -6,9 +6,13 @@ import GlobalPanel from "./GlobalPanel/GlobalPanel";
 
 function GameBoard() {
   return (
-    <Stack direction={{ xs: "column", md: "row" }} spacing={1} justifyContent="space-between">
-      <PersonalPanel/>
+    <Stack 
+      direction={{ xs: "column", md: "row" }} 
+      spacing={1} 
+      paddingTop={1}
+      justifyContent="space-between">
       <GamePanel/>
+      <PersonalPanel/>
       <GlobalPanel/>
     </Stack>
     );
