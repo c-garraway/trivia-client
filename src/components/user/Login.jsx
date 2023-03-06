@@ -1,80 +1,146 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
-
-
-const formStyle = {
-  position: 'absolute',
-  top: {xs: "25%", sm: "30%", md: "35%"},
-  left: '50%',
-  transform: 'translate(-50%, -40%)',
-  width: {xs: "70%", sm: "70%", md: "30%"},
-  maxHeight: '80%',
-  bgcolor: 'background.paper',
-/*   border: '1px solid #000', */
-  boxShadow: 10,
-  p: 4,
-  borderRadius: '5px',
-  opacity: '95%',
-  '& .MuiTextField-root': { mt: 2, width: '100%' },
-};
+import { useLocation, useNavigate } from "react-router-dom";
+import { getUser, loginLocalUser } from "../../apis/auth";
+import { validEmail } from "../../utilities/regex";
+import { formStyle } from "../../styles/styles";
+import { useDispatch } from "react-redux";
+import { setCurrentUser, setIsLoggedIn } from "../../features/userData/userDataSlice";
 
 function Login() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const location = useLocation();
+    //console.log(location)
 
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [errorMessage, setErrorMessage] = useState();
+    const [email, setEmail] = useState();
+    const [password, setPassword] = useState();
+    const [formMessage, setFormMessage] = useState('none');
+    const [visibility, setVisibility] = useState('hidden');
+    const [passwordErrorStatus, setPasswordErrorStatus] = useState(false);
+    const [emailErrorStatus, setEmailErrorStatus] = useState(false);
+    const [loginDisabled, setLoginDisabled] = useState(true);
 
-  return (
-    <Box /* sx={{border: '1px solid black', padding: 1, width: '30%', margin: 'auto', mt: 1}} */>
-      <Box
-        component="form"
-        sx={formStyle}>
-        {/* <Typography sx={{ padding: 1 }}>LOGIN</Typography> */}
-          <div>
-          <TextField
-            required
-            id="outlined-required"
-            label="Email"
-            type='email'
-            size="small"
-            InputLabelProps={{
-                shrink: true,
-            }}
-            onChange={(e) => {
-                setEmail(e.currentTarget.value)
-                setErrorMessage('')
-            }}
-            />
-            <TextField
-            required
-            id="outlined-password-input"
-            label="Password"
-            type="password"
-            size="small"
-            InputLabelProps={{
-                shrink: true,
-            }}
-            onChange={(e) => {
-                setPassword(e.currentTarget.value)
-                setErrorMessage('')
-            }}
-            /* onKeyDown={handleKeyDown} */
-            />
-            <Button 
-                variant="contained" 
-                /* onClick={handleLogin} */
-                sx={{
-                    display: "block",
-                    width: "100%",
-                    marginTop: "10px",
-                }}
-                >Login
-            </Button>
-          </div>
+    const loginPath = location.pathname.length > 1 ? "login" : "home"
+    const xsDisplay = loginPath === 'home' ? "none" : "flex"
+    const mdDisplay = loginPath === 'home' ? "flex" : "none"
 
-      </Box>
-    </Box>
-  );
+    //console.log(loginPath)
+
+    function handleValidate(e) {
+        const email = e.target.value
+
+        if (email === '') {
+            return;
+        }
+
+        if (!validEmail.test(email)) {
+            setFormMessage('Invalid email address!')
+            setVisibility();
+            setEmailErrorStatus(true)
+            setLoginDisabled(true)
+            return;
+        }
+
+        setLoginDisabled(false)
+    }
+
+    function handleKeyDown(e) {
+        if (e.key === 'Enter' && loginDisabled === false) {
+            handleLogin();
+        };
+    }
+
+    async function handleLogin() {
+        if (password === undefined || password === "") {
+            setFormMessage('Password required!')
+            setVisibility();
+            setPasswordErrorStatus(true)
+            return;
+        };
+        try {
+            const login = await loginLocalUser(email, password)
+            if (login.status === 'error') {
+                setFormMessage(login.message);
+                setVisibility();
+                return;
+            } else {
+                setVisibility('hidden');
+                setFormMessage('none');
+                dispatch(setIsLoggedIn(true));
+                const user = await getUser();
+                dispatch(setCurrentUser(user));
+                /* dispatch(setUserType('Local')) */
+                navigate('/game');
+            }
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
+    return (
+        <Box flex={1} sx={{ justifyContent: 'center', mt: 3, display: { xs: xsDisplay, sm: xsDisplay, md: mdDisplay } }}>
+            <Box
+                component="form"
+                sx={formStyle}>
+                <Typography sx={{ color: 'red', textAlign: 'center', visibility: { visibility } }}>{formMessage}</Typography>
+                <div>
+                    <TextField
+                        required
+                        error={emailErrorStatus}
+                        variant="outlined"
+                        id="outlined-required"
+                        label="Email"
+                        type='email'
+                        size="small"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        onChange={(e) => {
+                            setEmail(e.currentTarget.value)
+                            setVisibility('hidden')
+                            setFormMessage('none')
+                            setEmailErrorStatus(false)
+                            /* setLoginDisabled(true) */
+                        }}
+                        onBlur={handleValidate}
+                        /* onKeyDown={handleKeyDown} */
+                    />
+                    <TextField
+                        required
+                        error={passwordErrorStatus}
+                        variant="outlined"
+                        id="outlined-password-input"
+                        label="Password"
+                        type="password"
+                        size="small"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        onChange={(e) => {
+                            setPassword(e.currentTarget.value)
+                            setVisibility('hidden')
+                            setFormMessage('none')
+                            setPasswordErrorStatus(false)
+                        }}
+                        onKeyDown={handleKeyDown}
+                    />
+                    <Button
+                        disabled={loginDisabled}
+                        variant="contained"
+                        onClick={handleLogin}
+                        sx={{
+                            display: "block",
+                            width: "100%",
+                            marginTop: "40px",
+                        }}
+                        >Login
+                    </Button>
+                </div>
+            </Box>
+        </Box>
+    );
 }
 
 export default Login;

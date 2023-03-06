@@ -15,5 +15,5 @@ function GlobalPanel() {
         </Stack>
       );
 }
-
+            
 export default GlobalPanel;

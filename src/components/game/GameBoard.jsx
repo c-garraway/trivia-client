@@ -5,16 +5,16 @@ import GamePanel from "./GamePanel/GamePanel";
 import GlobalPanel from "./GlobalPanel/GlobalPanel";
 
 function GameBoard() {
-  return (
-    <Stack 
-      direction={{ xs: "column", md: "row" }} 
-      spacing={1} 
-      paddingTop={1}
-      justifyContent="space-between">
-      <GamePanel/>
-      <PersonalPanel/>
-      <GlobalPanel/>
-    </Stack>
+    return (
+        <Stack
+            direction={{ xs: "column", md: "row" }}
+            spacing={1}
+            paddingTop={1}
+            justifyContent="space-between">
+            <GamePanel />
+            <PersonalPanel />
+            <GlobalPanel />
+        </Stack>
     );
 }
 

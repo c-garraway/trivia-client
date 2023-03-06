@@ -4,13 +4,13 @@ import { theme } from './theme/theme'
 import AppRouter from './routers/AppRouter';
 
 function App() {
-  return (
-    <ThemeProvider theme={theme}>
-      <Box className="App">
-        <AppRouter/>
-      </Box>
-    </ThemeProvider>
-  );
+    return (
+        <ThemeProvider theme={theme}>
+            <Box className="App">
+                <AppRouter />
+            </Box>
+        </ThemeProvider>
+    );
 }
 
 export default App;
