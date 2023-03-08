@@ -4,6 +4,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 import thunk from 'redux-thunk';
 import userReducer from '../features/userData/userDataSlice';
 import teamReducer from '../features/userData/teamDataSlice';
+import gameReducer from '../features/gameData/gameDataSlice';
 
 const persistConfig = {
     key: 'root',
@@ -13,6 +14,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
     userData: userReducer,
     teamData: teamReducer,
+    gameData: gameReducer,
 
 });
 

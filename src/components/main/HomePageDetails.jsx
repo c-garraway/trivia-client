@@ -5,6 +5,7 @@ import { loginLocalUser, getUser } from "../../apis/auth";
 import { setIsLoggedIn, setCurrentUser } from "../../features/userData/userDataSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { resetGameData } from "../../features/gameData/gameDataSlice";
 
 const style = {
     //border: '1px solid black',
@@ -26,7 +27,7 @@ function HomePageDetails() {
                 dispatch(setIsLoggedIn(true));
                 const user = await getUser();
                 dispatch(setCurrentUser(user));
-                /* dispatch(setUserType('Local')) */
+                dispatch(resetGameData())
                 navigate('/game');
             }
         } catch (error) {

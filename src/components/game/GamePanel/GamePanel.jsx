@@ -12,8 +12,8 @@ function GamePanel() {
             spacing={1}
             flex={5}>
             <NewGame />
-            <Quiz />
             <GameStats />
+            <Quiz />
         </Stack>
     );
 }
