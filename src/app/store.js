@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import userReducer from '../features/userData/userDataSlice';
 import teamReducer from '../features/userData/teamDataSlice';
 import gameReducer from '../features/gameData/gameDataSlice';
+import questionReducer from '../features/gameData/questionDataSlice';
 
 const persistConfig = {
     key: 'root',
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     userData: userReducer,
     teamData: teamReducer,
     gameData: gameReducer,
+    questionData: questionReducer,
 
 });
 

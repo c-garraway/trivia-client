@@ -31,3 +31,36 @@ export const loginFormStyle = {
     /*   opacity: '95%', */
     '& .MuiTextField-root': { mt: 2, width: '100%' },
 };
+
+export const answerBoxStyle = {
+    display: 'flex',
+    border: '1px solid black',
+    padding: 10,
+    width: '100%',
+    minHeight: 50,
+    borderRadius: 5,
+    alignItems: 'center',
+    cursor: 'pointer',
+    justifyContent: 'center'
+}
+
+export const questionBoxStyle = {
+    height: '4em',
+    
+}
+
+export const answerButtonStyle = {
+    width: '100%',
+    height: '4em',
+    textTransform: 'none',
+    marginTop: 10
+}
+
+export const nextButtonStyle = {
+    opacity: .6,
+    cursor: 'not-allowed',
+    width: '100%',
+    textTransform: 'none',
+    marginTop: 10,
+    backgroundColor: theme.palette.secondary.main,
+}

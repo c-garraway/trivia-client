@@ -2,7 +2,7 @@ import { Stack } from "@mui/material";
 import React from "react";
 import NewGame from "./NewGame";
 import GameStats from "./GameStats";
-import Quiz from "./Quiz";
+import Quiz from "./Quiz/Quiz";
 
 function GamePanel() {
     return (

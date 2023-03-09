@@ -9,7 +9,8 @@ export const theme = createTheme({
             main: '#1565c0' // customise your main color here
         },
         secondary: { main: '#673ab7' },
-
+        correctAnswer: { main: 'green' },
+        incorrectAnswer: { main: 'red' },
         error: { main: '#ca0909' },
 
         sand: { main: '#F4DECB' },

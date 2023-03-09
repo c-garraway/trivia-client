@@ -1,16 +1,21 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
-import { addToCorrectAnswers } from "../../../features/gameData/gameDataSlice";
-import { useDispatch } from "react-redux";
-
-const questions = [{ "category": "Music", "id": "622a1c397cc59eab6f950d29", "correctAnswer": "The Beatles", "incorrectAnswers": ["Deep Purple", "Feeder", "Uriah Heep"], "question": "Which English rock band released the song 'Let It Be'?", "tags": ["songs", "general_knowledge", "music"], "type": "Multiple Choice", "difficulty": "medium", "regions": [], "isNiche": false }, { "category": "Music", "id": "622a1c397cc59eab6f950d30", "correctAnswer": "The Beatles", "incorrectAnswers": ["Status Quo", "Led Zeppelin", "The Kings"], "question": "Which English rock band released the album 'A Hard Day's Night'?", "tags": ["rock_music", "general_knowledge", "music"], "type": "Multiple Choice", "difficulty": "easy", "regions": [], "isNiche": false }, { "category": "Society & Culture", "id": "6266e6acff2394bd44dee05c", "correctAnswer": "Neuf", "incorrectAnswers": ["Nove", "Negen", "Trois"], "question": "In French, what is the word for for 'nine'?", "tags": ["language", "translations", "society_and_culture"], "type": "Multiple Choice", "difficulty": "hard", "regions": [], "isNiche": false }, { "category": "Geography", "id": "623741ffcb85f7ce9e949d9f", "correctAnswer": "Romania", "incorrectAnswers": ["Ireland", "Netherlands", "Estonia"], "question": "Bucharest is the capital city of which country?", "tags": ["geography"], "type": "Multiple Choice", "difficulty": "medium", "regions": [], "isNiche": false }, { "category": "Film & TV", "id": "62573f593d2f5c16bfb88330", "correctAnswer": "A secretary checks into a remote motel run by a young man under the domination of his mother.", "incorrectAnswers": ["The story of how the scandal of child molestation within the Boston Catholic church was uncovered.", "In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler.", "When a heist goes wrong, the surviving criminals suspect that one of them is a police informant."], "question": "What is the plot of the movie Psycho?", "tags": ["film", "film_and_tv"], "type": "Multiple Choice", "difficulty": "medium", "regions": [], "isNiche": false }, { "category": "Film & TV", "id": "63d9531f168979b94b2e4fa1", "correctAnswer": "Bad Boys", "incorrectAnswers": ["Men in Black", "Independence Day", "Wild Wild West"], "question": "What was the name of the popular '90s police film starring Will Smith and Martin Lawrence?", "tags": ["1990's", "film_and_tv", "film"], "type": "Multiple Choice", "regions": [], "isNiche": false }, { "category": "Sport & Leisure", "id": "622a1c357cc59eab6f95001f", "correctAnswer": "Boxing", "incorrectAnswers": ["Karate", "Kickboxing", "Judo"], "question": "With Which Sport Would You Associate A Lonsdale Belt?", "tags": ["sport"], "type": "Multiple Choice", "difficulty": "medium", "regions": [], "isNiche": false }, { "category": "Film & TV", "id": "624db9f9de6018633d31f6ad", "correctAnswer": "Garbage", "incorrectAnswers": ["Shirley Bassey", "Matt Monro", "Sam Smith"], "question": "Who performed the theme song to the James Bond film The World is Not Enough?", "tags": ["james_bond", "film", "soundtracks", "film_and_tv"], "type": "Multiple Choice", "difficulty": "hard", "regions": [], "isNiche": false }, { "category": "Science", "id": "622a1c3a7cc59eab6f95104c", "correctAnswer": "Rabies", "incorrectAnswers": ["Meningitis", "Syphilis", "Alzeimer's"], "question": "What Is Hydrophobia Better Known As", "tags": ["science"], "type": "Multiple Choice", "difficulty": "medium", "regions": [], "isNiche": false }, { "category": "Science", "id": "6242cb44d543524f1b19c91d", "correctAnswer": "A sedge", "incorrectAnswers": ["A sloth", "A yoke", "An unkindness"], "question": "What is the word for a group of herons?", "tags": ["words", "animals", "birds", "science"], "type": "Multiple Choice", "difficulty": "hard", "regions": [], "isNiche": false }]
-
+import { addToCorrectAnswers } from "../../../../features/gameData/gameDataSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectQuestions } from "../../../../features/gameData/questionDataSlice";
+import { answerBoxStyle, answerButtonStyle } from "../../../../styles/styles";
+/* import theme from "../../../../theme/theme"; */
+import Answer from "./Answer";
+import useAnswer from "../../../../hooks/useAnswer";
+import useButton from "../../../../hooks/useButton";
 
 function Quiz() {
     const dispatch = useDispatch();
-    const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [randomAnswers, setRandomAnswers] = useState('');
+    const questions = useSelector(selectQuestions);
+
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [randomAnswers, setRandomAnswers] = useState([]);
     const [borderColor0, setBorderColor0] = useState('');
     const [borderColor1, setBorderColor1] = useState('');
     const [borderColor2, setBorderColor2] = useState('');
@@ -22,26 +27,17 @@ function Quiz() {
     const [disabled3, setDisabled3] = useState(false);
     let answers;
 
-    const answerBoxStyle = {
-        display: 'flex',
-        border: '1px solid black',
-        padding: 10,
-        width: '100%',
-        minHeight: 50,
-        borderRadius: 5,
-        marginLeft: 10,
-        alignItems: 'center'
-    }
-    
-    const answerButtonStyle = {
-        width: 'fit-content',
-    }
+    const [handleAnswer, backgroundColor, buttonLabel, answer] = useAnswer('testAnswer', 'testAnswer', 3);
+    console.log('newAnswer: ' + handleAnswer, backgroundColor, buttonLabel, answer)
+
+/*     const [newerAnswer, setNewerAnswer] = useButton('test');
+    console.log(newerAnswer) */
 
     function getAnswers() {
-        answers.push(questions[currentQuestion].incorrectAnswers[0])
-        answers.push(questions[currentQuestion].incorrectAnswers[1])
-        answers.push(questions[currentQuestion].incorrectAnswers[2])
-        answers.push(questions[currentQuestion].correctAnswer)
+        answers.push(questions[currentQuestionIndex].incorrectAnswers[0])
+        answers.push(questions[currentQuestionIndex].incorrectAnswers[1])
+        answers.push(questions[currentQuestionIndex].incorrectAnswers[2])
+        answers.push(questions[currentQuestionIndex].correctAnswer)
         console.log('A1 ' + answers)
         return answers
     };
@@ -53,28 +49,28 @@ function Quiz() {
             array[i] = array[j];
             array[j] = temp;
         }
-        console.log('A2 ' + answers)
+        //console.log('A2 ' + answers)
     }
 
     function setAnswers() {
         answers = []
         shuffleAnswers(getAnswers())
         setRandomAnswers(answers)
-        console.log('A3 ' + answers)
+        //console.log('A3 ' + answers)
     }
 
     useEffect(() => {
         setAnswers()
-    }, [currentQuestion])
+    }, [currentQuestionIndex])
 
     function handleAnswerSelection(x) {
         //TODO: check answer and allocate points
-        if((currentQuestion + 1) < questions.length) {
+        if((currentQuestionIndex + 1) < questions.length) {
             setDisabled(false);
         }
         
         console.log(x)
-        if (randomAnswers[x] === questions[currentQuestion].correctAnswer) {
+        if (randomAnswers[x] === questions[currentQuestionIndex].correctAnswer) {
 
             dispatch(addToCorrectAnswers());
 
@@ -141,7 +137,7 @@ function Quiz() {
 
     function handleNextQuestion() {
         
-        setCurrentQuestion(currentQuestion + 1)
+        setCurrentQuestionIndex(currentQuestionIndex + 1)
         setBorderColor0('');
         setBorderColor1('');
         setBorderColor2('');
@@ -154,15 +150,25 @@ function Quiz() {
     }
 
 
+
+
     return (
         <Box sx={{ border: '1px solid black', width: '100%' }}>
-            <Typography sx={{ padding: 1, textAlign: 'center', fontSize: 'x-large' }}>QUESTION {currentQuestion + 1} of 10</Typography>
+            <Typography sx={{ padding: 1, textAlign: 'center', fontSize: 'x-large' }}>QUESTION {currentQuestionIndex + 1} of 10</Typography>
             <Stack direction='row' spacing={1} sx={{/* border: '1px solid black',  */justifyContent: "space-around", alignItems: "center", padding: 1 }}>
-                <Typography sx={{ padding: 1 }}>CAT: {questions[currentQuestion].category}</Typography>
-                <Typography sx={{ padding: 1 }}>DIF: {questions[currentQuestion].difficulty}</Typography>
+                <Typography sx={{ padding: 1 }}>CAT: {questions[currentQuestionIndex].category}</Typography>
+                <Typography sx={{ padding: 1 }}>DIF: {questions[currentQuestionIndex].difficulty}</Typography>
             </Stack>
-            <Typography sx={{ padding: 1, textAlign: 'center', fontSize: 'larger', minHeight: '3em'}}>{questions[currentQuestion].question}</Typography>
+            <Typography sx={{ padding: 1, textAlign: 'center', fontSize: 'larger', minHeight: '3em'}}>{questions[currentQuestionIndex].question}</Typography>
             <Stack direction='column' spacing={1} sx={{padding: 1 }}>
+                {randomAnswers.map((answer, index) => {
+                    return (
+                        <div key={index}>
+                            <Answer
+                                answer={answer} />
+                        </div>
+                    )
+                })} {/* disabled, onClick, backgroundColor, answer */}
                 <Box sx={{display: 'flex', justifyContent: 'flex-start'}}>
                     <Button
                         disabled={disabled0}
