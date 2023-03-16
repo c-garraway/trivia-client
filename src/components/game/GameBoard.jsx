@@ -1,10 +1,31 @@
 import { Stack } from "@mui/system";
-import React from "react";
-import PersonalPanel from "./PersonalPanel/PersonalPanel"
+import React, { useEffect } from "react";
+import PersonalPanel from "./StatsPanel/StatsPanel"
 import GamePanel from "./GamePanel/GamePanel";
-import GlobalPanel from "./GlobalPanel/GlobalPanel";
+//import GlobalPanel from "./RulesPanel/RulesPanel";
+import { selectIsLoggedIn } from "../../features/userData/userDataSlice";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
+import { selectIsTeamLoaded } from "../../features/userData/teamDataSlice";
 
 function GameBoard() {
+    const navigate = useNavigate();
+    const isLoggedIn = useSelector(selectIsLoggedIn);
+    const isTeamLoaded = useSelector(selectIsTeamLoaded);
+
+    useEffect(()=> {
+        if(!isLoggedIn) {
+            navigate('/')
+            return;
+        }
+        if(!isTeamLoaded) {
+            navigate('/profile')
+            return;
+        }
+
+
+    },[isLoggedIn, isTeamLoaded])
+
     return (
         <Stack
             direction={{ xs: "column", md: "row" }}
@@ -13,7 +34,7 @@ function GameBoard() {
             justifyContent="space-between">
             <GamePanel />
             <PersonalPanel />
-            <GlobalPanel />
+            {/* <GlobalPanel /> */}
         </Stack>
     );
 }

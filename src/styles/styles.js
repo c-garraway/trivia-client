@@ -41,19 +41,26 @@ export const answerBoxStyle = {
     borderRadius: 5,
     alignItems: 'center',
     cursor: 'pointer',
-    justifyContent: 'center'
+    justifyContent: 'center',
 }
 
 export const questionBoxStyle = {
     height: '4em',
-    
+    fontWeight: 'bold',
+    marginLeft: 10,
+    marginRight: 10,
+    /* textAlign: 'center' */
 }
 
 export const answerButtonStyle = {
     width: '100%',
     height: '4em',
     textTransform: 'none',
-    marginTop: 10
+    marginBottom: 10,
+    lineHeight: '95%',
+    fontWeight: 'normal',
+
+
 }
 
 export const nextButtonStyle = {

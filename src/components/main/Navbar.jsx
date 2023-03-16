@@ -8,6 +8,10 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 
 import { Logout } from "@mui/icons-material";
+import { resetGameData } from "../../features/gameData/gameDataSlice";
+import { resetQuestionData } from "../../features/gameData/questionDataSlice";
+import { resetNewGameOptionsData } from "../../features/gameData/newGameOptionsDataSlice";
+import { resetTeamData } from "../../features/userData/teamDataSlice";
 
 function Navbar() {
     const navigate = useNavigate();
@@ -38,6 +42,10 @@ function Navbar() {
         try {
             await logoutUser();
             dispatch(resetUserData());
+            dispatch(resetGameData());
+            dispatch(resetQuestionData());
+            dispatch(resetNewGameOptionsData());
+            dispatch(resetTeamData());
             handleCloseMenu();
             navigate('/');
 

@@ -23,6 +23,10 @@ function Register() {
     function handleValidate(e) {
         const email = e.target.value
 
+        if (email === '') {
+            return;
+        }
+
         if (!validEmail.test(email)) {
             setFormMessage('Invalid email address!')
             setVisibility();
@@ -77,7 +81,7 @@ function Register() {
             } else {
                 setVisibility('hidden')
                 setFormMessage('none')
-                navigate('/profile');
+                navigate('/login'); //changed to  login
             }
         } catch (error) {
             console.log(error)

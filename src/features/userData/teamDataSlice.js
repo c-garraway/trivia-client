@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = () => {
     return {
-        teamData: ''
+        isTeamLoaded: false,
+        currentTeam: '',
+        teamPoints: []
     }
 };
 
@@ -12,11 +14,15 @@ const teamDataSlice = createSlice({
     reducers: {
         resetTeamData: () => initialState(),
         setTeamData: (state, action) => {
-            state.teamData = action.payload;
+            state.currentTeam = action.payload;
+            if(!action.payload.error) {
+                state.isTeamLoaded = true
+            };
         }
     }
 });
 
 export const {resetTeamData, setTeamData} = teamDataSlice.actions;
-export const selectTeamData = (state) => state.teamData;
+export const selectTeamData = (state) => state.teamData.currentTeam;
+export const selectIsTeamLoaded = (state) => state.teamData.isTeamLoaded;
 export default teamDataSlice.reducer;

@@ -11,6 +11,7 @@ export const theme = createTheme({
         secondary: { main: '#673ab7' },
         correctAnswer: { main: 'green' },
         incorrectAnswer: { main: 'red' },
+        highlight: {main: 'lightgray'},
         error: { main: '#ca0909' },
 
         sand: { main: '#F4DECB' },

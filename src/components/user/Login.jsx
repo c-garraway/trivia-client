@@ -6,6 +6,8 @@ import { validEmail } from "../../utilities/regex";
 import { formStyle } from "../../styles/styles";
 import { useDispatch } from "react-redux";
 import { setCurrentUser, setIsLoggedIn } from "../../features/userData/userDataSlice";
+import { getTeam } from "../../apis/team";
+import { setTeamData } from "../../features/userData/teamDataSlice";
 
 function Login() {
     const navigate = useNavigate();
@@ -23,7 +25,6 @@ function Login() {
 
     const loginPath = location.pathname.length > 1 ? "login" : "home"
     const xsDisplay = loginPath === 'home' ? "none" : "flex"
-    const mdDisplay = loginPath === 'home' ? "flex" : "none"
 
     //console.log(loginPath)
 
@@ -70,7 +71,8 @@ function Login() {
                 dispatch(setIsLoggedIn(true));
                 const user = await getUser();
                 dispatch(setCurrentUser(user));
-                /* dispatch(setUserType('Local')) */
+                const team = await getTeam();
+                dispatch(setTeamData(team))
                 navigate('/game');
             }
         } catch (error) {
@@ -80,7 +82,7 @@ function Login() {
     }
 
     return (
-        <Box flex={1} sx={{ justifyContent: 'center', mt: 3, display: { xs: xsDisplay, sm: xsDisplay, md: mdDisplay } }}>
+        <Box flex={1} sx={{ justifyContent: 'center', mt: 3, display: { xs: xsDisplay, md: "flex" } }}>
             <Box
                 component="form"
                 sx={formStyle}>

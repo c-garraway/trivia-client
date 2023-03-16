@@ -1,18 +1,22 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 import { useEffect, useState } from 'react';
-import { useSelector } from "react-redux";
-import { selectQuestions } from "../../../../features/gameData/questionDataSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addQuestionNumber } from "../../../../features/gameData/gameDataSlice";
+import { selectQuestions/* , resetQuestionData */ } from "../../../../features/gameData/questionDataSlice";
 import MultipleChoiceQuestions from './MultipleChoiceQuestions';
 
 
 function Quiz() {
+    const dispatch = useDispatch();
+    //dispatch(resetQuestionData())
 
     const questions = useSelector(selectQuestions);
 
     const [shuffledAnswers, setShuffledAnswers] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const currentQuestion = questions[currentQuestionIndex].question
+    const questionDifficulty = questions[currentQuestionIndex].difficulty
     const correctAnswer = questions[currentQuestionIndex].correctAnswer
     let answers = []
 
@@ -42,25 +46,26 @@ function Quiz() {
 
     useEffect(() => {
         setAnswers()
-    }, [currentQuestionIndex])
+    }, [currentQuestionIndex, questions])
 
     function handleNextQuestion() {
         if(currentQuestionIndex === questions.length - 1) {
             return;
         }
         setCurrentQuestionIndex(currentQuestionIndex + 1)
+        dispatch(addQuestionNumber(currentQuestionIndex + 2))
     }
-
     return (
         <Box sx={{border: '1px solid black', width: '100%'}}>
-            <Typography sx={{marginLeft: 1}}>
+            {/* <Typography sx={{marginLeft: 1}}>
                 Question {currentQuestionIndex + 1} of 10
-            </Typography>
+            </Typography> */}
             <MultipleChoiceQuestions
                 question={currentQuestion}
                 choices={shuffledAnswers}
                 correctAnswer={correctAnswer}
                 handleNextQuestion={handleNextQuestion}
+                questionDifficulty={questionDifficulty}
             />
         </Box>
     );

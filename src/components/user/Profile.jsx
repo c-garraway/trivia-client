@@ -3,95 +3,123 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { formStyle } from "../../styles/styles";
 import { validEmail } from "../../utilities/regex";
-import { registerLocalUser } from "../../apis/auth";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../features/userData/userDataSlice";
+import { theme } from '../../theme/theme';
+import { checkEmail, checkTeamName, addTeam, addPartner, getTeam } from "../../apis/team";
+import { setTeamData } from "../../features/userData/teamDataSlice";
+
+const ColoredLine = ({ color }) => (
+    <hr
+        style={{
+            color: color,
+            backgroundColor: color,
+            height: 1
+        }}
+    />
+);
 
 function Profile() {
-    const df = new Intl.DateTimeFormat("en-us", {
+    /* const df = new Intl.DateTimeFormat("en-us", {
         dateStyle: "full"
     });
+    const memberStartDate = df.format(new Date())
+    console.log(memberStartDate) */
 
     const navigate = useNavigate();
     const currentUser = useSelector(selectCurrentUser);
-    const memberStartDate = df.format(new Date())
-    console.log(memberStartDate)
+    const dispatch = useDispatch();
 
-    const [name, setName] = useState();
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [password2, setPassword2] = useState();
     const [formMessage, setFormMessage] = useState('none');
     const [visibility, setVisibility] = useState('hidden');
-    const [passwordErrorStatus, setPasswordErrorStatus] = useState(false);
-    const [password2ErrorStatus, setPassword2ErrorStatus] = useState(false);
-    const [nameErrorStatus, setNameErrorStatus] = useState(false);
     const [emailErrorStatus, setEmailErrorStatus] = useState(false);
-    const [loginDisabled, setLoginDisabled] = useState(true);
+    const [teamNameErrorStatus, setTeamNameErrorStatus] = useState(false);
+    const [saveDisabled, setSaveDisabled] = useState(true);
+    const [teamName, setTeamName] = useState('');
+    const [teamNameDisabled, setTeamNameDisabled] = useState(false);
+    const [teamLeaderEmailAddress, setTeamLeaderEmailAddress] = useState('');
+    const [teamLeaderEmailAddressDisabled, setTeamLeaderEmailAddressDisabled] = useState(false);
 
-    function handleValidate(e) {
-        const email = e.target.value
+    async function handleTeamNameValidate() {
 
-        if (!validEmail.test(email)) {
+        if (teamName === '') {
+            setSaveDisabled(true)
+            return;
+        }
+
+        setTeamLeaderEmailAddressDisabled(true)
+
+        if (teamName.length < 4) {
+            setFormMessage('Team name less than 4 characters!')
+            setVisibility();
+            setTeamNameErrorStatus(true)
+            setSaveDisabled(true)
+            return;
+        }
+
+        const ifExists = await checkTeamName(teamName)
+
+        if(ifExists) {
+            setFormMessage(`${teamName} already exists`)
+            setVisibility();
+            setTeamNameErrorStatus(true)
+            setSaveDisabled(true)
+            return;
+        }
+
+        setSaveDisabled(false)
+    }
+
+    async function handleEmailValidate() {
+
+        if (teamLeaderEmailAddress === '') {
+            setSaveDisabled(true)
+            return;
+        }
+
+        setTeamNameDisabled(true)
+
+        if (!validEmail.test(teamLeaderEmailAddress)) {
             setFormMessage('Invalid email address!')
             setVisibility();
             setEmailErrorStatus(true)
-            setLoginDisabled(true)
+            setSaveDisabled(true)
             return;
         }
 
-        setLoginDisabled(false)
+        const ifExists = await checkEmail(teamLeaderEmailAddress)
+        console.log(teamLeaderEmailAddress)
+        console.log(ifExists)
+
+        if(ifExists === false) {
+            setFormMessage('Partner email address not found')
+            setVisibility();
+            setEmailErrorStatus(true)
+            setSaveDisabled(true)
+            return;
+        }
+
+        setSaveDisabled(false)
     }
 
     async function handleSave() {
-        if (name === undefined || name === "") {
-            setFormMessage('Nick Name Required!')
-            setVisibility();
-            setNameErrorStatus(true)
-            return;
-        }
-        if (password === undefined || password === "") {
-            setFormMessage('Password required!')
-            setVisibility();
-            setPasswordErrorStatus(true)
-            return;
-        };
-        if (password2 === undefined || password2 === "") {
-            setFormMessage('Confirm Password required!')
-            setVisibility();
-            setPassword2ErrorStatus(true)
-            return;
-        };
-        if (password !== password2) {
-            setFormMessage('Passwords do not match!')
-            setVisibility();
-            setPasswordErrorStatus(true)
-            setPassword2ErrorStatus(true)
-            return;
-        }
-        if (password.length < 6) {
-            setFormMessage('Password should be at least 6 characters!')
-            setVisibility();
-            setPasswordErrorStatus(true)
-            setPassword2ErrorStatus(true)
-            return;
+
+        if(teamName.length > 4) {
+            addTeam(currentUser.email, teamName)
         }
 
-        try {
-            const user = await registerLocalUser(name, email, password, password2)
-
-            if (user.status === 'error') {
-                setFormMessage(user.message);
-                setVisibility();
-                return;
-            } else {
-                setVisibility('hidden')
-                setFormMessage('none')
-                navigate('/profile');
-            }
-        } catch (error) {
-            console.log(error)
+        if(teamLeaderEmailAddress) {
+            addPartner(currentUser.email, teamLeaderEmailAddress)
         }
+
+        const team = await getTeam()
+        new Promise(resolve => {
+            dispatch(setTeamData(team));
+            resolve();
+        })
+        .then(() => {
+            navigate('/game');
+        });
     }
 
     return (
@@ -103,7 +131,6 @@ function Profile() {
                 <div>
                     <TextField
                         disabled
-                        error={nameErrorStatus}
                         variant="outlined"
                         id="outlined-required"
                         label="Nick Name"
@@ -112,17 +139,10 @@ function Profile() {
                         InputLabelProps={{
                             shrink: true,
                         }}
-                        onChange={(e) => {
-                            setName(e.currentTarget.value)
-                            setVisibility('hidden')
-                            setFormMessage('none')
-                            setNameErrorStatus(false)
-                        }}
                         defaultValue={currentUser.name}
                     />
                     <TextField
                         disabled
-                        error={emailErrorStatus}
                         variant="outlined"
                         id="outlined-required"
                         label="Email"
@@ -131,18 +151,10 @@ function Profile() {
                         InputLabelProps={{
                             shrink: true,
                         }}
-                        onChange={(e) => {
-                            setEmail(e.currentTarget.value)
-                            setVisibility('hidden')
-                            setFormMessage('none')
-                            setEmailErrorStatus(false)
-                        }}
-                        onBlur={handleValidate}
                         defaultValue={currentUser.email}
                     />
                     <TextField
                         disabled
-                        error={emailErrorStatus}
                         variant="outlined"
                         id="outlined-required"
                         label="Member Since"
@@ -151,54 +163,58 @@ function Profile() {
                         InputLabelProps={{
                             shrink: true,
                         }}
-                        onChange={(e) => {
-                            setEmail(e.currentTarget.value)
-                            setVisibility('hidden')
-                            setFormMessage('none')
-                            setEmailErrorStatus(false)
-                        }}
                         defaultValue={currentUser.createdAt}
+                        sx={{marginBottom: 2}}
                     />
+                    <ColoredLine color = {theme.palette.primary.main} />
+                    <Typography sx={{textAlign: 'center', backgroundColor: 'lightyellow'}}>Complete only one of the fields below!</Typography>
+                    <ColoredLine color= {theme.palette.primary.main} />
                     <TextField
-                        required
-                        error={passwordErrorStatus}
+                        error={teamNameErrorStatus}
+                        disabled={teamNameDisabled}
                         variant="outlined"
-                        id="outlined-password-input"
-                        label="Team Name"
+                        id="outlined-team-input"
+                        label="Create New Team (Name)"
                         type="text"
                         size="small"
                         InputLabelProps={{
                             shrink: true,
                         }}
                         onChange={(e) => {
-                            setPassword(e.currentTarget.value)
-                            setVisibility('hidden')
+                            setTeamName(e.currentTarget.value)
+                            setTeamNameErrorStatus(false)
+                            setTeamLeaderEmailAddressDisabled(false)
                             setFormMessage('none')
-                            setPasswordErrorStatus(false)
+                            setVisibility('hidden')
+                            setSaveDisabled(false)
                         }}
-                        helperText="Example: Team Bold"
+                        onBlur={handleTeamNameValidate}
+                        helperText="To create a new team, enter team name above. Min 4 characters."
                     />
                     <TextField
-                        required
-                        error={password2ErrorStatus}
+                        error={emailErrorStatus}
+                        disabled={teamLeaderEmailAddressDisabled}
                         variant="outlined"
-                        id="outlined-password-input"
-                        label="Team Role"
-                        type="text"
+                        id="outlined-email-input"
+                        label="Join Existing Team (Leaders Email Address)"
+                        type="email"
                         size="small"
                         InputLabelProps={{
                             shrink: true,
                         }}
                         onChange={(e) => {
-                            setPassword2(e.currentTarget.value)
-                            setVisibility('hidden')
+                            setTeamLeaderEmailAddress(e.currentTarget.value)
+                            setEmailErrorStatus(false)
+                            setTeamNameDisabled(false)
                             setFormMessage('none')
-                            setPassword2ErrorStatus(false)
+                            setVisibility('hidden')
+                            setSaveDisabled(false)                            
                         }}
-                        helperText="Select Manager or Player"
+                        onBlur={handleEmailValidate}
+                        helperText="To team up with an existing team leader, enter their email address above."
                     />
                     <Button
-                        disabled={loginDisabled}
+                        disabled={saveDisabled}
                         variant="contained"
                         onClick={handleSave}
                         sx={{
@@ -207,7 +223,7 @@ function Profile() {
                             marginTop: "20px",
                         }}
                         >Save
-                    </Button>
+                    </Button> {/* TODO: Add close button */}
                 </div>
 
             </Box>

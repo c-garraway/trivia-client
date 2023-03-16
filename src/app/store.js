@@ -6,6 +6,7 @@ import userReducer from '../features/userData/userDataSlice';
 import teamReducer from '../features/userData/teamDataSlice';
 import gameReducer from '../features/gameData/gameDataSlice';
 import questionReducer from '../features/gameData/questionDataSlice';
+import newGameOptionsReducer from '../features/gameData/newGameOptionsDataSlice';
 
 const persistConfig = {
     key: 'root',
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
     teamData: teamReducer,
     gameData: gameReducer,
     questionData: questionReducer,
+    newGameOptionsData: newGameOptionsReducer
 
 });
 
