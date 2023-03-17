@@ -77,11 +77,10 @@ export const getTeam = async () => {
 };
 
 //POST fetch
-export const  addTeam = async (userEmail, teamName) => {
-    const encodedEmail = encodeURIComponent(userEmail)
+export const  addTeam = async (teamName) => {
     
     try {
-        const response = await fetch(`${BASE_URL}/team/addTeam?userEmail=${encodedEmail}&teamName=${teamName}`,
+        const response = await fetch(`${BASE_URL}/team/addTeam?teamName=${teamName}`,
             {
                 method: 'POST',
                 credentials: "include",
@@ -106,12 +105,11 @@ export const  addTeam = async (userEmail, teamName) => {
 };
 
 //PUT fetch
-export const  addPartner = async (userEmail, teamLeadEmail) => {
-    const encodedUserEmail = encodeURIComponent(userEmail)
+export const  addPartner = async (teamLeadEmail) => {
     const encodedTeamLeadEmail = encodeURIComponent(teamLeadEmail)
     
     try {
-        const response = await fetch(`${BASE_URL}/team/updateTeam?userEmail=${encodedUserEmail}&teamLeadEmail=${encodedTeamLeadEmail}`,
+        const response = await fetch(`${BASE_URL}/team/updateTeam?teamLeadEmail=${encodedTeamLeadEmail}`,
             {
                 method: 'PUT',
                 credentials: "include",
@@ -125,7 +123,7 @@ export const  addPartner = async (userEmail, teamLeadEmail) => {
 
         const teamData = await response.json()
 
-        if(teamData.partner === userEmail) {
+        if(teamData.partner) {
             return true
         }
         return false

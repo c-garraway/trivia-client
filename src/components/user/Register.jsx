@@ -9,7 +9,7 @@ function Register() {
     const navigate = useNavigate();
 
     const [name, setName] = useState();
-    const [email, setEmail] = useState();
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState();
     const [password2, setPassword2] = useState();
     const [formMessage, setFormMessage] = useState('none');
@@ -20,8 +20,7 @@ function Register() {
     const [emailErrorStatus, setEmailErrorStatus] = useState(false);
     const [loginDisabled, setLoginDisabled] = useState(true);
 
-    function handleValidate(e) {
-        const email = e.target.value
+    function handleValidate() {
 
         if (email === '') {
             return;

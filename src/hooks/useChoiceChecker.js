@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch/* , useSelector */ } from 'react-redux';
-import { /* selectCorrectAnswers, */ addToCorrectAnswers, addToTotalScore } from '../features/gameData/gameDataSlice';
+import { /* selectCorrectAnswers, */ addToCorrectAnswers, addToTotalScore, addToQuestionScores } from '../features/gameData/gameDataSlice';
 import {theme} from '../theme/theme'
 
 function useChoiceChecker(correctChoice) {
@@ -30,18 +30,22 @@ function useChoiceChecker(correctChoice) {
             switch(questionDifficulty) {
                 case 'easy': {
                     dispatch(addToTotalScore(1))
+                    dispatch(addToQuestionScores(1))
                     break;
                 }
                 case 'medium': {
                     dispatch(addToTotalScore(2))
+                    dispatch(addToQuestionScores(2))
                     break;
                 }
                 default: {
                     dispatch(addToTotalScore(3))
+                    dispatch(addToQuestionScores(3))
                 }
             }
         } else {
             buttonElement.style.backgroundColor = theme.palette.incorrectAnswer.main;
+            dispatch(addToQuestionScores(0))
             /* paragraphElement.style.visibility = 'visible' */
         }
     };

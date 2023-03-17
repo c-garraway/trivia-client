@@ -15,7 +15,7 @@ function Login() {
     const location = useLocation();
     //console.log(location)
 
-    const [email, setEmail] = useState();
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState();
     const [formMessage, setFormMessage] = useState('none');
     const [visibility, setVisibility] = useState('hidden');
@@ -28,8 +28,7 @@ function Login() {
 
     //console.log(loginPath)
 
-    function handleValidate(e) {
-        const email = e.target.value
+    function handleValidate() {
 
         if (email === '') {
             return;

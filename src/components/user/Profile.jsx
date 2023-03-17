@@ -105,11 +105,11 @@ function Profile() {
     async function handleSave() {
 
         if(teamName.length > 4) {
-            addTeam(currentUser.email, teamName)
+            await addTeam(teamName)
         }
 
         if(teamLeaderEmailAddress) {
-            addPartner(currentUser.email, teamLeaderEmailAddress)
+            await addPartner(teamLeaderEmailAddress)
         }
 
         const team = await getTeam()

@@ -5,7 +5,9 @@ const initialState = () => {
         correctAnswers: 0,
         selectedDifficulty: null,
         totalScore: 0,
-        questionNumber: 1
+        questionScores: [],
+        questionNumber: 0,
+        isGameFinished: false
     }
 };
 
@@ -23,14 +25,22 @@ const gameDataSlice = createSlice({
         addToTotalScore: (state, action) => {
             state.totalScore = (state.totalScore + action.payload)
         },
+        addToQuestionScores: (state, action) => {
+            state.questionScores.push(action.payload)
+        },
         addQuestionNumber: (state, action) => {
             state.questionNumber = action.payload;
+        },
+        toggleIsGameFinished: (state, action) => {
+            state.isGameFinished = !state.isGameFinished
         }
     }
 });
 
-export const {resetGameData, addToCorrectAnswers, addToTotalScore, addQuestionNumber} = gameDataSlice.actions;
+export const {resetGameData, addToCorrectAnswers, addToTotalScore, addQuestionNumber, toggleIsGameFinished, addToQuestionScores} = gameDataSlice.actions;
 export const selectCorrectAnswers = (state) => state.gameData.correctAnswers;
 export const selectTotalScore = (state) => state.gameData.totalScore;
 export const selectQuestionNumber = (state) => state.gameData.questionNumber;
+export const selectIsGameFinished = (state) => state.gameData.isGameFinished;
+export const selectQuestionScores = (state) => state.gameData.questionScores;
 export default gameDataSlice.reducer;

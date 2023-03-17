@@ -3,8 +3,13 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import useChoiceChecker from '../../../../hooks/useChoiceChecker';
 import { answerButtonStyle, nextButtonStyle } from '../../../../styles/styles';
+import { selectQuestionNumber, toggleIsGameFinished } from '../../../../features/gameData/gameDataSlice';
+import { useDispatch, useSelector } from 'react-redux';
 
 function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQuestion, questionDifficulty }) {
+    const dispatch = useDispatch();
+    const questionNumber = useSelector(selectQuestionNumber);
+
     // eslint-disable-next-line
     const [choice, numOfCorrectAnswers, handleChoice, clearBackground] = useChoiceChecker(correctAnswer);
 
@@ -17,6 +22,14 @@ function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQ
     const buttonDRef = useRef();
     const buttonElements = [buttonARef.current, buttonBRef.current, buttonCRef.current, buttonDRef.current];
     
+    function handleGameFinished() {
+        if(questionNumber === 10) {
+            dispatch(toggleIsGameFinished());
+            return;
+        }
+        return;
+    }
+
     return (
         <Box sx={{padding: 1}}>
             <Typography sx={{padding: 1, minHeight: 50}} >[ {questionDifficulty} ] {question}</Typography>
@@ -28,7 +41,7 @@ function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQ
                 style={nextButtonStyle}
                 variant='contained' 
                 ref={buttonNextRef}
-                onClick={()=> {handleNextQuestion(); clearBackground(buttonElements, nextButtonElement)}}>
+                onClick={()=> {handleNextQuestion(); clearBackground(buttonElements, nextButtonElement); handleGameFinished()}}>
                 Next Question
             </Button>
         </Box>

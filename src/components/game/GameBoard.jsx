@@ -2,6 +2,7 @@ import { Stack } from "@mui/system";
 import React, { useEffect } from "react";
 import PersonalPanel from "./StatsPanel/StatsPanel"
 import GamePanel from "./GamePanel/GamePanel";
+import Status from "./GamePanel/Status/Status";
 //import GlobalPanel from "./RulesPanel/RulesPanel";
 import { selectIsLoggedIn } from "../../features/userData/userDataSlice";
 import { useSelector } from "react-redux";
@@ -34,6 +35,7 @@ function GameBoard() {
             justifyContent="space-between">
             <GamePanel />
             <PersonalPanel />
+            <Status />
             {/* <GlobalPanel /> */}
         </Stack>
     );

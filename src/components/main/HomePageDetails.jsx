@@ -6,6 +6,8 @@ import { setIsLoggedIn, setCurrentUser } from "../../features/userData/userDataS
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { resetGameData } from "../../features/gameData/gameDataSlice";
+import { setTeamData } from "../../features/userData/teamDataSlice";
+import { getTeam } from "../../apis/team";
 
 const style = {
     //border: '1px solid black',
@@ -15,19 +17,22 @@ const style = {
     padding: 1
 }
 
-
 function HomePageDetails() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const email = process.env.REACT_APP_GUEST_EMAIL
+    const password = process.env.REACT_APP_GUEST_PW
 
     async function handleGuestLogin() {
         try {
-            const login = await loginLocalUser('guest@email.ca', 'guestPassword')
+            const login = await loginLocalUser(email, password)
             if (login) {
                 dispatch(setIsLoggedIn(true));
                 const user = await getUser();
                 dispatch(setCurrentUser(user));
                 dispatch(resetGameData())
+                const team = await getTeam();
+                dispatch(setTeamData(team))
                 navigate('/game');
             }
         } catch (error) {

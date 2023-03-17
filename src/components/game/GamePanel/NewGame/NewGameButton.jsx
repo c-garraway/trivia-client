@@ -2,6 +2,7 @@ import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuestions } from "../../../../apis/theTriviaApi";
+import { addQuestionNumber } from "../../../../features/gameData/gameDataSlice";
 import { selectCategory, selectDifficulty, resetNewGameOptionsData } from "../../../../features/gameData/newGameOptionsDataSlice";
 import { replaceQuestionData/* , resetQuestionData  */} from "../../../../features/gameData/questionDataSlice";
 
@@ -25,6 +26,7 @@ function NewGame() {
         const questions = await getQuestions(selectedDifficulty, selectedCategory)
         dispatch(replaceQuestionData(questions))
         dispatch(resetNewGameOptionsData())
+        dispatch(addQuestionNumber(1));
     }
 
     return (
