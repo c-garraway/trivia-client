@@ -12,6 +12,7 @@ import { resetGameData } from "../../features/gameData/gameDataSlice";
 import { resetQuestionData } from "../../features/gameData/questionDataSlice";
 import { resetNewGameOptionsData } from "../../features/gameData/newGameOptionsDataSlice";
 import { resetTeamData } from "../../features/userData/teamDataSlice";
+import { resetPointsData } from "../../features/pointsData/pointsDataSlice";
 
 function Navbar() {
     const navigate = useNavigate();
@@ -46,6 +47,7 @@ function Navbar() {
             dispatch(resetQuestionData());
             dispatch(resetNewGameOptionsData());
             dispatch(resetTeamData());
+            dispatch(resetPointsData());
             handleCloseMenu();
             navigate('/');
 

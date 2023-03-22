@@ -1,24 +1,22 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import { useSelector } from "react-redux";
-import { selectTeamData, /* selectIsTeamLoaded */ } from "../../../features/userData/teamDataSlice";
-
+import { selectTeamPoints } from "../../../features/pointsData/pointsDataSlice";
 
 function TeamStats() {
-    //const teamLoaded = useSelector(selectIsTeamLoaded);
-    const team = useSelector(selectTeamData);
-    const teamName = team.name
+    const teamPoints = useSelector(selectTeamPoints);
+    const leadWeek = teamPoints.teamMembers.lead;
+    const partnerWeek = teamPoints.teamMembers.partner;
 
     return (
         <Box sx={{ border: '1px solid black', width: '100%' }}>
             <Typography sx={{ padding: 1 }}>TEAM STATS</Typography>
-            <Box sx={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
-                <Typography sx={{ padding: 1}}>Rank: 01 </Typography>
-                <Typography sx={{ padding: 1 }}>Name: <span style={{fontWeight: 'bold'}}>{teamName} </span></Typography>
-            </Box>
-            <Box sx={{display: 'grid', gridTemplateColumns: '1fr 1fr'}}>
-                <Typography sx={{ padding: 1 }}>Daily Points: 63</Typography>
-                <Typography sx={{ padding: 1 }}>7 Day Rolling Points:  350</Typography>
+            <Box>
+                <Typography sx={{ padding: 1}}>Team Rank: {teamPoints.teamRank}  </Typography>
+                <Typography sx={{ padding: 1 }}>Team Name: {teamPoints.teamName} </Typography>
+                <Typography sx={{ padding: 1 }}>Team Points: {teamPoints.teamPointsTotal} </Typography>
+                <Typography sx={{ padding: 1}}>Lead: Total({leadWeek.pointsBlockTotal}) | Last 7({leadWeek.pointsBlock}) </Typography>
+                <Typography sx={{ padding: 1 }}>Partner: Total({partnerWeek.pointsBlockTotal}) | Last 7({partnerWeek.pointsBlock}) </Typography>
             </Box>
         </Box>
     );

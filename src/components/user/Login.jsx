@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import { setCurrentUser, setIsLoggedIn } from "../../features/userData/userDataSlice";
 import { getTeam } from "../../apis/team";
 import { setTeamData } from "../../features/userData/teamDataSlice";
+import { getTeamPoints, getAllTeamRanks} from "../../apis/points";
+import { setTeamPoints, setAllTeamRanks } from "../../features/pointsData/pointsDataSlice";
 
 function Login() {
     const navigate = useNavigate();
@@ -71,7 +73,13 @@ function Login() {
                 const user = await getUser();
                 dispatch(setCurrentUser(user));
                 const team = await getTeam();
-                dispatch(setTeamData(team))
+                dispatch(setTeamData(team));
+                const teamPoints = await getTeamPoints();
+                console.log(teamPoints);
+                dispatch(setTeamPoints(teamPoints));
+                const allTeamRanks = await getAllTeamRanks();
+                console.log(allTeamRanks);
+                dispatch(setAllTeamRanks(allTeamRanks));
                 navigate('/game');
             }
         } catch (error) {

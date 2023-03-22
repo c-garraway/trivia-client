@@ -5,7 +5,7 @@ const initialState = () => {
         correctAnswers: 0,
         selectedDifficulty: null,
         totalScore: 0,
-        questionScores: [],
+        questionScores: [0],
         questionNumber: 0,
         isGameFinished: false
     }

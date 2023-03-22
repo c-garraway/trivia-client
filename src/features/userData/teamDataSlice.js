@@ -3,8 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = () => {
     return {
         isTeamLoaded: false,
-        currentTeam: '',
-        teamPoints: []
+        currentTeam: 'none',
     }
 };
 
