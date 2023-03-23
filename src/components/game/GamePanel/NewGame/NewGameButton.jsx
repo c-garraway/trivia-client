@@ -2,8 +2,8 @@ import { Button } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getQuestions } from "../../../../apis/theTriviaApi";
-import { addQuestionNumber } from "../../../../features/gameData/gameDataSlice";
-import { selectCategory, selectDifficulty, resetNewGameOptionsData } from "../../../../features/gameData/newGameOptionsDataSlice";
+import { addQuestionNumber, setIsGameActive } from "../../../../features/gameData/gameDataSlice";
+import { selectCategory, selectDifficulty } from "../../../../features/gameData/newGameOptionsDataSlice";
 import { replaceQuestionData/* , resetQuestionData  */} from "../../../../features/gameData/questionDataSlice";
 
 function NewGame() {
@@ -25,14 +25,14 @@ function NewGame() {
     async function handleGetQuestions() {
         const questions = await getQuestions(selectedDifficulty, selectedCategory)
         dispatch(replaceQuestionData(questions))
-        dispatch(resetNewGameOptionsData())
         dispatch(addQuestionNumber(1));
+        dispatch(setIsGameActive(true));
     }
 
     return (
         <Button
             disabled={disabled}
-            sx={{height: '2.8em', marginTop: 1, width:{xs: '100%', sm: 'fit-content'}}}
+            sx={{height: '2.8em', marginTop: 1, ml: 1, width:{xs: '100%', sm: 'fit-content'}}}
             variant='contained' 
             onClick={handleGetQuestions}>
             New Game

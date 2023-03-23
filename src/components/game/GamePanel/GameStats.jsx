@@ -12,7 +12,7 @@ function GameStats() {
     console.log('QN: ' + questionNumber)
 
     return (
-        <Box sx={{ border: '1px solid black', width: '100%' }}>
+        <Box sx={{ border: '1px solid black', width: '100%', mb: 1 }}>
             <Typography sx={{ padding: 1, textAlign: 'center' }}>GAME STATS</Typography>
             <Box sx={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', justifyItems: 'center', backgroundColor: theme.palette.highlight.main}}>
                 <Typography sx={{ padding: 1 }}>Question {questionNumber}/10 </Typography>

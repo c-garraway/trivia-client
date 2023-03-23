@@ -3,11 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = () => {
     return {
         correctAnswers: 0,
-        selectedDifficulty: null,
+        //selectedDifficulty: null,
         totalScore: 0,
-        questionScores: [0],
+        questionScores: [],
         questionNumber: 0,
-        isGameFinished: false
+        isGameFinished: false,
+        isGameActive: false,
     }
 };
 
@@ -33,14 +34,18 @@ const gameDataSlice = createSlice({
         },
         toggleIsGameFinished: (state, action) => {
             state.isGameFinished = !state.isGameFinished
+        },
+        setIsGameActive: (state, action) => {
+            state.isGameActive = action.payload
         }
     }
 });
 
-export const {resetGameData, addToCorrectAnswers, addToTotalScore, addQuestionNumber, toggleIsGameFinished, addToQuestionScores} = gameDataSlice.actions;
+export const {resetGameData, addToCorrectAnswers, addToTotalScore, addQuestionNumber, toggleIsGameFinished, addToQuestionScores, setIsGameActive} = gameDataSlice.actions;
 export const selectCorrectAnswers = (state) => state.gameData.correctAnswers;
 export const selectTotalScore = (state) => state.gameData.totalScore;
 export const selectQuestionNumber = (state) => state.gameData.questionNumber;
 export const selectIsGameFinished = (state) => state.gameData.isGameFinished;
+export const selectIsGameActive = (state) => state.gameData.isGameActive;
 export const selectQuestionScores = (state) => state.gameData.questionScores;
 export default gameDataSlice.reducer;

@@ -5,7 +5,6 @@ const initialState = () => {
         isLoggedIn: false,
         userType: '',
         currentUser: '',
-        userPoints: []
     }
 };
 

@@ -5,8 +5,8 @@ import { selectTeamPoints } from "../../../features/pointsData/pointsDataSlice";
 
 function TeamStats() {
     const teamPoints = useSelector(selectTeamPoints);
-    const leadWeek = teamPoints.teamMembers.lead;
-    const partnerWeek = teamPoints.teamMembers.partner;
+    const leadWeek = teamPoints.teamMembers?.lead;
+    const partnerWeek = teamPoints.teamMembers?.partner;
 
     return (
         <Box sx={{ border: '1px solid black', width: '100%' }}>
@@ -15,8 +15,8 @@ function TeamStats() {
                 <Typography sx={{ padding: 1}}>Team Rank: {teamPoints.teamRank}  </Typography>
                 <Typography sx={{ padding: 1 }}>Team Name: {teamPoints.teamName} </Typography>
                 <Typography sx={{ padding: 1 }}>Team Points: {teamPoints.teamPointsTotal} </Typography>
-                <Typography sx={{ padding: 1}}>Lead: Total({leadWeek.pointsBlockTotal}) | Last 7({leadWeek.pointsBlock}) </Typography>
-                <Typography sx={{ padding: 1 }}>Partner: Total({partnerWeek.pointsBlockTotal}) | Last 7({partnerWeek.pointsBlock}) </Typography>
+                <Typography sx={{ padding: 1 }}>Lead: Total({leadWeek?.pointsBlockTotal}) | Last 7({leadWeek?.pointsBlock}) </Typography>
+                <Typography sx={{ padding: 1 }}>Partner: Total({partnerWeek?.pointsBlockTotal}) | Last 7({partnerWeek?.pointsBlock}) </Typography>
             </Box>
         </Box>
     );

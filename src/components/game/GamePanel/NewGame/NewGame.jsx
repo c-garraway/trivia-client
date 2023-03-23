@@ -9,7 +9,7 @@ function NewGame() {
     return (
         <Box sx={{border: '1px solid black', width: '100%' }}>
             <Typography sx={{ padding: 1, textAlign: 'center' }}>NEW GAME</Typography>
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: {xs: 'space-evenly'}}}>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center'/* {xs: 'space-evenly'} */}}>
                 <DifficultyDropdown/>
                 <CategoriesDropdown/>
                 <NewGameButton/>

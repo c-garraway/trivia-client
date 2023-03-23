@@ -15,17 +15,17 @@ function Quiz() {
 
     const [shuffledAnswers, setShuffledAnswers] = useState([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const currentQuestion = questions[currentQuestionIndex].question
-    const questionDifficulty = questions[currentQuestionIndex].difficulty
-    const correctAnswer = questions[currentQuestionIndex].correctAnswer
+    const currentQuestion = questions[currentQuestionIndex]?.question
+    const questionDifficulty = questions[currentQuestionIndex]?.difficulty
+    const correctAnswer = questions[currentQuestionIndex]?.correctAnswer
     let answers = []
 
     function getAnswers() {
-        const incorrectAnswers = questions[currentQuestionIndex].incorrectAnswers
-        for(let i = 0; i < incorrectAnswers.length; i++) {
-            answers.push(questions[currentQuestionIndex].incorrectAnswers[i])
+        const incorrectAnswers = questions[currentQuestionIndex]?.incorrectAnswers
+        for(let i = 0; i < incorrectAnswers?.length; i++) {
+            answers.push(questions[currentQuestionIndex]?.incorrectAnswers[i])
         }
-        answers.push(questions[currentQuestionIndex].correctAnswer)
+        answers.push(questions[currentQuestionIndex]?.correctAnswer)
         return answers
     };
 

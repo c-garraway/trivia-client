@@ -11,7 +11,7 @@ export const  getTeamPoints = async () => {
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Credentials": true
+                //"Access-Control-Allow-Credentials": true
             }
         }) 
 
@@ -36,7 +36,7 @@ export const  getAllTeamRanks = async () => {
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Credentials": true
+                //"Access-Control-Allow-Credentials": true
             }
         }) 
 
@@ -51,54 +51,31 @@ export const  getAllTeamRanks = async () => {
     }
 };
 
-//POST fetch
-export const  addTeam = async (teamName) => {
-    
-    try {
-        const response = await fetch(`${BASE_URL}/team/addTeam?teamName=${teamName}`,
-            {
-                method: 'POST',
-                credentials: "include",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json",
-                    "Access-Control-Allow-Credentials": true
-                }
-            }
-        ) 
-
-        const teamData = await response.json()
-
-        if(teamData.name === teamName) {
-            return true
-        }
-        return false
-
-    } catch (error) {
-        console.log(error)
-    }
-};
-
 //PUT fetch
-export const  addPartner = async (teamLeadEmail) => {
-    const encodedTeamLeadEmail = encodeURIComponent(teamLeadEmail)
+export const  updateDailyPoints = async (category, difficulty, dailyPointsTotal, dailyPointsBlock) => {
     
     try {
-        const response = await fetch(`${BASE_URL}/team/updateTeam?teamLeadEmail=${encodedTeamLeadEmail}`,
+        const response = await fetch(`${BASE_URL}/points/updateDailyPoints`,
             {
                 method: 'PUT',
                 credentials: "include",
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Credentials": true
-                }
+                    //"Access-Control-Allow-Credentials": true
+                },
+                body: JSON.stringify({
+                    "category": `${category}`,
+                    "difficulty": `${difficulty}`,
+                    "dailyPointsTotal": dailyPointsTotal,
+                    "dailyPointsBlock": dailyPointsBlock
+                })
             }
         ) 
 
-        const teamData = await response.json()
+        const updateMessage = await response.json()
 
-        if(teamData.partner) {
+        if(updateMessage.message === 'Points successfully saved') {
             return true
         }
         return false

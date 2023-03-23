@@ -22,7 +22,7 @@ export const  loginLocalUser = async (email, password) => {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Credentials": true
+                    //"Access-Control-Allow-Credentials": true
                 },
                 body: JSON.stringify({
                     "email": `${email}`,
@@ -78,7 +78,7 @@ export const getUser = async () => {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Credentials": true
+                    //"Access-Control-Allow-Credentials": true
                 },
             }
         )
@@ -129,7 +129,7 @@ export const  logoutUser = async () => {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Credentials": true
+                    //"Access-Control-Allow-Credentials": true
                 },
             }
         ) 

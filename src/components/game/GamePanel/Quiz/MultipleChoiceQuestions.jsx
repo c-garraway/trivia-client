@@ -3,12 +3,20 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import useChoiceChecker from '../../../../hooks/useChoiceChecker';
 import { answerButtonStyle, nextButtonStyle } from '../../../../styles/styles';
-import { selectQuestionNumber, toggleIsGameFinished } from '../../../../features/gameData/gameDataSlice';
+import { selectQuestionNumber, selectQuestionScores, selectTotalScore, toggleIsGameFinished } from '../../../../features/gameData/gameDataSlice';
 import { useDispatch, useSelector } from 'react-redux';
+import { getAllTeamRanks, getTeamPoints, updateDailyPoints } from '../../../../apis/points';
+import { selectCategory, selectDifficulty } from '../../../../features/gameData/newGameOptionsDataSlice';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import { setAllTeamRanks, setTeamPoints } from '../../../../features/pointsData/pointsDataSlice';
 
 function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQuestion, questionDifficulty }) {
     const dispatch = useDispatch();
     const questionNumber = useSelector(selectQuestionNumber);
+    const dailyPointsBlock = useSelector(selectQuestionScores);
+    const dailyPointsTotal = useSelector(selectTotalScore);
+    const difficulty = useSelector(selectDifficulty);
+    const category = useSelector(selectCategory);
 
     // eslint-disable-next-line
     const [choice, numOfCorrectAnswers, handleChoice, clearBackground] = useChoiceChecker(correctAnswer);
@@ -22,9 +30,18 @@ function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQ
     const buttonDRef = useRef();
     const buttonElements = [buttonARef.current, buttonBRef.current, buttonCRef.current, buttonDRef.current];
     
-    function handleGameFinished() {
+    async function handleGameFinished() {
         if(questionNumber === 10) {
             dispatch(toggleIsGameFinished());
+            const update = await updateDailyPoints(category, difficulty, dailyPointsTotal, dailyPointsBlock)
+            if(update) {
+                const teamPoints = await getTeamPoints()
+                .then(()=> dispatch(setTeamPoints(teamPoints)));
+                const allTeamRanks = await getAllTeamRanks()
+                .then(()=> dispatch(setAllTeamRanks(allTeamRanks)));
+                return;
+            }
+            //TODO: Create failure message alert
             return;
         }
         return;
@@ -40,9 +57,10 @@ function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQ
             <Button
                 style={nextButtonStyle}
                 variant='contained' 
+                endIcon={<ArrowForwardIosIcon />}
                 ref={buttonNextRef}
                 onClick={()=> {handleNextQuestion(); clearBackground(buttonElements, nextButtonElement); handleGameFinished()}}>
-                Next Question
+                NEXT
             </Button>
         </Box>
     );    

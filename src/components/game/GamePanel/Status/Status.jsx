@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@mui/material';
 import { resetQuestionData } from '../../../../features/gameData/questionDataSlice';
 import QuestionScores from './QuestionScores';
+import { resetNewGameOptionsData } from '../../../../features/gameData/newGameOptionsDataSlice';
 
 const style = {
     position: 'absolute',
@@ -38,7 +39,8 @@ function Status() {
     function handleClose() {
         setOpen(false);
         dispatch(resetGameData());
-        //dispatch(resetQuestionData());
+        dispatch(resetQuestionData());
+        dispatch(resetNewGameOptionsData())
     }
 
     return (
