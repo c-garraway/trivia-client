@@ -1,10 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
+//TODO: remove userType and associated methods
+
 const initialState = () => {
     return {
         isLoggedIn: false,
-        userType: '',
-        currentUser: '',
+        userType: 'none',
+        currentUser: 'none',
     }
 };
 
@@ -25,7 +28,7 @@ const userDataSlice = createSlice({
     }
 });
 
-export const {resetUserData, setCurrentUser, setIsLoggedIn, setUserType} = userDataSlice.actions;
+export const {resetUserData, setCurrentUser, setIsLoggedIn, /* setUserType */} = userDataSlice.actions;
 export const selectUserType = (state) => state.userData.userType;
 export const selectCurrentUser = (state) => state.userData.currentUser;
 export const selectIsLoggedIn = (state) => state.userData.isLoggedIn;

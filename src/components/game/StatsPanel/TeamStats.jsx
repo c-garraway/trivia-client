@@ -12,11 +12,11 @@ function TeamStats() {
         <Box sx={{ border: '1px solid black', width: '100%' }}>
             <Typography sx={{ padding: 1 }}>TEAM STATS</Typography>
             <Box>
-                <Typography sx={{ padding: 1}}>Team Rank: {teamPoints.teamRank}  </Typography>
-                <Typography sx={{ padding: 1 }}>Team Name: {teamPoints.teamName} </Typography>
-                <Typography sx={{ padding: 1 }}>Team Points: {teamPoints.teamPointsTotal} </Typography>
-                <Typography sx={{ padding: 1 }}>Lead: Total({leadWeek?.pointsBlockTotal}) | Last 7({leadWeek?.pointsBlock}) </Typography>
-                <Typography sx={{ padding: 1 }}>Partner: Total({partnerWeek?.pointsBlockTotal}) | Last 7({partnerWeek?.pointsBlock}) </Typography>
+                <Typography sx={{ pl: 1}}>Team Rank: {teamPoints.teamRank}  </Typography>
+                <Typography sx={{ pl: 1 }}>Team Name: {teamPoints.teamName} </Typography>
+                <Typography sx={{ pl: 1 }}>Team Points: {teamPoints.teamPointsTotal} </Typography>
+                <Typography sx={{ pl: 1 }}>Lead: Total({leadWeek?.pointsBlockTotal}) | Last 7({leadWeek?.pointsBlock}) </Typography>
+                <Typography sx={{ pl: 1, pb: 1 }}>Partner: Total({partnerWeek?.pointsBlockTotal}) | Last 7({partnerWeek?.pointsBlock}) </Typography>
             </Box>
         </Box>
     );

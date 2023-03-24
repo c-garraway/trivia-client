@@ -9,6 +9,8 @@ import { getAllTeamRanks, getTeamPoints, updateDailyPoints } from '../../../../a
 import { selectCategory, selectDifficulty } from '../../../../features/gameData/newGameOptionsDataSlice';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { setAllTeamRanks, setTeamPoints } from '../../../../features/pointsData/pointsDataSlice';
+import { getUser } from '../../../../apis/auth';
+import { setCurrentUser } from '../../../../features/userData/userDataSlice';
 
 function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQuestion, questionDifficulty }) {
     const dispatch = useDispatch();
@@ -35,11 +37,9 @@ function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQ
             dispatch(toggleIsGameFinished());
             const update = await updateDailyPoints(category, difficulty, dailyPointsTotal, dailyPointsBlock)
             if(update) {
-                const teamPoints = await getTeamPoints()
-                .then(()=> dispatch(setTeamPoints(teamPoints)));
-                const allTeamRanks = await getAllTeamRanks()
-                .then(()=> dispatch(setAllTeamRanks(allTeamRanks)));
-                return;
+                await getTeamPoints().then((teamPoints) => dispatch(setTeamPoints(teamPoints)));
+                await getAllTeamRanks().then((allTeamRanks) => dispatch(setAllTeamRanks(allTeamRanks)));
+                await getUser().then((user) => dispatch(setCurrentUser(user)));
             }
             //TODO: Create failure message alert
             return;

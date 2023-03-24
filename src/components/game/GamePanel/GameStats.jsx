@@ -9,7 +9,7 @@ function GameStats() {
     const questionNumber = useSelector(selectQuestionNumber);
     const totalScore = useSelector(selectTotalScore);
 
-    console.log('QN: ' + questionNumber)
+    //console.log('QN: ' + questionNumber)
 
     return (
         <Box sx={{ border: '1px solid black', width: '100%', mb: 1 }}>

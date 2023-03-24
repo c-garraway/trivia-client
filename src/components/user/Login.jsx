@@ -67,6 +67,7 @@ function Login() {
                 setVisibility();
                 return;
             } else {
+                //TODO: refactor get and update statements
                 setVisibility('hidden');
                 setFormMessage('none');
                 dispatch(setIsLoggedIn(true));
