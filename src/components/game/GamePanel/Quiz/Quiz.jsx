@@ -56,7 +56,7 @@ function Quiz() {
         dispatch(addQuestionNumber(currentQuestionIndex + 2))
     }
     return (
-        <Box sx={{border: '1px solid black', width: '100%'}}>
+        <Box sx={{border: '1px solid black', borderRadius: '5px', width: '100%'}}>
             {/* <Typography sx={{marginLeft: 1}}>
                 Question {currentQuestionIndex + 1} of 10
             </Typography> */}

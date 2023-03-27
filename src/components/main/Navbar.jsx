@@ -64,8 +64,8 @@ function Navbar() {
         navigate('/register')
     }
 
-    function handleRules() {
-        navigate('/rules')
+    function handleDarkMode() {
+        //navigate('/rules')
     }
 
     function handleProfile() {
@@ -95,11 +95,11 @@ function Navbar() {
                 </Typography>
                 <Typography
                     variant="h6"
-                    onClick={handleRules}
+                    onClick={handleDarkMode}
                     sx={{
                         cursor: 'pointer', paddingLeft: 4
                     }}
-                >Rules
+                >Dark
                 </Typography>
                 <Typography
                     variant="h6"

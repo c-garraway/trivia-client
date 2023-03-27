@@ -14,10 +14,10 @@ function GamePanel() {
     return (
         <Stack
             direction={{ xs: "column", md: "column" }}
-            sx={{ border: '1px solid black', justifyContent: "flex-start", alignItems: "center", padding: 1 }}
+            sx={{ /* border: '1px solid black',  */justifyContent: "flex-start", alignItems: "center", padding: 1 }}
             spacing={1}
             flex={5}>
-            <Welcome />
+            {/* <Welcome /> */}
             <NewGame />
             { isGameActive ? 
                 <Box sx={{width: '100%'}}>

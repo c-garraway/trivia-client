@@ -66,8 +66,8 @@ export const answerButtonStyle = {
 export const nextButtonStyle = {
     opacity: .6,
     cursor: 'not-allowed',
-    width: '20ch',
-    height: '5em',
+    width: '100%',
+    height: '4em',
     textTransform: 'none',
     marginTop: 10,
     backgroundColor: theme.palette.secondary.main,

@@ -36,13 +36,18 @@ export const getQuestionCategories = async () => {
 
 export const getQuestions = async (difficulty, category) => {
 
+  const cleanedCategory = category.replace(/&| /g, function(match) {
+    if (match === "&") {
+      return "and";
+    } 
+    if (match === " ") {
+      return "_";
+    }
+  })
+
     try {
-        const response = await fetch(difficulty === 'mixed' ? `https://the-trivia-api.com/api/questions?categories=${category}&limit=10&region=CA` : `https://the-trivia-api.com/api/questions?categories=${category}&limit=10&region=CA&difficulty=${difficulty}`, {
+        const response = await fetch(difficulty === 'mixed' ? `https://the-trivia-api.com/api/questions?categories=${cleanedCategory}&limit=10&region=CA` : `https://the-trivia-api.com/api/questions?categories=${cleanedCategory}&limit=10&region=CA&difficulty=${difficulty}`, {
             headers: {
-              // An API key is not required for this endpoint,
-              // but can be used to bypass the rate limit or request
-              // more questions.
-              //'x-api-key': <LinkPI_KEY>,
               'Content-Type': 'application/json'
             },
           })

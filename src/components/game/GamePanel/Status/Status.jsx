@@ -7,7 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button } from '@mui/material';
 import { resetQuestionData } from '../../../../features/gameData/questionDataSlice';
 import QuestionScores from './QuestionScores';
-import { resetNewGameOptionsData } from '../../../../features/gameData/newGameOptionsDataSlice';
+import { resetNewGameOptionsData, selectCategory } from '../../../../features/gameData/newGameOptionsDataSlice';
+import { selectQuestionScores } from "../../../../features/gameData/gameDataSlice";
+import { selectQuestions } from "../../../../features/gameData/questionDataSlice";
 
 const style = {
     position: 'absolute',
@@ -28,6 +30,9 @@ function Status() {
     const dispatch = useDispatch();
     const isGameFinished = useSelector(selectIsGameFinished)
     const totalScore = useSelector(selectTotalScore);
+    const category = useSelector(selectCategory);
+    const questionScores = useSelector(selectQuestionScores);
+    const questions = useSelector(selectQuestions);
     const [open, setOpen] = useState(false);
 
     useEffect(()=> {
@@ -52,11 +57,20 @@ function Status() {
                 sx={style} >
                 <Typography sx={{fontWeight: 'bold'}}>Today's Game Result</Typography>
                 <Typography>See you tomorrow for more exciting questions.</Typography>
-                <Typography>Total Score: {totalScore}</Typography>
-                <Typography>See points for each question below.</Typography>
-                <QuestionScores/>
+                {/* <Typography>Total Score: {totalScore}</Typography> */}
+                <Typography>See points distribution below.</Typography>
+                {/* <Box sx={{border: '1px solid black', borderRadius: '5px', p: 1, mt: 1, mb: 1}}>
+                    <Typography sx={{mb: 0}}>{category}</Typography> */}
+                    <QuestionScores
+                        questionScores={questionScores}
+                        questions={questions}
+                        category={category}
+                        totalPoints={totalScore}
+                    />
+                {/* </Box> */}
                 <Box sx={{display: 'flex'/* , justifyContent: 'center' */}}>
                     <Button
+                        disabled
                         variant="contained">
                         Share
                     </Button>

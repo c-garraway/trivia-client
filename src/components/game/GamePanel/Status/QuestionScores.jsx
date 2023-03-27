@@ -3,33 +3,78 @@ import { Box } from "@mui/system";
 import React from "react";
 import { useSelector } from "react-redux";
 import { selectQuestionScores } from "../../../../features/gameData/gameDataSlice";
+import { selectQuestions } from "../../../../features/gameData/questionDataSlice";
+import { theme } from "../../../../theme/theme";
+import PropTypes from 'prop-types';
 
-const style = {
-    border: '1px solid black',
-    width: 15,
-    //height: 15,
-    marginTop: 2,
-    marginBottom: 2,
-    padding: 1,
-    textAlign: 'center',
-}
+function QuestionScores({questionScores, questions, category, totalPoints}) {
+    //const questionScores = useSelector(selectQuestionScores);
+    //const questions = useSelector(selectQuestions);
+    const difficultyColor = theme.palette.difficulty
 
-function QuestionScores() {
-    const questionScores = useSelector(selectQuestionScores)
-    console.log(questionScores)
     return (
-        <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
-            {questionScores.map((question, index) => {
-                return(
-                    <div key={index}>
-                        <Box sx={style}>
-                            <Typography>{question}</Typography>        
-                        </Box>
-                    </div>
-                )
-            })}
+        <Box sx={{border: '1px solid black', borderRadius: '5px', p: 1, mt: 1, mb: 1}}>
+            <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+                <Typography sx={{mb: 0}}>{category}</Typography>
+                <Typography sx={{mb: 0}}>Total Points: {totalPoints}</Typography>
+            </Box>
+            <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+                {questionScores.map((questionScore, index) => {
+                    let boxColor;
+                    let questionDifficulty = [];
+                    questions.forEach(dif => {
+                        questionDifficulty.push(dif.difficulty)
+                    })
+                    const difficulty = questionDifficulty[index]
+                    switch(difficulty) {
+                        case 'hard':
+                            boxColor = difficultyColor.hard
+                            break;
+                        case 'medium':
+                            boxColor = difficultyColor.medium
+                            break;
+                        case 'easy':
+                            boxColor = difficultyColor.easy
+                            break;
+                        default:
+                            boxColor = 'white'
+                    }
+
+                    return(
+                        <div key={index}>
+                            <Box sx={{
+                                border: `.5px solid black`,
+                                borderRadius: '5px',
+                                width: 15,
+                                //height: 15,
+                                //marginTop: 2,
+                                //marginBottom: 2,
+                                padding: 1,
+                                textAlign: 'center',
+                                backgroundColor: boxColor,
+                            }}>
+                                <Typography sx={{fontSize: 'larger'}}>{questionScore}</Typography>        
+                            </Box>
+                        </div>
+                    )
+                })}
+            </Box>
         </Box>
     )
 }
+
+QuestionScores.propTypes = {
+    questionScores: PropTypes.array.isRequired, 
+    questions: PropTypes.array, 
+    category: PropTypes.string.isRequired, 
+    totalPoints: PropTypes.number.isRequired,
+};
+
+QuestionScores.defaultProps = {
+    questionScores: [], 
+    questions: [], 
+    category: '', 
+    totalPoints: 0, 
+};
 
 export default QuestionScores;

@@ -14,11 +14,12 @@ function Instructions() {
         ['One question set per day (10 Questions)'],
         ['Difficulty Points per Question: easy 1pt, medium 2pts, hard 3pts'],
         ['Teams must have two players'],
-        ['Global ranking is based on the sum the last seven games of both team members']
+        ['Global ranking is based on the sum the last seven games of both team members'],
+        ['Correct Answers are not shown for incorrect selections']
     ]
 
     return (
-        <Box sx={{ /* border: '1px solid black', */ width: '100%' }}>
+        <Box sx={{/* border: '1px solid black', borderRadius: '5px', */ width: '100%' }}>
             <Typography sx={{ padding: 1, fontWeight: 'bold', fontSize: 'larger', color: leadColor }}>{leadMessage}</Typography>
             <Typography sx={{ padding: 1 }}>Rules and Regs... </Typography>
             { rules.map((rule, index) => {

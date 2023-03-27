@@ -10,23 +10,20 @@ export const theme = createTheme({
         },
         secondary: { main: '#673ab7' },
         correctAnswer: { main: 'green' },
-        incorrectAnswer: { main: 'red' },
-        highlight: {main: 'lightgray'},
+        incorrectAnswer: { main: '#ca0909' },
+        highlight: {main: 'lightGray'},
+        difficulty: { hard: '#FFD700', medium: '#C0C0C0', easy: '#CD7F32'},
         error: { main: '#ca0909' },
-
         sand: { main: '#F4DECB' },
         shell: { main: '#F8EEE7' },
-        status: {
-            danger: '#b71c1c'
-        },
-
+        status: { danger: '#b71c1c' },
 
         // Used by `getContrastText()` to maximize the contrast between the background and
         // the text.
-        contrastThreshold: 3,
+        //contrastThreshold: 3,
         // Used to shift a color's luminance by approximately
         // two indexes within its tonal palette.
         // E.g., shift from Red 500 to Red 300 or Red 700.
-        tonalOffset: 0.2,
+        //tonalOffset: 0.2,
     },
 });

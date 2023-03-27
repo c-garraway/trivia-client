@@ -3,6 +3,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { selectTeamPoints } from "../../../features/pointsData/pointsDataSlice";
 import { selectCurrentUser } from "../../../features/userData/userDataSlice";
+import QuestionScores from '../GamePanel/Status/QuestionScores';
 
 function PersonalStats() {
     const user = useSelector(selectCurrentUser);
@@ -16,16 +17,24 @@ function PersonalStats() {
     console.log(lastGameData)
 
     return (
-        <Box sx={{ border: '1px solid black', width: '100%' }}>
+        <Box sx={{ border: '1px solid black', borderRadius: '5px', width: '100%' }}>
             <Typography sx={{ padding: 1}}>PERSONAL STATS</Typography>
-            <Box>
-                <Typography sx={{ pl: 1 }}>Team {userType}</Typography>
-                <Typography sx={{ pl: 1 }}>Current Date: {currentDate} </Typography>
-                <Typography sx={{ pl: 1 }}>Last Game Date: {lastGamePlayedDate}</Typography>
-                <Typography sx={{ pl: 1 }}>Category (Last Game): {lastGameData?.category}</Typography>
-                <Typography sx={{ pl: 1 }}>Difficulty (Last Game): {lastGameData?.difficulty}</Typography>
-                <Typography sx={{ pl: 1 }}>Points (Last Game): {lastGameData?.dailyPointsTotal} </Typography>
-                <Typography sx={{ pl: 1, pb: 1 }}>Question Points (Last Game): {lastGameData?.dailyPointsBlock} </Typography>
+            <Box id='container'>
+                <Box sx={{border: '1px solid black', borderRadius: '5px',ml: 1, mr: 1 }}>
+                    <Typography sx={{ pl: 1 }}>{user.name} ({userType})</Typography>
+                    <Typography sx={{ pl: 1 }}>Current Date: {currentDate} </Typography>
+                    <Typography sx={{ pl: 1 }}>Last Game Date: {lastGamePlayedDate}</Typography>
+                    {/* <Typography sx={{ pl: 1 }}>Last GameDifficulty: {lastGameData?.difficulty}</Typography> */}
+                    <Typography sx={{ pl: 1 }}>Last Game Points Distribution Below</Typography>
+                </Box>
+                <Box sx={{ pl: 1, pr: 1 }}>
+                    <QuestionScores 
+                        questionScores={lastGameData?.dailyPointsBlock}
+                        //questions={questions}
+                        category={lastGameData?.category}
+                        totalPoints={lastGameData?.dailyPointsTotal}
+                    />
+                </Box>
             </Box>
         </Box>
     );

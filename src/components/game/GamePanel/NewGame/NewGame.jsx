@@ -7,7 +7,7 @@ import NewGameButton from "./NewGameButton"
 function NewGame() {
 
     return (
-        <Box sx={{border: '1px solid black', width: '100%' }}>
+        <Box sx={{border: '1px solid black', borderRadius: '5px', width: '100%' }}>
             <Typography sx={{ padding: 1, textAlign: 'center' }}>NEW GAME</Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center'/* {xs: 'space-evenly'} */}}>
                 <DifficultyDropdown/>

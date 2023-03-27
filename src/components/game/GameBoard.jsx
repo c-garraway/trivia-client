@@ -30,9 +30,9 @@ function GameBoard() {
     return (
         <Stack
             direction={{ xs: "column", md: "row" }}
-            spacing={1}
+            spacing={.1}
             paddingTop={1}
-            justifyContent="space-between">
+            justifyContent="space-around">
             <GamePanel />
             <PersonalPanel />
             <Status />
