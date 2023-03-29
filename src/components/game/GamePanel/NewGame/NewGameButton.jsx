@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getQuestions } from "../../../../apis/theTriviaApi";
 import { addQuestionNumber, selectIsGameActive, setIsGameActive } from "../../../../features/gameData/gameDataSlice";
 import { selectCategory, selectDifficulty } from "../../../../features/gameData/newGameOptionsDataSlice";
-import { replaceQuestionData/* , resetQuestionData  */} from "../../../../features/gameData/questionDataSlice";
+import { replaceQuestionData} from "../../../../features/gameData/questionDataSlice";
 import { selectCurrentUser } from "../../../../features/userData/userDataSlice";
 
 function NewGame() {
@@ -26,11 +26,13 @@ function NewGame() {
         }
         setDisabled(true)
 
-    },[selectedDifficulty, selectedCategory, currentDate, dateCheck])
+    },[selectedDifficulty, selectedCategory, currentDate, dateCheck, gameIsActive])
  
     async function handleGetQuestions() {
-        const questions = await getQuestions(selectedDifficulty, selectedCategory)
-        dispatch(replaceQuestionData(questions))
+        await getQuestions(selectedDifficulty, selectedCategory).then((questions) => dispatch(replaceQuestionData(questions)));
+        /* const questions = await getQuestions(selectedDifficulty, selectedCategory)
+        dispatch(replaceQuestionData(questions)) */ //TESTING
+
         dispatch(addQuestionNumber(1));
         dispatch(setIsGameActive(true));
         disabled === false ? setDisabled(true) : setDisabled(false)
@@ -39,7 +41,7 @@ function NewGame() {
     return (
         <Button
             disabled={disabled}
-            sx={{height: '2.8em', marginTop: 1, ml:{xs: 0, sm: 1}, width:{xs: '100%', sm: 'fit-content', borderRadius: '0 0'}}}
+            sx={{height: '2.8em', marginTop: 1, ml:1, mr: 1, mb: 1, width:{xs: '100%', sm: 'fit-content'}}}
             variant='contained' 
             onClick={handleGetQuestions}>
             New Game

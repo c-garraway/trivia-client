@@ -25,7 +25,6 @@ const style = {
     padding: 1,
 };
 
-
 function Status() {
     const dispatch = useDispatch();
     const isGameFinished = useSelector(selectIsGameFinished)
@@ -57,18 +56,15 @@ function Status() {
                 sx={style} >
                 <Typography sx={{fontWeight: 'bold'}}>Today's Game Result</Typography>
                 <Typography>See you tomorrow for more exciting questions.</Typography>
-                {/* <Typography>Total Score: {totalScore}</Typography> */}
                 <Typography>See points distribution below.</Typography>
-                {/* <Box sx={{border: '1px solid black', borderRadius: '5px', p: 1, mt: 1, mb: 1}}>
-                    <Typography sx={{mb: 0}}>{category}</Typography> */}
+                    <Typography sx={{mb: 0}}>{category}</Typography>
                     <QuestionScores
                         questionScores={questionScores}
                         questions={questions}
                         category={category}
                         totalPoints={totalScore}
                     />
-                {/* </Box> */}
-                <Box sx={{display: 'flex'/* , justifyContent: 'center' */}}>
+                <Box sx={{display: 'flex'}}>
                     <Button
                         disabled
                         variant="contained">

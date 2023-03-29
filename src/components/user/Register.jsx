@@ -1,7 +1,7 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { formStyle } from "../../styles/styles";
+import { formStyle } from "../../styles/styles.js";
 import { validEmail } from "../../utilities/regex";
 import { registerLocalUser } from "../../apis/auth";
 
@@ -80,7 +80,7 @@ function Register() {
             } else {
                 setVisibility('hidden')
                 setFormMessage('none')
-                navigate('/login'); //changed to  login
+                navigate('/login'); //changed to login
             }
         } catch (error) {
             console.log(error)

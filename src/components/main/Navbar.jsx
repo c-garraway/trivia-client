@@ -26,7 +26,6 @@ function Navbar() {
     const visibility = loggedIn ? 'visible' : 'hidden'
     const visibility2 = loggedIn ? 'hidden' : 'visible'
 
-
     const handleCloseMenu = () => {
         setAnchorEl(null);
     };

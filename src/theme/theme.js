@@ -17,6 +17,7 @@ export const theme = createTheme({
         sand: { main: '#F4DECB' },
         shell: { main: '#F8EEE7' },
         status: { danger: '#b71c1c' },
+        background: {main: '#8FBC8F'}
 
         // Used by `getContrastText()` to maximize the contrast between the background and
         // the text.

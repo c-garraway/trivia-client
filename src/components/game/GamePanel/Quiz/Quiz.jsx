@@ -3,14 +3,12 @@ import React from "react";
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { addQuestionNumber } from "../../../../features/gameData/gameDataSlice";
-import { selectQuestions/* , resetQuestionData */ } from "../../../../features/gameData/questionDataSlice";
+import { selectQuestions } from "../../../../features/gameData/questionDataSlice";
 import MultipleChoiceQuestions from './MultipleChoiceQuestions';
 
 
 function Quiz() {
     const dispatch = useDispatch();
-    //dispatch(resetQuestionData())
-
     const questions = useSelector(selectQuestions);
 
     const [shuffledAnswers, setShuffledAnswers] = useState([]);
@@ -46,6 +44,7 @@ function Quiz() {
 
     useEffect(() => {
         setAnswers()
+        // eslint-disable-next-line
     }, [currentQuestionIndex, questions])
 
     function handleNextQuestion() {
@@ -57,9 +56,6 @@ function Quiz() {
     }
     return (
         <Box sx={{border: '1px solid black', borderRadius: '5px', width: '100%'}}>
-            {/* <Typography sx={{marginLeft: 1}}>
-                Question {currentQuestionIndex + 1} of 10
-            </Typography> */}
             <MultipleChoiceQuestions
                 question={currentQuestion}
                 choices={shuffledAnswers}

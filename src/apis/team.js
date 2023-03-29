@@ -12,7 +12,7 @@ export const  checkEmail = async (email) => {
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Credentials": true
+                //"Access-Control-Allow-Credentials": true
             }
         }) 
 
@@ -37,7 +37,7 @@ export const  checkTeamName = async (name) => {
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json",
-                "Access-Control-Allow-Credentials": true
+                //"Access-Control-Allow-Credentials": true
             }
         }) 
 
@@ -62,7 +62,7 @@ export const getTeam = async () => {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Credentials": true
+                    //"Access-Control-Allow-Credentials": true
                 },
             }
         )
@@ -87,7 +87,7 @@ export const  addTeam = async (teamName) => {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Credentials": true
+                    //"Access-Control-Allow-Credentials": true
                 }
             }
         ) 
@@ -116,7 +116,7 @@ export const  addPartner = async (teamLeadEmail) => {
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json",
-                    "Access-Control-Allow-Credentials": true
+                    //"Access-Control-Allow-Credentials": true
                 }
             }
         ) 

@@ -10,7 +10,7 @@ function TeamStatsGraphic({userType, dailyTotalScores, totalPoints}) {
     }
 
     return (
-        <Box sx={{border: '1px solid black', borderRadius: '5px', p: 1, mt: 1, mb: 1}}>
+        <Box sx={{border: '1px solid black', borderRadius: '5px', p: 1, mt: 1, mb: 1, backgroundColor: 'white'}}>
             <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
                 <Typography sx={{mb: 0}}>{userType} (Last 7 Games)</Typography>
                 <Typography sx={{mb: 0}}>Total Points: {totalPoints}</Typography>

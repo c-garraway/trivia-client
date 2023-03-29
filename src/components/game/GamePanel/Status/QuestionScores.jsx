@@ -1,19 +1,14 @@
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
-import { useSelector } from "react-redux";
-import { selectQuestionScores } from "../../../../features/gameData/gameDataSlice";
-import { selectQuestions } from "../../../../features/gameData/questionDataSlice";
 import { theme } from "../../../../theme/theme";
 import PropTypes from 'prop-types';
 
 function QuestionScores({questionScores, questions, category, totalPoints}) {
-    //const questionScores = useSelector(selectQuestionScores);
-    //const questions = useSelector(selectQuestions);
     const difficultyColor = theme.palette.difficulty
 
     return (
-        <Box sx={{border: '1px solid black', borderRadius: '5px', p: 1, mt: 1, mb: 1}}>
+        <Box sx={{border: '1px solid black', borderRadius: '5px', p: 1, mt: 1, mb: 1, backgroundColor: 'white'}}>
             <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
                 <Typography sx={{mb: 0}}>{category}</Typography>
                 <Typography sx={{mb: 0}}>Total Points: {totalPoints}</Typography>
@@ -46,9 +41,6 @@ function QuestionScores({questionScores, questions, category, totalPoints}) {
                                 border: `.5px solid black`,
                                 borderRadius: '5px',
                                 width: 15,
-                                //height: 15,
-                                //marginTop: 2,
-                                //marginBottom: 2,
                                 padding: 1,
                                 textAlign: 'center',
                                 backgroundColor: boxColor,

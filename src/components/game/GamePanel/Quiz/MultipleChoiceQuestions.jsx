@@ -2,7 +2,7 @@ import { Box, Button, Typography } from '@mui/material';
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import useChoiceChecker from '../../../../hooks/useChoiceChecker';
-import { answerButtonStyle, nextButtonStyle } from '../../../../styles/styles';
+//import { answerButtonStyle, nextButtonStyle } from '../../../../styles/styles.oldjs';
 import { selectQuestionNumber, selectQuestionScores, selectTotalScore, toggleIsGameFinished } from '../../../../features/gameData/gameDataSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllTeamRanks, getTeamPoints, updateDailyPoints } from '../../../../apis/points';
@@ -11,6 +11,26 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { setAllTeamRanks, setTeamPoints } from '../../../../features/pointsData/pointsDataSlice';
 import { getUser } from '../../../../apis/auth';
 import { setCurrentUser } from '../../../../features/userData/userDataSlice';
+import { theme } from '../../../../theme/theme';
+
+const answerButtonStyle = {
+    width: '100%',
+    height: '4em',
+    textTransform: 'none',
+    marginBottom: 10,
+    lineHeight: '95%',
+    fontWeight: 'normal',
+}
+
+const nextButtonStyle = {
+    opacity: .6,
+    cursor: 'not-allowed',
+    width: '100%',
+    height: '4em',
+    textTransform: 'none',
+    marginTop: 10,
+    backgroundColor: theme.palette.secondary.main,
+}
 
 function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQuestion, questionDifficulty }) {
     const dispatch = useDispatch();
@@ -20,8 +40,7 @@ function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQ
     const difficulty = useSelector(selectDifficulty);
     const category = useSelector(selectCategory);
 
-    // eslint-disable-next-line
-    const [choice, numOfCorrectAnswers, handleChoice, clearBackground] = useChoiceChecker(correctAnswer);
+    const [handleChoice, clearBackground] = useChoiceChecker(correctAnswer);
 
     const buttonNextRef = useRef();
     const nextButtonElement = buttonNextRef.current
@@ -41,7 +60,8 @@ function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQ
                 await getAllTeamRanks().then((allTeamRanks) => dispatch(setAllTeamRanks(allTeamRanks)));
                 await getUser().then((user) => dispatch(setCurrentUser(user)));
             }
-            //TODO: Create failure message alert
+            // Failure message alert
+            alert('Your daily points were not successfully saved!')
             return;
         }
         return;

@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = () => {
     return {
         correctAnswers: 0,
-        //selectedDifficulty: null,
         totalScore: 0,
         questionScores: [],
         questionNumber: 0,
@@ -17,9 +16,6 @@ const gameDataSlice = createSlice({
     initialState: initialState(),
     reducers: {
         resetGameData: () => initialState(),
-        /* setGameData: (state, action) => {
-            state.gameData = action.payload;
-        }, */
         addToCorrectAnswers: (state, action) => {
             state.correctAnswers = (state.correctAnswers + 1)
         },

@@ -16,7 +16,6 @@ function DifficultyDropdown() {
                 size="small"
                 defaultValue=""
                 sx={{width: '13ch', margin: 1}}
-                /* helperText="Select Category" */
                 onChange={(e) => {dispatch(setDifficulty(e.target.value))}}
                 >
                 {difficulties.map((option, index) => (

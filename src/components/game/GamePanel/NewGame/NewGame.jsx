@@ -8,7 +8,7 @@ function NewGame() {
 
     return (
         <Box sx={{border: '1px solid black', borderRadius: '5px', width: '100%' }}>
-            <Typography sx={{ padding: 1, textAlign: 'center' }}>NEW GAME</Typography>
+            <Typography sx={{ pt: 1, pb: 1, textAlign: 'center' }}>NEW GAME</Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center'/* {xs: 'space-evenly'} */}}>
                 <DifficultyDropdown/>
                 <CategoriesDropdown/>

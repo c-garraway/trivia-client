@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { getUser, loginLocalUser } from "../../apis/auth";
 import { validEmail } from "../../utilities/regex";
-import { formStyle } from "../../styles/styles";
+import { formStyle } from "../../styles/styles.js";
 import { useDispatch } from "react-redux";
 import { setCurrentUser, setIsLoggedIn } from "../../features/userData/userDataSlice";
 import { getTeam } from "../../apis/team";
@@ -15,7 +15,6 @@ function Login() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const location = useLocation();
-    //console.log(location)
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState();
@@ -28,10 +27,7 @@ function Login() {
     const loginPath = location.pathname.length > 1 ? "login" : "home"
     const xsDisplay = loginPath === 'home' ? "none" : "flex"
 
-    //console.log(loginPath)
-
     function handleValidate() {
-
         if (email === '') {
             return;
         }
@@ -67,26 +63,18 @@ function Login() {
                 setVisibility();
                 return;
             } else {
-                //TODO: refactor get and update statements
                 setVisibility('hidden');
                 setFormMessage('none');
                 dispatch(setIsLoggedIn(true));
-                const user = await getUser();
-                dispatch(setCurrentUser(user));
-                const team = await getTeam();
-                dispatch(setTeamData(team));
-                const teamPoints = await getTeamPoints();
-                console.log(teamPoints);
-                dispatch(setTeamPoints(teamPoints));
-                const allTeamRanks = await getAllTeamRanks();
-                console.log(allTeamRanks);
-                dispatch(setAllTeamRanks(allTeamRanks));
+                await getUser().then((user) => dispatch(setCurrentUser(user)));
+                await getTeam().then((team) => dispatch(setTeamData(team)));
+                await getTeamPoints().then((teamPoints) => dispatch(setTeamPoints(teamPoints)));
+                await getAllTeamRanks().then((allTeamRanks) => dispatch(setAllTeamRanks(allTeamRanks)));
                 navigate('/game');
             }
         } catch (error) {
             console.log(error)
         }
-
     }
 
     return (
@@ -112,10 +100,8 @@ function Login() {
                             setVisibility('hidden')
                             setFormMessage('none')
                             setEmailErrorStatus(false)
-                            /* setLoginDisabled(true) */
                         }}
                         onBlur={handleValidate}
-                        /* onKeyDown={handleKeyDown} */
                     />
                     <TextField
                         required

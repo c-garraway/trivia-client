@@ -3,10 +3,12 @@ import React from 'react';
 import { theme } from './theme/theme'
 import AppRouter from './routers/AppRouter';
 
+const background = theme.palette.background.main
+
 function App() {
     return (
         <ThemeProvider theme={theme}>
-            <Box className="App">
+            <Box sx={{backgroundColor: background}}>
                 <AppRouter />
             </Box>
         </ThemeProvider>

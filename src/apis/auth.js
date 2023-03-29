@@ -47,6 +47,7 @@ export const  registerLocalUser = async (name, email, password, password2) => {
             {
                 method: 'POST',
                 headers: {
+                    "Accept": "application/json",
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
@@ -99,6 +100,7 @@ export const  addUserProfile = async (email, firstName, lastName, companyName) =
             {
                 method: 'PUT',
                 headers: {
+                    "Accept": "application/json",
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({

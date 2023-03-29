@@ -5,14 +5,13 @@ import { loginLocalUser, getUser } from "../../apis/auth";
 import { setIsLoggedIn, setCurrentUser } from "../../features/userData/userDataSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { resetGameData } from "../../features/gameData/gameDataSlice";
+//import { resetGameData } from "../../features/gameData/gameDataSlice";
 import { setTeamData } from "../../features/userData/teamDataSlice";
 import { getTeam } from "../../apis/team";
+import { setAllTeamRanks, setTeamPoints } from "../../features/pointsData/pointsDataSlice";
+import { getAllTeamRanks, getTeamPoints } from "../../apis/points";
 
 const style = {
-    //border: '1px solid black',
-    /*     marginLeft: 1, 
-        marginRight: 1, */
     borderRadius: '5px',
     padding: 1
 }
@@ -26,13 +25,17 @@ function HomePageDetails() {
     async function handleGuestLogin() {
         try {
             const login = await loginLocalUser(email, password)
-            if (login) {
+            if (login) { //TODO: refactor get and set - TESTING
                 dispatch(setIsLoggedIn(true));
-                const user = await getUser();
+                await getUser().then((user) => dispatch(setCurrentUser(user)));
+                await getTeam().then((team) => dispatch(setTeamData(team)));
+                await getTeamPoints().then((teamPoints) => dispatch(setTeamPoints(teamPoints)));
+                await getAllTeamRanks().then((allTeamRanks) => dispatch(setAllTeamRanks(allTeamRanks)));
+                /* const user = await getUser();
                 dispatch(setCurrentUser(user));
-                dispatch(resetGameData())
                 const team = await getTeam();
-                dispatch(setTeamData(team))
+                dispatch(setTeamData(team)) */
+                //dispatch(resetGameData()) //TODO: Why?????
                 navigate('/game');
             }
         } catch (error) {

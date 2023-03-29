@@ -9,8 +9,6 @@ function GameStats() {
     const questionNumber = useSelector(selectQuestionNumber);
     const totalScore = useSelector(selectTotalScore);
 
-    //console.log('QN: ' + questionNumber)
-
     return (
         <Box sx={{ border: '1px solid black', borderRadius: '5px', width: '100%', mb: 1 }}>
             <Typography sx={{ padding: 1, textAlign: 'center' }}>GAME STATS</Typography>
