@@ -19,17 +19,9 @@ function Home() {
     })
 
     return (
-        <Box sx={{ padding: 2, mt: 1, height: 'calc(100svh - 100px)' }}>
-            <Box>
-                <Stack
-                    direction={{ xs: "column", md: "row" }}
-                    spacing={2}
-                    paddingTop={1}
-                    justifyContent="space-evenly"
-                    >
-                    <HomePageDetails />
-                    <Login />
-                </Stack>
+        <Box sx={{ padding: 2, mt: 1 }}>
+            <Box >
+                <HomePageDetails />
             </Box>
         </Box>
     );

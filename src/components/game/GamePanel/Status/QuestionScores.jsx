@@ -6,9 +6,10 @@ import PropTypes from 'prop-types';
 
 function QuestionScores({questionScores, questions, category, totalPoints}) {
     const difficultyColor = theme.palette.difficulty
+    const insetColor = theme.palette.inset.main;
 
     return (
-        <Box sx={{border: '1px solid black', borderRadius: '5px', p: 1, mt: 1, mb: 1, backgroundColor: 'white'}}>
+        <Box sx={{border: '1px solid black', borderRadius: '5px', p: 1, mt: 1, mb: 1, backgroundColor: insetColor}}>
             <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
                 <Typography sx={{mb: 0}}>{category}</Typography>
                 <Typography sx={{mb: 0}}>Total Points: {totalPoints}</Typography>
@@ -32,7 +33,7 @@ function QuestionScores({questionScores, questions, category, totalPoints}) {
                             boxColor = difficultyColor.easy
                             break;
                         default:
-                            boxColor = 'white'
+                            boxColor = insetColor
                     }
 
                     return(

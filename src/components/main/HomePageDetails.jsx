@@ -12,9 +12,9 @@ import { setAllTeamRanks, setTeamPoints } from "../../features/pointsData/points
 import { getAllTeamRanks, getTeamPoints } from "../../apis/points";
 
 const style = {
-    borderRadius: '5px',
-    padding: 1
-}
+    /* borderRadius: '5px',
+    padding: 1*/
+} 
 
 function HomePageDetails() {
     const dispatch = useDispatch();
@@ -44,7 +44,7 @@ function HomePageDetails() {
     }
 
     return (
-        <Box flex={1.5} sx={style}>
+        <Box sx={style}>
             <Typography
                 variant="h3"
                 sx={{ color: theme.palette.primary.main, }}>

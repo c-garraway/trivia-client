@@ -7,11 +7,14 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import PropTypes from 'prop-types';
+import { theme } from "../../../../theme/theme";
 
 export default function GlobalRankingTable({teamRanks}) {
+    const insetColor = theme.palette.inset.main;
+    
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{backgroundColor: insetColor}}>
       <Table size='small' aria-label="simple table">
         <TableHead>
           <TableRow>

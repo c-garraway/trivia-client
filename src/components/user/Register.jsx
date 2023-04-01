@@ -1,11 +1,15 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { formStyle } from "../../styles/styles.js";
 import { validEmail } from "../../utilities/regex";
 import { registerLocalUser } from "../../apis/auth";
+import { theme } from '../../theme/theme';
 
 function Register() {
+    const insetColor = theme.palette.inset.main;
+    const errorColor = theme.palette.error.main;
+    const mattColor = theme.palette.matt.main;
+
     const navigate = useNavigate();
 
     const [name, setName] = useState();
@@ -19,6 +23,10 @@ function Register() {
     const [nameErrorStatus, setNameErrorStatus] = useState(false);
     const [emailErrorStatus, setEmailErrorStatus] = useState(false);
     const [loginDisabled, setLoginDisabled] = useState(true);
+
+    const formStyle = { border: '1px solid black', pl: 2, pr: 2, pt: 1, pb: 2, borderRadius: '5px', '& .MuiTextField-root': { mt: 2, width: '100%' }, backgroundColor: mattColor, width: { xs: "90%", sm: "40%", md: "30%" }, mb: 3
+    };
+    const formInsetStyle = {padding: 2, width: {md:'90%'}, border: '1px solid black', borderRadius: '5px', backgroundColor: insetColor, mt: 1}
 
     function handleValidate() {
 
@@ -88,12 +96,15 @@ function Register() {
     }
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 1 }}>
             <Box
                 component="form"
                 sx={formStyle}>
-                <Typography sx={{ color: 'red', textAlign: 'center', visibility: { visibility } }}>{formMessage}</Typography>
-                <div>
+                <Box>
+                    <Typography sx={{ padding: 1, color: insetColor, textAlign: 'center' }}>USER REGISTRATION</Typography>
+                    <Typography sx={{ border: '1px solid black', borderRadius: '5px',width: 'fit-content',color: errorColor, textAlign: 'center', visibility: { visibility }, margin: '0 auto', pl: 1, pr: 1, backgroundColor: insetColor, }}>{formMessage}</Typography>
+                </Box>
+                <Box sx={formInsetStyle}>
                     <TextField
                         required
                         error={nameErrorStatus}
@@ -180,7 +191,7 @@ function Register() {
                         }}
                         >Register
                     </Button>
-                </div>
+                </Box>
 
             </Box>
         </Box>

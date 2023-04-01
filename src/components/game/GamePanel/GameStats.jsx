@@ -5,14 +5,18 @@ import { selectCorrectAnswers, selectQuestionNumber, selectTotalScore } from "..
 import {theme} from '../../../theme/theme'
 
 function GameStats() {
+    const insetColor = theme.palette.inset.main;
+    const highlightColor = theme.palette.highlight.main;
+    const mattColor = theme.palette.matt.main;
+
     const correctAnswers = useSelector(selectCorrectAnswers);
     const questionNumber = useSelector(selectQuestionNumber);
     const totalScore = useSelector(selectTotalScore);
 
     return (
-        <Box sx={{ border: '1px solid black', borderRadius: '5px', width: '100%', mb: 1 }}>
+        <Box sx={{ border: `2px solid ${mattColor}`, borderRadius: '5px', /* width: '100%', */ mb: 1, backgroundColor: insetColor, opacity: '.9' }}>
             <Typography sx={{ padding: 1, textAlign: 'center' }}>GAME STATS</Typography>
-            <Box sx={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', justifyItems: 'center', backgroundColor: theme.palette.highlight.main, borderRadius: '0 0 5px 5px'}}>
+            <Box sx={{display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', justifyItems: 'center', backgroundColor: highlightColor, borderRadius: '0 0 2px 2px'}}>
                 <Typography sx={{ padding: 1 }}>Question {questionNumber}/10 </Typography>
                 <Typography sx={{ padding: 1 }}>Correct: {correctAnswers} </Typography>
                 <Typography sx={{ padding: 1 }}>Points: {totalScore} </Typography>

@@ -1,40 +1,18 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-//import { formStyle } from "../../styles/styles.js";
 import { validEmail } from "../../utilities/regex";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUser } from "../../features/userData/userDataSlice";
-//import { theme } from '../../theme/theme';
+import { theme } from '../../theme/theme';
 import { checkEmail, checkTeamName, addTeam, addPartner, getTeam } from "../../apis/team";
 import { selectTeamData, setTeamData } from "../../features/userData/teamDataSlice";
 import { Stack } from "@mui/system";
 
-/* const ColoredLine = ({ color }) => (
-    <hr
-        style={{
-            color: color,
-            backgroundColor: color,
-            height: 1
-        }}
-    />
-); */
-
-const formStyle = {
-    position: 'absolute',
-    width: { xs: "70%", sm: "40%", md: "60%" },
-    bgcolor: 'background.paper',
-    border: '1px solid #000',
-    pl: 2,
-    pr: 2,
-    pt: 1,
-    pb: 2,
-    borderRadius: '5px',
-    '& .MuiTextField-root': { mt: 2, width: '100%' },
-};
-
 function Profile() {
-
+    const insetColor = theme.palette.inset.main;
+    const errorColor = theme.palette.error.main;
+    const mattColor = theme.palette.matt.main;
     const navigate = useNavigate();
     const currentUser = useSelector(selectCurrentUser);
     const teamData = useSelector(selectTeamData);
@@ -44,6 +22,10 @@ function Profile() {
     const existingTeamRole = currentUser.userType ? currentUser.userType : 'Not Yet Registered'
     const capExistingTeamRole = existingTeamRole.charAt(0).toUpperCase() + existingTeamRole.slice(1)
     let existingTeammate;
+
+    const formStyle = { border: '1px solid black', pl: 2, pr: 2, pt: 1, pb: 4, borderRadius: '5px', '& .MuiTextField-root': { mt: 2, width: '100%' }, backgroundColor: mattColor
+    };
+    const formInsetStyle = {padding: 2, width: {md:'40%'}, border: '1px solid black', borderRadius: '5px', backgroundColor: insetColor}
 
     if(existingTeamRole === 'lead') {
         existingTeammate = teamData?.members?.partner === '' ? 'Not Yet Registered' : teamData?.members?.partner
@@ -126,8 +108,6 @@ function Profile() {
 
 
         const ifExists = await checkEmail(teamLeaderEmailAddress)
-        //console.log(teamLeaderEmailAddress)
-        //console.log(ifExists)
 
         if(ifExists === false) {
             setFormMessage('Partner email address not found')
@@ -165,19 +145,21 @@ function Profile() {
     }
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+        <Box sx={{p: 2}}>
             <Box
                 component="form"
                 sx={formStyle}>
-                <Typography sx={{ color: 'red', textAlign: 'center', visibility: { visibility } }}>{formMessage}</Typography>
+                <Box>
+                    <Typography sx={{ padding: 1, color: insetColor, textAlign: 'center' }}>USER PROFILE</Typography>
+                    <Typography sx={{ border: '1px solid black', borderRadius: '5px',width: 'fit-content',color: errorColor, textAlign: 'center', visibility: { visibility }, margin: '0 auto', pl: 1, pr: 1, backgroundColor: insetColor, }}>{formMessage}</Typography>
+                </Box>
                 <Stack
                     direction={{ xs: "column", md: "row"  }}
-                    spacing={.1}
+                    spacing={1}
                     paddingTop={1}
-                    justifyContent="space-around"
-                    paddingRight={{xs: 4, md: 0}}
+                    justifyContent="space-evenly"
                     >
-                    <Box sx={{padding: 2, width: {xs: '100%', md:'45%'}}}>
+                    <Box sx={formInsetStyle}>
                         <TextField
                             disabled
                             variant="outlined"
@@ -261,8 +243,8 @@ function Profile() {
                                 >Close
                             </Button>
                     </Box>
-                    { existingTeamName ? '' :
-                        <Box sx={{border: '1px solid black', borderRadius: '5px', padding: 2, width: {xs: '100%', md:'45%'}}}>
+                    { existingTeamName ? null :
+                        <Box sx={formInsetStyle}>
                             <Typography sx={{textAlign: 'center', fontWeight: 'bold'}}>Create or Join an Existing Team below!</Typography>
                             <Typography sx={{textAlign: 'center', textDecoration: 'underline'}}>This choice cannot be updated!</Typography>
                             <TextField

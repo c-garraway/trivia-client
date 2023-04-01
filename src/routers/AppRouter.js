@@ -7,7 +7,6 @@ import Login from "../components/user/Login"
 import Register from "../components/user/Register"
 import Profile from "../components/user/Profile"
 import GameBoard from "../components/game/GameBoard"
-//import Rules from '../components/game/Rules';
 
 function AppRouter() {
 
@@ -20,7 +19,6 @@ function AppRouter() {
                     <Route path='/login' element={<Login/>} />
                     <Route path='/register' element={<Register/>} />
                     <Route path='/profile' element={<Profile/>} />
-                    {/* <Route path='/rules' element={<Rules/>} /> */}
                     <Route path='/game' element={<GameBoard/>} />       
                 </Routes>
             </Box>

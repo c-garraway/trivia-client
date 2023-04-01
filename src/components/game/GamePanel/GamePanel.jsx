@@ -16,7 +16,9 @@ function GamePanel() {
             sx={{ justifyContent: "flex-start", alignItems: "center", padding: 1 }}
             spacing={1}
             flex={5}>
-            <NewGame />
+            <Box sx={{width: '100%'}}>
+                <NewGame />
+            </Box>
             { isGameActive ? 
                 <Box sx={{width: '100%'}}>
                     <GameStats />

@@ -13,8 +13,11 @@ import { resetQuestionData } from "../../features/gameData/questionDataSlice";
 import { resetNewGameOptionsData } from "../../features/gameData/newGameOptionsDataSlice";
 import { resetTeamData } from "../../features/userData/teamDataSlice";
 import { resetPointsData } from "../../features/pointsData/pointsDataSlice";
+import { theme } from "../../theme/theme"
 
 function Navbar() {
+    const mattColor = theme.palette.matt.main;
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -78,7 +81,7 @@ function Navbar() {
             <Box flex={1} sx={{ display: { xs: "none", sm: "flex", md: "flex" }, alignItems: 'flex-end' }}>
                 <Typography
                     variant="h4"
-                    sx={{ cursor: 'pointer' }}
+                    sx={{ cursor: 'pointer', color: mattColor, fontWeight: 'bold' }}
                     onClick={handleHome}>
                     Team Trivia
                 </Typography>
@@ -104,7 +107,7 @@ function Navbar() {
                     variant="h6"
                     onClick={handleLogin}
                     sx={{
-                        cursor: 'pointer', paddingLeft: 4, display: { xs: "flex", sm: "flex", md: "none" }
+                        cursor: 'pointer', paddingLeft: 4
                     }}
                 >Login
                 </Typography>
@@ -125,7 +128,7 @@ function Navbar() {
                     onClick={handleOpenMenu}
                     endIcon={<KeyboardArrowDownIcon />}
                     sx={{
-                        visibility: { visibility }, cursor: 'pointer',
+                        visibility: { visibility }, cursor: 'pointer', height: 'fit-content'
                     }}
                     >
                     {currentUserName}

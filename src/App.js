@@ -8,7 +8,7 @@ const background = theme.palette.background.main
 function App() {
     return (
         <ThemeProvider theme={theme}>
-            <Box sx={{backgroundColor: background}}>
+            <Box sx={{backgroundColor: background, borderRadius: '5px', p: 2, height: 'calc(100svh - 50px)'}}>
                 <AppRouter />
             </Box>
         </ThemeProvider>

@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { selectTeamPoints } from "../../../features/pointsData/pointsDataSlice";
 import { selectCurrentUser } from "../../../features/userData/userDataSlice";
 import QuestionScores from '../GamePanel/Status/QuestionScores';
+import {theme} from '../../../theme/theme'
 
 function PersonalStats() {
     const currentDate = new Date().toISOString().slice(0, 10);
@@ -12,12 +13,14 @@ function PersonalStats() {
     const userType = user.userType ? user.userType : 'User Type Not Selected';
     const lastGamePlayedDate = user.lastGame ? user.lastGame.slice(0, 10) : 'none';
     const lastGameData = typeof teamPoints === 'object' ? teamPoints.teamMembers[userType].dailyPoints[lastGamePlayedDate] : ''
+    const insetColor = theme.palette.inset.main;
+    const mattColor = theme.palette.matt.main;
     
     return (
-        <Box sx={{ border: '1px solid black', borderRadius: '5px', width: '100%', backgroundColor: 'darkgreen' }}>
-            <Typography sx={{ padding: 1, color: 'white'}}>PERSONAL STATS</Typography>
+        <Box sx={{ border: '1px solid black', borderRadius: '5px', width: '100%', backgroundColor: mattColor }}>
+            <Typography sx={{ padding: 1, color: insetColor}}>PERSONAL STATS</Typography>
             <Box id='container'>
-                <Box sx={{border: '1px solid black', borderRadius: '5px',ml: 1, mr: 1, mb: 1, backgroundColor: 'white' }}>
+                <Box sx={{border: '1px solid black', borderRadius: '5px',ml: 1, mr: 1, mb: 1, backgroundColor: insetColor }}>
                     <Typography sx={{ pl: 1 }}>{user.name} ({userType})</Typography>
                     <Typography sx={{ pl: 1 }}>Current Date: {currentDate} </Typography>
                     <Typography sx={{ pl: 1 }}>Last Game Date: {lastGamePlayedDate }</Typography>

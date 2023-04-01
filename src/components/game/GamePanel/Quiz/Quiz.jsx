@@ -5,9 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { addQuestionNumber } from "../../../../features/gameData/gameDataSlice";
 import { selectQuestions } from "../../../../features/gameData/questionDataSlice";
 import MultipleChoiceQuestions from './MultipleChoiceQuestions';
-
+import {theme} from '../../../../theme/theme'
 
 function Quiz() {
+    const insetColor = theme.palette.inset.main;
+    const mattColor = theme.palette.matt.main;
+
     const dispatch = useDispatch();
     const questions = useSelector(selectQuestions);
 
@@ -55,7 +58,7 @@ function Quiz() {
         dispatch(addQuestionNumber(currentQuestionIndex + 2))
     }
     return (
-        <Box sx={{border: '1px solid black', borderRadius: '5px', width: '100%'}}>
+        <Box sx={{border: `2px solid ${mattColor}`, borderRadius: '5px', /* width: '100%', */ backgroundColor: insetColor, opacity: '.9'}}>
             <MultipleChoiceQuestions
                 question={currentQuestion}
                 choices={shuffledAnswers}

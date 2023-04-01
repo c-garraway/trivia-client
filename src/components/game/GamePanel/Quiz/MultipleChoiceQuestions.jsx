@@ -59,6 +59,7 @@ function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQ
                 await getTeamPoints().then((teamPoints) => dispatch(setTeamPoints(teamPoints)));
                 await getAllTeamRanks().then((allTeamRanks) => dispatch(setAllTeamRanks(allTeamRanks)));
                 await getUser().then((user) => dispatch(setCurrentUser(user)));
+                return;
             }
             // Failure message alert
             alert('Your daily points were not successfully saved!')
