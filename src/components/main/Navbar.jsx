@@ -1,7 +1,7 @@
 import { Box, Button, ListItemIcon, Menu, MenuItem, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { logoutUser } from "../../apis/auth";
 import { resetUserData, selectCurrentUser, selectIsLoggedIn } from "../../features/userData/userDataSlice";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -17,17 +17,23 @@ import { theme } from "../../theme/theme"
 
 function Navbar() {
     const mattColor = theme.palette.matt.main;
+    const insetColor = theme.palette.inset.main;
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const [anchorEl, setAnchorEl] = useState(null);
-    const loggedIn = useSelector(selectIsLoggedIn);
     const currentUser = useSelector(selectCurrentUser);
+    const isLoggedIn = useSelector(selectIsLoggedIn);
     const currentUserName = currentUser.name;
     const open = Boolean(anchorEl);
-    const visibility = loggedIn ? 'visible' : 'hidden'
-    const visibility2 = loggedIn ? 'hidden' : 'visible'
+    const userMenuVisibility = isLoggedIn ? 'visible' : 'hidden'
+    const currentPath = useLocation();
+    const homeVisibility = currentPath.pathname === '/' ? 'hidden' : 'visible'
+    const loginDisplay = currentPath.pathname === '/login' ? 'none' : ''
+    const registerDisplay = currentPath.pathname === '/register' ? 'none' : ''
+
+    //console.log(currentPath)
 
     const handleCloseMenu = () => {
         setAnchorEl(null);
@@ -66,104 +72,94 @@ function Navbar() {
         navigate('/register')
     }
 
-    function handleDarkMode() {
-        //navigate('/rules')
-    }
-
     function handleProfile() {
         handleCloseMenu();
         navigate('/profile')
     }
 
     return (
-        <Box
-            sx={{ padding: 1, display: 'flex', }}>
-            <Box flex={1} sx={{ display: { xs: "none", sm: "flex", md: "flex" }, alignItems: 'flex-end' }}>
+        <Box sx={{ padding: 1, display: 'flex', justifyContent: 'space-between'}}>
+            <Box sx={{ display: "flex", alignItems: 'flex-end' }}>
                 <Typography
                     variant="h4"
-                    sx={{ cursor: 'pointer', color: mattColor, fontWeight: 'bold' }}
+                    sx={{ cursor: 'pointer', color: insetColor, /* fontWeight: 'bold', */ fontFamily: ['Secular One'] }}
                     onClick={handleHome}>
                     Team Trivia
                 </Typography>
             </Box>
-            <Box flex={1.5} sx={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-end', visibility: visibility2 }} >
-                <Typography
-                    variant="h6"
-                    onClick={handleHome}
-                    sx={{
-                        cursor: 'pointer'
-                    }}
-                >Home
-                </Typography>
-                <Typography
-                    variant="h6"
-                    onClick={handleDarkMode}
-                    sx={{
-                        cursor: 'pointer', paddingLeft: 4
-                    }}
-                >Dark
-                </Typography>
-                <Typography
-                    variant="h6"
-                    onClick={handleLogin}
-                    sx={{
-                        cursor: 'pointer', paddingLeft: 4
-                    }}
-                >Login
-                </Typography>
-                <Typography
-                    variant="h6"
-                    onClick={handleRegister}
-                    sx={{
-                        cursor: 'pointer', paddingLeft: 4
-                    }}
-                >Register
-                </Typography>
-            </Box>
-            <Box flex={1} sx={{ display: 'flex', justifyContent: 'right' }} >
-                <Button
-                    id="customized-button"
-                    variant="contained"
-                    disableElevation
-                    onClick={handleOpenMenu}
-                    endIcon={<KeyboardArrowDownIcon />}
-                    sx={{
-                        visibility: { visibility }, cursor: 'pointer', height: 'fit-content'
-                    }}
-                    >
-                    {currentUserName}
-                </Button>
-                <Menu
-                    id="demo-positioned-menu"
-                    aria-labelledby="demo-positioned-button"
-                    anchorEl={anchorEl}
-                    open={open}
-                    onClose={handleCloseMenu}
-                    anchorOrigin={{
-                        vertical: 'bottom',
-                        horizontal: 'right',
-                    }}
-                    transformOrigin={{
-                        vertical: 'top',
-                        horizontal: 'right',
-                    }}
-                    >
-                    <MenuItem
-                        onClick={handleProfile} >
-                        <ListItemIcon>
-                            <AccountCircleOutlinedIcon fontSize="small" />
-                        </ListItemIcon>
-                        Profile
-                    </MenuItem>
-                    <MenuItem
-                        onClick={handleLogout} >
-                        <ListItemIcon>
-                            <Logout fontSize="small" />
-                        </ListItemIcon>
-                        Logout
-                    </MenuItem>
-                </Menu>
-            </Box>
+            { !isLoggedIn ?
+                <Box flex={1.5} sx={{ display: 'flex', justifyContent: 'right', alignItems: 'flex-end' }} >
+                    <Typography
+                        variant="h6"
+                        onClick={handleHome}
+                        sx={{
+                            cursor: 'pointer', visibility: homeVisibility, color: insetColor
+                        }}
+                    >Home
+                    </Typography>
+                    <Typography
+                        variant="h6"
+                        onClick={handleLogin}
+                        sx={{
+                            cursor: 'pointer', paddingLeft: 4, display: loginDisplay, color: insetColor
+                        }}
+                    >Login
+                    </Typography>
+                    <Typography
+                        variant="h6"
+                        onClick={handleRegister}
+                        sx={{
+                            cursor: 'pointer', paddingLeft: 4, display: registerDisplay, color: insetColor
+                        }}
+                    >Register
+                    </Typography>
+                </Box>
+                :
+                <Box flex={1} sx={{ display: 'flex', justifyContent: 'right' }} >
+                    <Button
+                        id="customized-button"
+                        variant="contained"
+                        disableElevation
+                        onClick={handleOpenMenu}
+                        endIcon={<KeyboardArrowDownIcon />}
+                        sx={{
+                            visibility: { userMenuVisibility }, cursor: 'pointer', height: 'fit-content'
+                        }}
+                        >
+                        {currentUserName}
+                    </Button>
+                    <Menu
+                        id="demo-positioned-menu"
+                        aria-labelledby="demo-positioned-button"
+                        anchorEl={anchorEl}
+                        open={open}
+                        onClose={handleCloseMenu}
+                        anchorOrigin={{
+                            vertical: 'bottom',
+                            horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        >
+                        <MenuItem
+                            onClick={handleProfile} >
+                            <ListItemIcon>
+                                <AccountCircleOutlinedIcon fontSize="small" />
+                            </ListItemIcon>
+                            Profile
+                        </MenuItem>
+                        <MenuItem
+                            onClick={handleLogout} >
+                            <ListItemIcon>
+                                <Logout fontSize="small" />
+                            </ListItemIcon>
+                            Logout
+                        </MenuItem>
+                    </Menu>
+                </Box>
+            }
         </Box>
     );
 }

@@ -32,7 +32,7 @@ function Login() {
     //const loginPath = location.pathname.length > 1 ? "login" : "home"
     //const xsDisplay = loginPath === 'home' ? "none" : "block"
 
-    const formStyle = { border: '1px solid black', pl: 2, pr: 2, pt: 1, pb: 2, borderRadius: '5px', '& .MuiTextField-root': { mt: 2, width: '100%' }, backgroundColor: mattColor, width: { xs: "90%", sm: "40%", md: "30%" }, mb: 3
+    const formStyle = { /* border: '1px solid black', */ pl: 2, pr: 2, pt: 1, pb: 2, borderRadius: '5px', '& .MuiTextField-root': { mt: 2, width: '100%' }, backgroundColor: mattColor, width: { xs: "90%", sm: "60%", md: "30%" }, mb: 3, opacity: .9
     };
     const formInsetStyle = {padding: 2, width: {md:'90%'}, border: '1px solid black', borderRadius: '5px', backgroundColor: insetColor, mt: 1}
 
@@ -92,7 +92,7 @@ function Login() {
                 component="form"
                 sx={formStyle}>
                 <Box>
-                    <Typography sx={{ padding: 1, color: insetColor, textAlign: 'center' }}>LOGIN</Typography>
+                    <Typography sx={{ padding: 1, color: insetColor, textAlign: 'center' }}>PLAYER LOGIN</Typography>
                     <Typography sx={{ border: '1px solid black', borderRadius: '5px',width: 'fit-content',color: errorColor, textAlign: 'center', visibility: { visibility }, margin: '0 auto', pl: 1, pr: 1, backgroundColor: insetColor, }}>{formMessage}</Typography>
                 </Box>
                 <Box sx={formInsetStyle}>

@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 import React from "react";
 import { theme } from "../../theme/theme"
 import { loginLocalUser, getUser } from "../../apis/auth";
@@ -11,10 +11,7 @@ import { getTeam } from "../../apis/team";
 import { setAllTeamRanks, setTeamPoints } from "../../features/pointsData/pointsDataSlice";
 import { getAllTeamRanks, getTeamPoints } from "../../apis/points";
 
-const style = {
-    /* borderRadius: '5px',
-    padding: 1*/
-} 
+
 
 function HomePageDetails() {
     const dispatch = useDispatch();
@@ -22,6 +19,14 @@ function HomePageDetails() {
     const email = process.env.REACT_APP_GUEST_EMAIL
     const password = process.env.REACT_APP_GUEST_PW
 
+    const style = {
+        width: { xs: "90%", sm: "70%", md: "40%" },
+        backgroundColor: 'white',
+        borderRadius: '5px',
+        padding: 2,
+        opacity: .9,
+        textAlign: 'center'
+    } 
     async function handleGuestLogin() {
         try {
             const login = await loginLocalUser(email, password)
@@ -53,13 +58,23 @@ function HomePageDetails() {
             <Typography
                 variant="h5"
                 sx={{ color: theme.palette.secondary.main }}>
-                to <Typography variant="span" sx={{ display: { xs: "inline", sm: "none", md: "none" }, color: 'black', fontSize: "150%" }}>Team Trivia</Typography> the ultimate knowledge contest!
+                to the ultimate knowledge contest.
             </Typography>
             <Typography
                 variant="h5"
-                sx={{ color: theme.palette.primary.main, cursor: 'pointer' }}
+                sx={{ color: theme.palette.secondary.main }}>
+                Compete with your friends to reach the top of the Leader Board!
+            </Typography>
+            <Button
+                variant="contained"
+                sx={{display: 'block', margin: '10px auto', textTransform: 'capitalize'}}
                 onClick={handleGuestLogin}>
-                click here to log in as a guest!
+                Curious? Click Here To Have a Look around
+            </Button>
+            <Typography
+                variant="h6"
+                sx={{ color: theme.palette.secondary.main }}>
+                Login or Register to play
             </Typography>
         </Box>
 

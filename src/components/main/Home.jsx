@@ -2,7 +2,6 @@ import { Box } from "@mui/material";
 import { Stack } from "@mui/system";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Login from "../user/Login";
 import HomePageDetails from "./HomePageDetails";
 import { selectIsLoggedIn } from "../../features/userData/userDataSlice";
 import { useSelector } from "react-redux";
@@ -19,8 +18,8 @@ function Home() {
     })
 
     return (
-        <Box sx={{ padding: 2, mt: 1 }}>
-            <Box >
+        <Box sx={{ paddingTop: {xs: 5, md: 15}, mt: 1 }}>
+            <Box sx={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
                 <HomePageDetails />
             </Box>
         </Box>

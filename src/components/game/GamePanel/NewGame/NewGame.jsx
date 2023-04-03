@@ -10,7 +10,7 @@ function NewGame() {
     const mattColor = theme.palette.matt.main;
 
     return (
-        <Box sx={{border: `2px solid ${mattColor}`, borderRadius: '5px', /* width: '100%', */ backgroundColor: insetColor }}>
+        <Box sx={{border: `2px solid ${mattColor}`, borderRadius: '5px', /* width: '100%', */ backgroundColor: insetColor, opacity: .9 }}>
             <Typography sx={{ pt: 1, pb: 1, textAlign: 'center'/* , color: mattColor  */}}>NEW GAME</Typography>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center'/* {xs: 'space-evenly'} */}}>
                 <DifficultyDropdown/>

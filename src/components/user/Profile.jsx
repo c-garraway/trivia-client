@@ -23,9 +23,13 @@ function Profile() {
     const capExistingTeamRole = existingTeamRole.charAt(0).toUpperCase() + existingTeamRole.slice(1)
     let existingTeammate;
 
-    const formStyle = { border: '1px solid black', pl: 2, pr: 2, pt: 1, pb: 4, borderRadius: '5px', '& .MuiTextField-root': { mt: 2, width: '100%' }, backgroundColor: mattColor
+    const formStyle = { /* border: '1px solid black', */ pl: 2, pr: 2, pt: 1, pb: 4, borderRadius: '5px', '& .MuiTextField-root': { mt: 2, width: '100%' }, backgroundColor: mattColor, opacity: .9
     };
     const formInsetStyle = {padding: 2, width: {md:'40%'}, border: '1px solid black', borderRadius: '5px', backgroundColor: insetColor}
+
+    const textFieldStyle = {
+        "& .MuiInputBase-input.Mui-disabled": { WebkitTextFillColor: "#000000" }
+    }
 
     if(existingTeamRole === 'lead') {
         existingTeammate = teamData?.members?.partner === '' ? 'Not Yet Registered' : teamData?.members?.partner
@@ -150,7 +154,7 @@ function Profile() {
                 component="form"
                 sx={formStyle}>
                 <Box>
-                    <Typography sx={{ padding: 1, color: insetColor, textAlign: 'center' }}>USER PROFILE</Typography>
+                    <Typography sx={{ padding: 1, color: insetColor, textAlign: 'center' }}>PLAYER PROFILE</Typography>
                     <Typography sx={{ border: '1px solid black', borderRadius: '5px',width: 'fit-content',color: errorColor, textAlign: 'center', visibility: { visibility }, margin: '0 auto', pl: 1, pr: 1, backgroundColor: insetColor, }}>{formMessage}</Typography>
                 </Box>
                 <Stack
@@ -167,6 +171,7 @@ function Profile() {
                             label="Nick Name"
                             type='text'
                             size="small"
+                            sx={textFieldStyle}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -179,6 +184,7 @@ function Profile() {
                             label="Email"
                             type='email'
                             size="small"
+                            sx={textFieldStyle}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -191,6 +197,7 @@ function Profile() {
                             label="Member Since"
                             type='text'
                             size="small"
+                            sx={textFieldStyle}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -203,6 +210,7 @@ function Profile() {
                             label="Existing Team Name"
                             type='text'
                             size="small"
+                            sx={textFieldStyle}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -215,6 +223,7 @@ function Profile() {
                             label="Existing Team Role"
                             type='text'
                             size="small"
+                            sx={textFieldStyle}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -227,6 +236,7 @@ function Profile() {
                             label="Existing Teammate"
                             type='text'
                             size="small"
+                            sx={textFieldStyle}
                             InputLabelProps={{
                                 shrink: true,
                             }}

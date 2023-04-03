@@ -11,7 +11,7 @@ function GlobalStats() {
     const mattColor = theme.palette.matt.main;
 
     return (
-        <Box sx={{ border: '1px solid black',borderRadius: '5px', width: '100%', backgroundColor: mattColor }}>
+        <Box sx={{ /* border: '1px solid black', */borderRadius: '5px', width: '100%', backgroundColor: mattColor, opacity: .9 }}>
             <Typography sx={{ padding: 1, color: insetColor }}>GLOBAL RANKING</Typography>
             <Box sx={{border: '1px solid black', borderRadius: '5px',ml: 1, mr: 1, mb: 1 }}>
                 <GlobalRankingTable

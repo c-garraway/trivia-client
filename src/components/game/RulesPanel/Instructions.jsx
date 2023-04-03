@@ -23,7 +23,7 @@ function Instructions() {
     ]
 
     return (
-        <Box sx={{ /* width: '100%', */ border: `2px solid ${mattColor}`, borderRadius: '5px', backgroundColor: insetColor }}>
+        <Box sx={{ /* width: '100%', */ border: `2px solid ${mattColor}`, borderRadius: '5px', backgroundColor: insetColor, opacity: .9 }}>
             <Typography sx={{ padding: 1, fontWeight: 'bold', fontSize: 'larger', color: leadColor }}>{leadMessage}</Typography>
             <Typography sx={{ padding: 1 }}>Rules and Regs... </Typography>
             { rules.map((rule, index) => {
