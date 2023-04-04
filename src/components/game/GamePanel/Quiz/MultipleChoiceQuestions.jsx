@@ -1,5 +1,5 @@
 import { Box, Button, Typography } from '@mui/material';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import useChoiceChecker from '../../../../hooks/useChoiceChecker';
 //import { answerButtonStyle, nextButtonStyle } from '../../../../styles/styles.oldjs';
@@ -39,8 +39,13 @@ function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQ
     const dailyPointsTotal = useSelector(selectTotalScore);
     const difficulty = useSelector(selectDifficulty);
     const category = useSelector(selectCategory);
+    let isVisible;
 
     const [handleChoice, clearBackground] = useChoiceChecker(correctAnswer);
+
+    if(questionNumber === 1) {
+        isVisible = 'hidden'
+    }
 
     const buttonNextRef = useRef();
     const nextButtonElement = buttonNextRef.current
@@ -76,6 +81,7 @@ function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQ
             <Button style={answerButtonStyle} variant='contained' ref={buttonCRef} onClick={(e) => handleChoice(choices[2], e.target, buttonElements, nextButtonElement, questionDifficulty)}>{choices[2]}</Button>
             <Button style={answerButtonStyle} variant='contained' ref={buttonDRef} onClick={(e) => handleChoice(choices[3], e.target, buttonElements, nextButtonElement, questionDifficulty)}>{choices[3]}</Button>
             <Button
+                sx={{visibility: isVisible}}
                 style={nextButtonStyle}
                 variant='contained' 
                 endIcon={<ArrowForwardIosIcon />}

@@ -82,7 +82,7 @@ function Navbar() {
             <Box sx={{ display: "flex", alignItems: 'flex-end' }}>
                 <Typography
                     variant="h4"
-                    sx={{ cursor: 'pointer', color: insetColor, /* fontWeight: 'bold', */ fontFamily: ['Secular One'] }}
+                    sx={{ cursor: 'pointer', color: insetColor, /* fontWeight: 'bold', */ fontFamily: ['Bebas Neue'] }}
                     onClick={handleHome}>
                     Team Trivia
                 </Typography>
@@ -115,15 +115,15 @@ function Navbar() {
                     </Typography>
                 </Box>
                 :
-                <Box flex={1} sx={{ display: 'flex', justifyContent: 'right' }} >
+                <Box flex={1} sx={{ display: 'flex', justifyContent: 'right', alignItems: 'flex-end' }} >
                     <Button
                         id="customized-button"
-                        variant="contained"
+                        variant="text"
                         disableElevation
                         onClick={handleOpenMenu}
                         endIcon={<KeyboardArrowDownIcon />}
                         sx={{
-                            visibility: { userMenuVisibility }, cursor: 'pointer', height: 'fit-content'
+                            visibility: { userMenuVisibility }, cursor: 'pointer', height: 'fit-content', color: 'white', /* textTransform: 'capitalize' */
                         }}
                         >
                         {currentUserName}

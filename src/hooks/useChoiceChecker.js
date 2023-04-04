@@ -7,6 +7,7 @@ function useChoiceChecker(correctChoice) {
 
     const handleChoice = (selectedChoice, buttonElement, buttonElements, nextButtonElement, questionDifficulty) => {
         nextButtonElement.disabled = false
+        nextButtonElement.style.visibility = 'visible'
         nextButtonElement.style.cursor = 'pointer'
         nextButtonElement.style.opacity = 1
 

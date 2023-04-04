@@ -10,11 +10,12 @@ function App() {
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{
+                
                 backgroundImage: `url(${backgroundImage})`,
                 backgroundPosition: 'center',
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'cover',
-                zIndex: '-100', borderRadius: '5px', p: 2, height: 'calc(100svh - 50px)'
+                zIndex: '-100', /* borderRadius: '5px', */ /* p: 2, */ height: 'calc(100svh - 50px)'/* , width: '100%' */
             }}/* sx={{backgroundColor: background, borderRadius: '5px', p: 2, height: 'calc(100svh - 50px)'}} */>
                 <AppRouter />
             </Box>

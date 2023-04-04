@@ -51,7 +51,7 @@ function GameBoard() {
             justifyContent="space-around">
             <GamePanel />
             <PersonalPanel />
-            <Status />
+            <Status /> {/* popup status screen */}
         </Stack>
     );
 }

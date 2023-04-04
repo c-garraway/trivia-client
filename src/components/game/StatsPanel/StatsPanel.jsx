@@ -10,7 +10,7 @@ function StatsPanel() {
             direction={{ xs: "column", md: "column" }} 
             sx={{ justifyContent: "flex-start", alignItems: "center", padding: 1, }} 
             spacing={1} 
-            flex={2.5}>
+            flex={{md: 3.5, lg: 2.5}}>
             <PersonalStats/>
             <TeamStats/>
             <GlobalStats/>
