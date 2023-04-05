@@ -16,20 +16,23 @@ function Instructions() {
 
     const rules = [
         ['One question set per day (10 Questions)'],
-        ['Difficulty Points per Question: easy 1pt, medium 2pts, hard 3pts'],
-        ['Teams must have two players'],
-        ['Global ranking is based on the sum the last seven games of both team members'],
-        ['Correct Answers are not shown for incorrect selections']
+        ['Difficulty points/question: easy(1), medium(2), hard(3)'],
+        ['Teams must have two players (individual scores will not be saved until this condition is met)'],
+        ['Global ranking is based on the sum of the last seven games of both team members'],
+        ['Correct answers are not shown for incorrect selections']
     ]
 
     return (
-        <Box sx={{ /* width: '100%', */ border: `2px solid ${mattColor}`, borderRadius: '5px', backgroundColor: insetColor, opacity: .9 }}>
+        <Box sx={{ pb: 1, border: `2px solid ${mattColor}`, borderRadius: '5px', backgroundColor: insetColor, opacity: .9 }}>
             <Typography sx={{ padding: 1, fontWeight: 'bold', fontSize: 'larger', color: leadColor }}>{leadMessage}</Typography>
             <Typography sx={{ padding: 1 }}>Rules and Regs... </Typography>
             { rules.map((rule, index) => {
                 const ruleNumber = index + 1
                 return(
-                    <Typography key={index} sx={{ padding: 1 }}>{ruleNumber}. {rule} </Typography>
+                    <Box key={index} sx={{display: 'flex', justifyContent: 'flex-start'}}>
+                        <Typography  sx={{ padding: 1 }}>{ruleNumber}.</Typography>
+                        <Typography sx={{ pt: 1, pr: 1 }}>{rule}</Typography> 
+                    </Box>
                 )
                 })
             }

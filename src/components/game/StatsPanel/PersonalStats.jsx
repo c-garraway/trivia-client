@@ -11,8 +11,10 @@ function PersonalStats() {
     const user = useSelector(selectCurrentUser);
     const teamPoints = useSelector(selectTeamPoints);
     const userType = user.userType ? user.userType : 'User Type Not Selected';
-    const lastGamePlayedDate = user.lastGame ? user.lastGame.slice(0, 10) : 'none';
-    const lastGameData = typeof teamPoints === 'object' ? teamPoints.teamMembers[userType].dailyPoints[lastGamePlayedDate] : ''
+    const lastGamePlayedDate = user?.lastGame ? user?.lastGame.slice(0, 10) : 'none';
+
+    const lastGameData = typeof teamPoints === 'object' && teamPoints.teamMembers[userType].dailyPoints ? teamPoints.teamMembers[userType].dailyPoints[lastGamePlayedDate] : ''
+
     const insetColor = theme.palette.inset.main;
     const mattColor = theme.palette.matt.main;
     

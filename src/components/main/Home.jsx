@@ -1,5 +1,4 @@
 import { Box } from "@mui/material";
-import { Stack } from "@mui/system";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import HomePageDetails from "./HomePageDetails";
@@ -8,10 +7,10 @@ import { useSelector } from "react-redux";
 
 function Home() {
     const navigate = useNavigate();
-    const loggedIn = useSelector(selectIsLoggedIn);
+    const isLoggedIn = useSelector(selectIsLoggedIn);
 
     useEffect(() => {
-        if (loggedIn) {
+        if (isLoggedIn) {
             navigate('/game')
 
         }

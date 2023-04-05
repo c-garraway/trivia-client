@@ -14,7 +14,7 @@ function QuestionScores({questionScores, questions, category, totalPoints}) {
                 <Typography sx={{mb: 0}}>{category}</Typography>
                 <Typography sx={{mb: 0}}>Total Points: {totalPoints}</Typography>
             </Box>
-            <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+            <Box sx={{display: 'flex', justifyContent: {xs: 'space-between', sm: 'space-evenly', md: 'space-between'}}}>
                 {questionScores.map((questionScore, index) => {
                     let boxColor;
                     let questionDifficulty = [];

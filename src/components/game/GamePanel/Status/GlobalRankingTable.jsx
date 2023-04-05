@@ -18,9 +18,9 @@ export default function GlobalRankingTable({teamRanks}) {
       <Table size='small' aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell >RANK</TableCell>
-            <TableCell align="left">POINTS</TableCell>
-            <TableCell align="left">TEAM</TableCell>
+            <TableCell align="center">RANK</TableCell>
+            <TableCell align="center">POINTS</TableCell>
+            <TableCell align="center">TEAM</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -29,11 +29,11 @@ export default function GlobalRankingTable({teamRanks}) {
               key={index}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell component="th" scope="row">
+              <TableCell align="center" component="th" scope="row">
                 {team.teamRank}
               </TableCell>
-              <TableCell align="left">{team.teamPointsTotal}</TableCell>
-              <TableCell align="left">{team.teamName}</TableCell>
+              <TableCell align="center">{team.teamPointsTotal}</TableCell>
+              <TableCell align="center">{team.teamName}</TableCell>
             </TableRow>
           ))}
         </TableBody>

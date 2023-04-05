@@ -18,7 +18,7 @@ function TeamStatsGraphic({userType, dailyTotalScores, totalPoints}) {
                 <Typography sx={{mb: 0}}>{userType} (Last 7 Games)</Typography>
                 <Typography sx={{mb: 0}}>Total Points: {totalPoints}</Typography>
             </Box>
-            <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+            <Box sx={{display: 'flex', justifyContent: {xs: 'space-between', sm: 'space-evenly', md: 'space-between'}}}>
                 {updatedDailyTotalScores.map((dailyScore, index) => {
                     
                     return(

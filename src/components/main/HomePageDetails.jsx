@@ -20,7 +20,7 @@ function HomePageDetails() {
     const password = process.env.REACT_APP_GUEST_PW
 
     const style = {
-        width: { xs: "90%", sm: "70%", md: "40%" },
+        width: { xs: "100%", sm: "70%", md: "40%" },
         backgroundColor: 'white',
         borderRadius: '5px',
         padding: 2,
@@ -30,17 +30,12 @@ function HomePageDetails() {
     async function handleGuestLogin() {
         try {
             const login = await loginLocalUser(email, password)
-            if (login) { //TODO: refactor get and set - TESTING
+            if (login) { 
                 dispatch(setIsLoggedIn(true));
                 await getUser().then((user) => dispatch(setCurrentUser(user)));
                 await getTeam().then((team) => dispatch(setTeamData(team)));
                 await getTeamPoints().then((teamPoints) => dispatch(setTeamPoints(teamPoints)));
-                await getAllTeamRanks().then((allTeamRanks) => dispatch(setAllTeamRanks(allTeamRanks)));
-                /* const user = await getUser();
-                dispatch(setCurrentUser(user));
-                const team = await getTeam();
-                dispatch(setTeamData(team)) */
-                //dispatch(resetGameData()) //TODO: Why?????
+                await getAllTeamRanks().then((allTeamRanks) => dispatch(setAllTeamRanks(allTeamRanks)))
                 navigate('/game');
             }
         } catch (error) {

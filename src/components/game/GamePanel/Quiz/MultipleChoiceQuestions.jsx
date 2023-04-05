@@ -1,8 +1,7 @@
 import { Box, Button, Typography } from '@mui/material';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import useChoiceChecker from '../../../../hooks/useChoiceChecker';
-//import { answerButtonStyle, nextButtonStyle } from '../../../../styles/styles.oldjs';
 import { selectQuestionNumber, selectQuestionScores, selectTotalScore, toggleIsGameFinished } from '../../../../features/gameData/gameDataSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllTeamRanks, getTeamPoints, updateDailyPoints } from '../../../../apis/points';
@@ -33,6 +32,8 @@ const nextButtonStyle = {
 }
 
 function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQuestion, questionDifficulty }) {
+    const difficultyColor = theme.palette.difficulty
+    const insetColor = theme.palette.inset.main;
     const dispatch = useDispatch();
     const questionNumber = useSelector(selectQuestionNumber);
     const dailyPointsBlock = useSelector(selectQuestionScores);
@@ -40,8 +41,23 @@ function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQ
     const difficulty = useSelector(selectDifficulty);
     const category = useSelector(selectCategory);
     let isVisible;
+    let boxColor;
 
     const [handleChoice, clearBackground] = useChoiceChecker(correctAnswer);
+
+    switch(questionDifficulty) {
+        case 'hard':
+            boxColor = difficultyColor.hard
+            break;
+        case 'medium':
+            boxColor = difficultyColor.medium
+            break;
+        case 'easy':
+            boxColor = difficultyColor.easy
+            break;
+        default:
+            boxColor = insetColor
+    }
 
     if(questionNumber === 1) {
         isVisible = 'hidden'
@@ -67,7 +83,7 @@ function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQ
                 return;
             }
             // Failure message alert
-            alert('Your daily points were not successfully saved!')
+            alert('Your daily points were not successfully saved! You must have a teammate.')
             return;
         }
         return;
@@ -75,7 +91,9 @@ function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQ
 
     return (
         <Box sx={{padding: 1}}>
-            <Typography sx={{padding: 1, minHeight: 50}} >[ {questionDifficulty} ] {question}</Typography>
+            <Typography sx={{minHeight: 50, mb: 1}} >
+                <Typography variant='span' sx={{backgroundColor: boxColor, color: 'black', mr: 1, pt: .3, pb: .3, pl: 1, pr: 1, borderRadius: '5px', textTransform: 'uppercase'}}> {questionDifficulty}</Typography>
+            {question}</Typography>
             <Button style={answerButtonStyle} variant='contained' ref={buttonARef} onClick={(e) => handleChoice(choices[0], e.target, buttonElements, nextButtonElement, questionDifficulty)}>{choices[0]}</Button>
             <Button style={answerButtonStyle} variant='contained' ref={buttonBRef} onClick={(e) => handleChoice(choices[1], e.target, buttonElements, nextButtonElement, questionDifficulty)}>{choices[1]}</Button>
             <Button style={answerButtonStyle} variant='contained' ref={buttonCRef} onClick={(e) => handleChoice(choices[2], e.target, buttonElements, nextButtonElement, questionDifficulty)}>{choices[2]}</Button>

@@ -16,7 +16,6 @@ import { resetPointsData } from "../../features/pointsData/pointsDataSlice";
 import { theme } from "../../theme/theme"
 
 function Navbar() {
-    const mattColor = theme.palette.matt.main;
     const insetColor = theme.palette.inset.main;
 
     const navigate = useNavigate();

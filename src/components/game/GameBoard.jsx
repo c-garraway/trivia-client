@@ -4,24 +4,15 @@ import PersonalPanel from "./StatsPanel/StatsPanel"
 import GamePanel from "./GamePanel/GamePanel";
 import Status from "./GamePanel/Status/Status";
 import { selectIsLoggedIn } from "../../features/userData/userDataSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { selectIsTeamLoaded } from "../../features/userData/teamDataSlice";
-import background from '../../images/QuestionMark.png'
-
-const backgroundStyle = {
-    minHeight: '100vh',
-    backgroundImage: `url(${background})`,
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundSize: 'cover',
-    display: 'block',
-    padding: {xs: "15%", sm: "15%", md: "10%"}
-    
-};
+import { getAllTeamRanks } from "../../apis/points";
+import { setAllTeamRanks } from "../../features/pointsData/pointsDataSlice";
 
 function GameBoard() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const isLoggedIn = useSelector(selectIsLoggedIn);
     const isTeamLoaded = useSelector(selectIsTeamLoaded);
 
@@ -34,18 +25,13 @@ function GameBoard() {
             navigate('/profile')
             return;
         }
-    },[isLoggedIn, isTeamLoaded, navigate])
+        getAllTeamRanks().then((allTeamRanks) => dispatch(setAllTeamRanks(allTeamRanks)));
+
+    },[isLoggedIn, isTeamLoaded, navigate, dispatch])
 
     return (
         <Stack
             direction={{ xs: "column", md: "row"  }}
-/*             sx={{
-                backgroundImage: `url(${background})`,
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                backgroundSize: 'cover',
-                zIndex: '-100',
-            }} */
             spacing={.1}
             paddingTop={1}
             justifyContent="space-around">

@@ -76,10 +76,19 @@ function Login() {
                 setFormMessage('none');
                 dispatch(setIsLoggedIn(true));
                 await getUser().then((user) => dispatch(setCurrentUser(user)));
-                await getTeam().then((team) => dispatch(setTeamData(team)));
-                await getTeamPoints().then((teamPoints) => dispatch(setTeamPoints(teamPoints)));
-                await getAllTeamRanks().then((allTeamRanks) => dispatch(setAllTeamRanks(allTeamRanks)));
-                navigate('/game');
+                await getTeam().then((team) => {
+                    if(team?.error) {
+                        navigate('/profile')
+                        return;
+                    }
+                    dispatch(setTeamData(team))
+                    getTeamPoints().then((teamPoints) => dispatch(setTeamPoints(teamPoints)));
+                    getAllTeamRanks().then((allTeamRanks) => dispatch(setAllTeamRanks(allTeamRanks)));
+                    setTimeout(() => {
+                        navigate('/game');
+                    }, 100)
+                });
+                
             }
         } catch (error) {
             console.log(error)

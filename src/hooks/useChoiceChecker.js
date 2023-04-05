@@ -19,7 +19,7 @@ function useChoiceChecker(correctChoice) {
         if (selectedChoice === correctChoice) {
             buttonElement.style.backgroundColor = theme.palette.correctAnswer.main;
             dispatch(addToCorrectAnswers());
-            console.log(questionDifficulty)
+            
             switch(questionDifficulty) {
                 case 'easy': {
                     dispatch(addToTotalScore(1))

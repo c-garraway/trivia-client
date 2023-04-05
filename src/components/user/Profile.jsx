@@ -3,11 +3,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validEmail } from "../../utilities/regex";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentUser } from "../../features/userData/userDataSlice";
+import { selectCurrentUser, setCurrentUser } from "../../features/userData/userDataSlice";
 import { theme } from '../../theme/theme';
 import { checkEmail, checkTeamName, addTeam, addPartner, getTeam } from "../../apis/team";
 import { selectTeamData, setTeamData } from "../../features/userData/teamDataSlice";
 import { Stack } from "@mui/system";
+import { getUser } from "../../apis/auth";
 
 function Profile() {
     const insetColor = theme.palette.inset.main;
@@ -18,8 +19,8 @@ function Profile() {
     const teamData = useSelector(selectTeamData);
     const dispatch = useDispatch();
     const cleanDate = currentUser.createdAt?.slice(0, 10);
-    const existingTeamName = teamData.name ? teamData.name : 'Not Yet Registered'
-    const existingTeamRole = currentUser.userType ? currentUser.userType : 'Not Yet Registered'
+    const existingTeamName = teamData.name ? teamData.name : ''
+    const existingTeamRole = currentUser.userType ? currentUser.userType : ''
     const capExistingTeamRole = existingTeamRole.charAt(0).toUpperCase() + existingTeamRole.slice(1)
     let existingTeammate;
 
@@ -140,8 +141,14 @@ function Profile() {
             resolve();
         })
         .then(() => {
+            getUser().then((user) => dispatch(setCurrentUser(user)));
+        })
+        .then(() => {
+            getTeam().then((team) => dispatch(setTeamData(team)))
+        })
+        .then(() => {
             navigate('/game');
-        });
+        })
     }
 
     function handleClose() {
@@ -163,6 +170,69 @@ function Profile() {
                     paddingTop={1}
                     justifyContent="space-evenly"
                     >
+                    { existingTeamName !== '' ? null :
+                        <Box sx={formInsetStyle}>
+                            <Typography sx={{textAlign: 'center', fontWeight: 'bold'}}>Create or Join an Existing Team below!</Typography>
+                            <Typography sx={{textAlign: 'center', textDecoration: 'underline'}}>This choice cannot be updated!</Typography>
+                            <TextField
+                                error={teamNameErrorStatus}
+                                disabled={teamNameDisabled}
+                                variant="outlined"
+                                id="outlined-team-input"
+                                label="Create New Team (Name)"
+                                type="text"
+                                size="small"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                onChange={(e) => {
+                                    setTeamName(e.currentTarget.value)
+                                    setTeamNameErrorStatus(false)
+                                    setTeamLeaderEmailAddressDisabled(false)
+                                    setFormMessage('none')
+                                    setVisibility('hidden')
+                                    setSaveDisabled(false)
+                                }}
+                                onBlur={handleTeamNameValidate}
+                                helperText="To create a new team, enter team name above. Min 4 characters."
+                            />
+                            <Typography sx={{textAlign: 'center', fontWeight: 'bold'}}>-- OR --</Typography>
+
+                            <TextField
+                                error={emailErrorStatus}
+                                disabled={teamLeaderEmailAddressDisabled}
+                                variant="outlined"
+                                id="outlined-email-input"
+                                label="Join Existing Team (Leaders Email Address)"
+                                type="email"
+                                size="small"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                onChange={(e) => {
+                                    setTeamLeaderEmailAddress(e.currentTarget.value)
+                                    setEmailErrorStatus(false)
+                                    setTeamNameDisabled(false)
+                                    setFormMessage('none')
+                                    setVisibility('hidden')
+                                    setSaveDisabled(false)                            
+                                }}
+                                onBlur={handleEmailValidate}
+                                helperText="To team up with an existing team leader, enter their email address above."
+                            />
+                            <Button
+                                disabled={saveDisabled}
+                                variant="contained"
+                                onClick={handleSave}
+                                sx={{
+                                    display: "block",
+                                    width: "100%",
+                                    marginTop: "20px",
+                                }}
+                                >Save
+                            </Button>
+                        </Box>
+                    }
                     <Box sx={formInsetStyle}>
                         <TextField
                             disabled
@@ -253,69 +323,6 @@ function Profile() {
                                 >Close
                             </Button>
                     </Box>
-                    { existingTeamName ? null :
-                        <Box sx={formInsetStyle}>
-                            <Typography sx={{textAlign: 'center', fontWeight: 'bold'}}>Create or Join an Existing Team below!</Typography>
-                            <Typography sx={{textAlign: 'center', textDecoration: 'underline'}}>This choice cannot be updated!</Typography>
-                            <TextField
-                                error={teamNameErrorStatus}
-                                disabled={teamNameDisabled}
-                                variant="outlined"
-                                id="outlined-team-input"
-                                label="Create New Team (Name)"
-                                type="text"
-                                size="small"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                onChange={(e) => {
-                                    setTeamName(e.currentTarget.value)
-                                    setTeamNameErrorStatus(false)
-                                    setTeamLeaderEmailAddressDisabled(false)
-                                    setFormMessage('none')
-                                    setVisibility('hidden')
-                                    setSaveDisabled(false)
-                                }}
-                                onBlur={handleTeamNameValidate}
-                                helperText="To create a new team, enter team name above. Min 4 characters."
-                            />
-                            <Typography sx={{textAlign: 'center', fontWeight: 'bold'}}>-- OR --</Typography>
-
-                            <TextField
-                                error={emailErrorStatus}
-                                disabled={teamLeaderEmailAddressDisabled}
-                                variant="outlined"
-                                id="outlined-email-input"
-                                label="Join Existing Team (Leaders Email Address)"
-                                type="email"
-                                size="small"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                onChange={(e) => {
-                                    setTeamLeaderEmailAddress(e.currentTarget.value)
-                                    setEmailErrorStatus(false)
-                                    setTeamNameDisabled(false)
-                                    setFormMessage('none')
-                                    setVisibility('hidden')
-                                    setSaveDisabled(false)                            
-                                }}
-                                onBlur={handleEmailValidate}
-                                helperText="To team up with an existing team leader, enter their email address above."
-                            />
-                            <Button
-                                disabled={saveDisabled}
-                                variant="contained"
-                                onClick={handleSave}
-                                sx={{
-                                    display: "block",
-                                    width: "100%",
-                                    marginTop: "20px",
-                                }}
-                                >Save
-                            </Button>
-                        </Box>
-                    }
                 </Stack>
             </Box>
         </Box>
