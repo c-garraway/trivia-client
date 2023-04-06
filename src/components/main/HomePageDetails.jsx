@@ -29,12 +29,13 @@ function HomePageDetails() {
     async function handleGuestLogin() {
         try {
             const login = await loginLocalUser(email, password)
+            console.log(login)
             if (login) { 
-                dispatch(setIsLoggedIn(true));
                 await getUser().then((user) => dispatch(setCurrentUser(user)));
                 await getTeam().then((team) => dispatch(setTeamData(team)));
                 await getTeamPoints().then((teamPoints) => dispatch(setTeamPoints(teamPoints)));
                 await getAllTeamRanks().then((allTeamRanks) => dispatch(setAllTeamRanks(allTeamRanks)))
+                dispatch(setIsLoggedIn(true));
                 navigate('/game');
             }
         } catch (error) {
