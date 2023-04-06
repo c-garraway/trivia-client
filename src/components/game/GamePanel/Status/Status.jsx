@@ -61,7 +61,7 @@ function Status() {
             try {
               await navigator.share({
                 files: [file],
-                url: window.location.href,
+                url: window.location.hostname,
                 text: `Team Trivia [${teamPoints?.name}]: ${currentDate}`
               });
               console.log('Thanks for sharing!');
