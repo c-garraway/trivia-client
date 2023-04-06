@@ -24,7 +24,7 @@ function Profile() {
     const capExistingTeamRole = existingTeamRole.charAt(0).toUpperCase() + existingTeamRole.slice(1)
     let existingTeammate;
 
-    const formStyle = { /* border: '1px solid black', */ pl: 2, pr: 2, pt: 1, pb: 4, borderRadius: '5px', '& .MuiTextField-root': { mt: 2, width: '100%' }, backgroundColor: mattColor, opacity: .9
+    const formStyle = { pl: 2, pr: 2, pt: 1, pb: 4, borderRadius: '5px', '& .MuiTextField-root': { mt: 2, width: '100%' }, backgroundColor: mattColor, opacity: .9
     };
     const formInsetStyle = {padding: 2, width: {md:'40%'}, border: '1px solid black', borderRadius: '5px', backgroundColor: insetColor}
 

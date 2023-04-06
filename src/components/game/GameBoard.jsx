@@ -7,8 +7,8 @@ import { selectIsLoggedIn } from "../../features/userData/userDataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { selectIsTeamLoaded } from "../../features/userData/teamDataSlice";
-import { getAllTeamRanks } from "../../apis/points";
-import { setAllTeamRanks } from "../../features/pointsData/pointsDataSlice";
+import { getAllTeamRanks, getTeamPoints } from "../../apis/points";
+import { setAllTeamRanks, setTeamPoints } from "../../features/pointsData/pointsDataSlice";
 
 function GameBoard() {
     const navigate = useNavigate();
@@ -26,6 +26,7 @@ function GameBoard() {
             return;
         }
         getAllTeamRanks().then((allTeamRanks) => dispatch(setAllTeamRanks(allTeamRanks)));
+        getTeamPoints().then((teamPoints) => dispatch(setTeamPoints(teamPoints)));
 
     },[isLoggedIn, isTeamLoaded, navigate, dispatch])
 

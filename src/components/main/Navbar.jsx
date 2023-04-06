@@ -6,7 +6,6 @@ import { logoutUser } from "../../apis/auth";
 import { resetUserData, selectCurrentUser, selectIsLoggedIn } from "../../features/userData/userDataSlice";
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-
 import { Logout } from "@mui/icons-material";
 import { resetGameData } from "../../features/gameData/gameDataSlice";
 import { resetQuestionData } from "../../features/gameData/questionDataSlice";
@@ -31,8 +30,6 @@ function Navbar() {
     const homeVisibility = currentPath.pathname === '/' ? 'hidden' : 'visible'
     const loginDisplay = currentPath.pathname === '/login' ? 'none' : ''
     const registerDisplay = currentPath.pathname === '/register' ? 'none' : ''
-
-    //console.log(currentPath)
 
     const handleCloseMenu = () => {
         setAnchorEl(null);
@@ -77,12 +74,11 @@ function Navbar() {
     }
 
     return (
-        <Box sx={{ padding: 1, display: 'flex', justifyContent: 'space-between'}}>
+        <Box sx={{ pt: 1, pb: 1, pl: 2, pr: 2, display: 'flex', justifyContent: 'space-between'}}>
             <Box sx={{ display: "flex", alignItems: 'flex-end' }}>
                 <Typography
                     variant="h4"
-                    sx={{ cursor: 'pointer', color: insetColor, /* fontWeight: 'bold', */ fontFamily: ['Bebas Neue'] }}
-                    onClick={handleHome}>
+                    sx={{ color: insetColor, fontFamily: ['Bebas Neue'] }}>
                     Team Trivia
                 </Typography>
             </Box>

@@ -5,13 +5,10 @@ import { loginLocalUser, getUser } from "../../apis/auth";
 import { setIsLoggedIn, setCurrentUser } from "../../features/userData/userDataSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-//import { resetGameData } from "../../features/gameData/gameDataSlice";
 import { setTeamData } from "../../features/userData/teamDataSlice";
 import { getTeam } from "../../apis/team";
 import { setAllTeamRanks, setTeamPoints } from "../../features/pointsData/pointsDataSlice";
 import { getAllTeamRanks, getTeamPoints } from "../../apis/points";
-
-
 
 function HomePageDetails() {
     const dispatch = useDispatch();
@@ -20,9 +17,11 @@ function HomePageDetails() {
     const password = process.env.REACT_APP_GUEST_PW
 
     const style = {
-        width: { xs: "100%", sm: "70%", md: "40%" },
+        position: 'fixed',
+        top: '20%',
+        width: { xs: "100%", sm: "70%", md: "40%", lg: '30%' },
         backgroundColor: 'white',
-        borderRadius: '5px',
+        borderRadius: {xs: 0, sm: '5px'},
         padding: 2,
         opacity: .9,
         textAlign: 'center'
@@ -72,7 +71,6 @@ function HomePageDetails() {
                 Login or Register to play
             </Typography>
         </Box>
-
     );
 }
 

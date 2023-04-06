@@ -16,9 +16,7 @@ export const  getTeamPoints = async () => {
         }) 
 
         const teamPoints = await response.json()
-        /* if(email.email) {
-            return true
-        } */
+
         return teamPoints
 
     } catch (error) {
@@ -41,9 +39,7 @@ export const  getAllTeamRanks = async () => {
         }) 
 
         const allTeamRanks = await response.json()
-        /* if(email.email) {
-            return true
-        } */
+
         return allTeamRanks
 
     } catch (error) {

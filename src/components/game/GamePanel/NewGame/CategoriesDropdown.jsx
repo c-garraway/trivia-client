@@ -38,7 +38,6 @@ function CategoriesDropdown() {
                 size="small"
                 defaultValue=""
                 sx={{width: '25ch', margin: 1}}
-                /* helperText="Select Category" */
                 onChange={(e) => {dispatch(setCategory(e.target.value))}}
                 >
                 {categories.map((option, index) => (

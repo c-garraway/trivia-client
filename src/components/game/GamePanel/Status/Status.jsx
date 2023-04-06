@@ -17,7 +17,7 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: {xs: "90%", sm: "50%", md: "30%"},
+    width: {xs: "95%", sm: "55%", md: "35%"},
     maxHeight: '80%',
     backgroundColor: 'white',
     border: '2px solid #000',
@@ -58,8 +58,8 @@ function Status() {
             try {
               await navigator.share({
                 files: [file],
-                title: 'Team Trivia',
-                text: `${currentDate}`
+                url: 'trivia.cgprojects.dev',
+                text: `Team Trivia: ${currentDate}`
               });
               console.log('Thanks for sharing!');
             } catch (error) {
@@ -81,14 +81,14 @@ function Status() {
                 <Typography sx={{fontWeight: 'bold'}}>Today's Game Result</Typography>
                 <Typography>See you tomorrow for more exciting questions.</Typography>
                 <Typography>See points distribution below.</Typography>
-                    <div ref={shareScoresRef}>
+                    <Box ref={shareScoresRef} sx={{p:1}}>
                         <QuestionScores
                             questionScores={questionScores}
                             questions={questions}
                             category={category}
                             totalPoints={totalScore}
                         />
-                    </div>
+                    </Box>
                 <Box sx={{display: 'flex'}}>
                     <Button
                         variant="contained"

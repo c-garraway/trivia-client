@@ -58,7 +58,7 @@ function Quiz() {
         dispatch(addQuestionNumber(currentQuestionIndex + 2))
     }
     return (
-        <Box sx={{border: `2px solid ${mattColor}`, borderRadius: '5px', /* width: '100%', */ backgroundColor: insetColor, opacity: '.9'}}>
+        <Box sx={{border: `2px solid ${mattColor}`, borderRadius: '5px', backgroundColor: insetColor, opacity: '.9'}}>
             <MultipleChoiceQuestions
                 question={currentQuestion}
                 choices={shuffledAnswers}

@@ -30,8 +30,6 @@ function NewGame() {
  
     async function handleGetQuestions() {
         await getQuestions(selectedDifficulty, selectedCategory).then((questions) => dispatch(replaceQuestionData(questions)));
-        /* const questions = await getQuestions(selectedDifficulty, selectedCategory)
-        dispatch(replaceQuestionData(questions)) */ //TESTING
 
         dispatch(addQuestionNumber(1));
         dispatch(setIsGameActive(true));
