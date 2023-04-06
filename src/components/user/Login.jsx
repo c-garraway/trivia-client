@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUser, loginLocalUser } from "../../apis/auth";
@@ -10,6 +10,7 @@ import { setTeamData } from "../../features/userData/teamDataSlice";
 import { getTeamPoints, getAllTeamRanks} from "../../apis/points";
 import { setTeamPoints, setAllTeamRanks } from "../../features/pointsData/pointsDataSlice";
 import { theme } from '../../theme/theme';
+import { VisibilityOffOutlined, VisibilityOutlined } from "@mui/icons-material";
 
 function Login() {
     const insetColor = theme.palette.inset.main;
@@ -26,6 +27,7 @@ function Login() {
     const [passwordErrorStatus, setPasswordErrorStatus] = useState(false);
     const [emailErrorStatus, setEmailErrorStatus] = useState(false);
     const [loginDisabled, setLoginDisabled] = useState(true);
+    const [showPassword, setShowPassword] = useState(false)
 
     const formStyle = { pl: 2, pr: 2, pt: 1, pb: 2, borderRadius: '5px', '& .MuiTextField-root': { mt: 2, width: '100%' }, backgroundColor: mattColor, width: { xs: "90%", sm: "60%", md: "30%" }, mb: 3, opacity: .9
     };
@@ -125,7 +127,7 @@ function Login() {
                         variant="outlined"
                         id="outlined-password-input"
                         label="Password"
-                        type="password"
+                        type={showPassword ? 'text' : 'password'}
                         size="small"
                         InputLabelProps={{
                             shrink: true,
@@ -137,6 +139,19 @@ function Login() {
                             setPasswordErrorStatus(false)
                         }}
                         onKeyDown={handleKeyDown}
+                        InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={() => setShowPassword(!showPassword)}
+                                  edge="end"
+                                >
+                                  {showPassword ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                        }}
                     />
                     <Button
                         disabled={loginDisabled}
