@@ -11,13 +11,14 @@ import { resetNewGameOptionsData, selectCategory } from '../../../../features/ga
 import { selectQuestionScores } from "../../../../features/gameData/gameDataSlice";
 import { selectQuestions } from "../../../../features/gameData/questionDataSlice";
 import html2canvas from 'html2canvas';
+import { selectTeamPoints } from '../../../../features/pointsData/pointsDataSlice';
 
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: {xs: "95%", sm: "55%", md: "35%"},
+    width: {xs: "92%", sm: "55%", md: "35%"},
     maxHeight: '80%',
     backgroundColor: 'white',
     border: '2px solid #000',
@@ -33,6 +34,8 @@ function Status() {
     const category = useSelector(selectCategory);
     const questionScores = useSelector(selectQuestionScores);
     const questions = useSelector(selectQuestions);
+    const teamPoints = useSelector(selectTeamPoints);
+
     const [open, setOpen] = useState(false);
     const shareScoresRef = useRef();
     const currentDate = new Date().toISOString().slice(0, 10);
@@ -58,8 +61,8 @@ function Status() {
             try {
               await navigator.share({
                 files: [file],
-                url: 'trivia.cgprojects.dev',
-                text: `Team Trivia: ${currentDate}`
+                url: window.location.href,
+                text: `Team Trivia [${teamPoints?.name}]: ${currentDate}`
               });
               console.log('Thanks for sharing!');
             } catch (error) {
@@ -89,17 +92,18 @@ function Status() {
                             totalPoints={totalScore}
                         />
                     </Box>
-                <Box sx={{display: 'flex'}}>
+                <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
                     <Button
                         variant="contained"
                         onClick={handleShare}
+                        sx={{width: '50%'}}
                         >
                         Share
                     </Button>
                     <Button
                         variant="contained"
                         onClick={handleClose}
-                        sx={{ml: 1}}>
+                        sx={{width: '50%', ml: 1}}>
                         Close
                     </Button>
                 </Box>
