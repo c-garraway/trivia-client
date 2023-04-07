@@ -40,6 +40,8 @@ function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQ
     const dailyPointsTotal = useSelector(selectTotalScore);
     const difficulty = useSelector(selectDifficulty);
     const category = useSelector(selectCategory);
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const localCurrentDate = new Date().toLocaleDateString('en-CA', options);
     let isVisible;
     let boxColor;
 
@@ -75,7 +77,7 @@ function MultipleChoiceQuestions({ question, choices, correctAnswer, handleNextQ
     async function handleGameFinished() {
         if(questionNumber === 10) {
             dispatch(toggleIsGameFinished());
-            const update = await updateDailyPoints(category, difficulty, dailyPointsTotal, dailyPointsBlock)
+            const update = await updateDailyPoints(category, difficulty, dailyPointsTotal, dailyPointsBlock, localCurrentDate)
             if(update) {
                 await getTeamPoints().then((teamPoints) => dispatch(setTeamPoints(teamPoints)));
                 await getAllTeamRanks().then((allTeamRanks) => dispatch(setAllTeamRanks(allTeamRanks)));

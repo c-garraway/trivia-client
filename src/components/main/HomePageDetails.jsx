@@ -29,7 +29,7 @@ function HomePageDetails() {
     async function handleGuestLogin() {
         try {
             const login = await loginLocalUser(email, password)
-            console.log(login)
+            
             if (login) { 
                 await getUser().then((user) => dispatch(setCurrentUser(user)));
                 await getTeam().then((team) => dispatch(setTeamData(team)));

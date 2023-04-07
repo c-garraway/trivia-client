@@ -48,7 +48,7 @@ export const  getAllTeamRanks = async () => {
 };
 
 //PUT fetch
-export const  updateDailyPoints = async (category, difficulty, dailyPointsTotal, dailyPointsBlock) => {
+export const  updateDailyPoints = async (category, difficulty, dailyPointsTotal, dailyPointsBlock, localCurrentDate) => {
     
     try {
         const response = await fetch(`${BASE_URL}/points/updateDailyPoints`,
@@ -64,7 +64,8 @@ export const  updateDailyPoints = async (category, difficulty, dailyPointsTotal,
                     "category": `${category}`,
                     "difficulty": `${difficulty}`,
                     "dailyPointsTotal": dailyPointsTotal,
-                    "dailyPointsBlock": dailyPointsBlock
+                    "dailyPointsBlock": dailyPointsBlock,
+                    "currentDate": `${localCurrentDate}` //added- sending local date
                 })
             }
         ) 

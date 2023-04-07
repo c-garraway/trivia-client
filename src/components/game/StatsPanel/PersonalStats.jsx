@@ -7,7 +7,9 @@ import QuestionScores from '../GamePanel/Status/QuestionScores';
 import {theme} from '../../../theme/theme'
 
 function PersonalStats() {
-    const currentDate = new Date().toISOString().slice(0, 10);
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const localCurrentDate = new Date().toLocaleDateString('en-CA', options);
+    //const currentDate = new Date().toISOString().slice(0, 10);
     const user = useSelector(selectCurrentUser);
     const teamPoints = useSelector(selectTeamPoints);
     const userType = user.userType ? user.userType : 'User Type Not Selected';
@@ -24,7 +26,7 @@ function PersonalStats() {
             <Box id='container'>
                 <Box sx={{border: '1px solid black', borderRadius: '5px',ml: 1, mr: 1, mb: 1, backgroundColor: insetColor }}>
                     <Typography sx={{ pl: 1 }}>{user.name} ({userType})</Typography>
-                    <Typography sx={{ pl: 1 }}>Current Date: {currentDate} </Typography>
+                    <Typography sx={{ pl: 1 }}>Current Date: {localCurrentDate} </Typography>
                     <Typography sx={{ pl: 1 }}>Last Game Date: {lastGamePlayedDate }</Typography>
                     { lastGamePlayedDate === 'none' ? '' :
                         <Typography sx={{ pl: 1 }}>Last Game Points Distribution Below</Typography>

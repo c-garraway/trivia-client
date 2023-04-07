@@ -18,7 +18,10 @@ function Profile() {
     const currentUser = useSelector(selectCurrentUser);
     const teamData = useSelector(selectTeamData);
     const dispatch = useDispatch();
-    const cleanDate = currentUser.createdAt?.slice(0, 10);
+    const isoDate = currentUser.createdAt; //iso date from db
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric' };
+    const localDate = new Date(isoDate).toLocaleString('en-CA', options) //convert date from iso to local
+    //const cleanDate = currentUser.createdAt?.slice(0, 10); //convert date from iso to local
     const existingTeamName = teamData.name ? teamData.name : ''
     const existingTeamRole = currentUser.userType ? currentUser.userType : ''
     const capExistingTeamRole = existingTeamRole.charAt(0).toUpperCase() + existingTeamRole.slice(1)
@@ -271,7 +274,7 @@ function Profile() {
                             InputLabelProps={{
                                 shrink: true,
                             }}
-                            defaultValue={cleanDate}
+                            defaultValue={localDate}
                         />
                         <TextField
                             disabled

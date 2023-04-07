@@ -38,7 +38,9 @@ function Status() {
 
     const [open, setOpen] = useState(false);
     const shareScoresRef = useRef();
-    const currentDate = new Date().toISOString().slice(0, 10);
+    const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
+    const localCurrentDate = new Date().toLocaleDateString('en-CA', options);
+    //const currentDate = new Date().toISOString().slice(0, 10);
 
     useEffect(()=> {
         if(isGameFinished) {
@@ -61,15 +63,15 @@ function Status() {
             try {
               await navigator.share({
                 files: [file],
-                url: window.location.hostname,
-                text: `Team Trivia [${teamPoints?.name}]: ${currentDate}`
+                url: window.location.protocol + '//' + window.location.hostname,
+                text: `Team Trivia [ ${teamPoints?.teamName} ]: ${localCurrentDate}`
               });
-              console.log('Thanks for sharing!');
+              //console.log('Thanks for sharing!');
             } catch (error) {
               console.error('There was an error sharing the file:', error);
             }
           } else {
-            console.log('Your system does not support sharing files.');
+            alert('Your system does not support sharing files.');
           }
         });
     }
@@ -84,7 +86,7 @@ function Status() {
                 <Typography sx={{fontWeight: 'bold'}}>Today's Game Result</Typography>
                 <Typography>See you tomorrow for more exciting questions.</Typography>
                 <Typography>See points distribution below.</Typography>
-                    <Box ref={shareScoresRef} sx={{p:1}}>
+                    <Box ref={shareScoresRef} sx={{pt:.5, pb:.5, pl:1, pr:1,}}>
                         <QuestionScores
                             questionScores={questionScores}
                             questions={questions}
