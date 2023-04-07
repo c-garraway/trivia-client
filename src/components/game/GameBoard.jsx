@@ -16,8 +16,6 @@ function GameBoard() {
     const isLoggedIn = useSelector(selectIsLoggedIn);
     const isTeamLoaded = useSelector(selectIsTeamLoaded);
 
-    console.log(window.location.hostname)
-
     useEffect(()=> {
         if(!isLoggedIn) {
             navigate('/')
