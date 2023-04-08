@@ -66,11 +66,11 @@ function HomePageDetails() {
                 onClick={handleGuestLogin}>
                 Curious? Click Here To Have a Look around
             </Button>
-            <Typography
+{/*             <Typography
                 variant="h6"
                 sx={{ color: theme.palette.secondary.main }}>
                 Login or Register to play
-            </Typography>
+            </Typography> */}
         </Box>
     );
 }

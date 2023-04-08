@@ -27,7 +27,7 @@ function Login() {
     const [visibility, setVisibility] = useState('hidden');
     const [passwordErrorStatus, setPasswordErrorStatus] = useState(false);
     const [emailErrorStatus, setEmailErrorStatus] = useState(false);
-    const [loginDisabled, setLoginDisabled] = useState(true);
+    //const [loginDisabled, setLoginDisabled] = useState(true);
     const [showPassword, setShowPassword] = useState(false)
 
     const formStyle = { pl: 2, pr: 2, pt: 1, pb: 2, borderRadius: '5px', '& .MuiTextField-root': { mt: 2, width: '100%' }, backgroundColor: mattColor, width: { xs: "90%", sm: "60%", md: "30%" }, mb: 3, opacity: .9
@@ -43,31 +43,44 @@ function Login() {
 
     function handleValidate() {
         if (email === '') {
-            return;
+            return false;
         }
 
         if (!validEmail.test(email)) {
             setFormMessage('Invalid email address!')
             setVisibility();
             setEmailErrorStatus(true)
-            setLoginDisabled(true)
-            return;
+            //setLoginDisabled(true)
+            return false;
         }
 
-        setLoginDisabled(false)
+        //setLoginDisabled(false)
+        return true
     }
 
     function handleKeyDown(e) {
-        if (e.key === 'Enter' && loginDisabled === false) {
+        if (e.key === 'Enter'/*  && loginDisabled === false */) {
             handleLogin();
         };
     }
 
     async function handleLogin() {
+        if(!handleValidate()) {
+            setFormMessage('Invalid email address!')
+            setVisibility();
+            setEmailErrorStatus(true)
+            return;
+        }
         if (password === undefined || password === "") {
             setFormMessage('Password required!')
             setVisibility();
             setPasswordErrorStatus(true)
+            return;
+        };
+        if (password.length < 6 ) {
+            setFormMessage('Invalid Credentials')
+            setVisibility();
+            //setPasswordErrorStatus(true)
             return;
         };
         try {
@@ -159,7 +172,7 @@ function Login() {
                         }}
                     />
                     <Button
-                        disabled={loginDisabled}
+                        /* disabled={loginDisabled} */
                         variant="contained"
                         onClick={handleLogin}
                         sx={{
