@@ -1,9 +1,9 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validEmail } from "../../utilities/regex";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentUser, setCurrentUser } from "../../features/userData/userDataSlice";
+import { selectCurrentUser, selectIsLoggedIn, setCurrentUser } from "../../features/userData/userDataSlice";
 import { theme } from '../../theme/theme';
 import { checkEmail, checkTeamName, addTeam, addPartner, getTeam } from "../../apis/team";
 import { selectTeamData, setTeamData } from "../../features/userData/teamDataSlice";
@@ -17,6 +17,8 @@ function Profile() {
     const navigate = useNavigate();
     const currentUser = useSelector(selectCurrentUser);
     const teamData = useSelector(selectTeamData);
+    const isLoggedIn = useSelector(selectIsLoggedIn);
+
     const dispatch = useDispatch();
     const isoDate = currentUser.createdAt; //iso date from db
     const options = { year: 'numeric', month: '2-digit', day: '2-digit', hour: 'numeric', minute: 'numeric' };
@@ -40,6 +42,13 @@ function Profile() {
     } else {
         existingTeammate = teamData?.members?.lead
     }
+
+    useEffect(()=> {
+        if(!isLoggedIn) {
+            navigate('/')
+            return;
+        }
+    })
 
     const [formMessage, setFormMessage] = useState('none');
     const [visibility, setVisibility] = useState('hidden');

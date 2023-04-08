@@ -17,6 +17,9 @@ This full stack web development project was built with the following technologie
 - Node JS: Express, BCrypt, Passport (Local Strategy)
 - React JS: React-Router, Material UI, Redux
 
+## Supporting APIs
+- The Trivia API: [the-trivia-api.com](https://the-trivia-api.com/)
+
 ## Supporting Service Repository
 - Node JS Web Service: [GitHub Repository](https://github.com/c-garraway/trivia-server)
 
