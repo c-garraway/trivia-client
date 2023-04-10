@@ -1,4 +1,4 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, InputAdornment, TextField, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validEmail } from "../../utilities/regex";
@@ -163,6 +163,21 @@ function Profile() {
         })
     }
 
+    async function handleEmailShare() {
+        if ( navigator.canShare ) {
+            try {
+                await navigator.share({
+                url: window.location.protocol + '//' + window.location.hostname,
+                text: `My Team Trivia Email Address: ${currentUser.email}`
+                });
+            } catch (error) {
+                console.error('There was an error sharing email:', error);
+            }
+        } else {
+            alert('Your system does not support sharing.');
+        }
+    }
+
     function handleClose() {
         navigate('/game');
     }
@@ -270,6 +285,16 @@ function Profile() {
                             InputLabelProps={{
                                 shrink: true,
                             }}
+                            InputProps={{
+                                endAdornment: (
+                                  <InputAdornment position="end">
+                                    <Button
+                                        onClick={handleEmailShare}>
+                                        Share
+                                    </Button>
+                                  </InputAdornment>
+                                ),
+                            }}
                             defaultValue={currentUser.email}
                         />
                         <TextField
@@ -325,15 +350,15 @@ function Profile() {
                             defaultValue={existingTeammate}
                         />
                         <Button
-                                variant="contained"
-                                onClick={handleClose}
-                                sx={{
-                                    display: "block",
-                                    width: "100%",
-                                    marginTop: "20px",
-                                }}
-                                >Close
-                            </Button>
+                            variant="contained"
+                            onClick={handleClose}
+                            sx={{
+                                display: "block",
+                                width: "100%",
+                                marginTop: "20px",
+                            }}
+                            >Close
+                        </Button>
                     </Box>
                 </Stack>
             </Box>
