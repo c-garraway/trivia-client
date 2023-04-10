@@ -19,7 +19,7 @@ function Instructions() {
     const rules = [
         ['One question set per day (10 Questions)'],
         ['Difficulty points/question: easy(1), medium(2), hard(3)'],
-        ['Teams consists of two players (individual scores will not be saved until this condition is met)'],
+        ['Teams consists of two players (required)'],
         ['Global ranking is based on the sum of the last seven games of both team members'],
         ['Correct answers will not be revealed when an incorrect answer in chosen']
     ]

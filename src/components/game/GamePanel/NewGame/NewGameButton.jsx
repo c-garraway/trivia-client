@@ -6,6 +6,8 @@ import { addQuestionNumber, selectIsGameActive, setIsGameActive } from "../../..
 import { selectCategory, selectDifficulty } from "../../../../features/gameData/newGameOptionsDataSlice";
 import { replaceQuestionData} from "../../../../features/gameData/questionDataSlice";
 import { selectCurrentUser } from "../../../../features/userData/userDataSlice";
+import { selectTeamData, setTeamData } from "../../../../features/userData/teamDataSlice";
+import { getTeam } from "../../../../apis/team";
 
 function NewGame() {
 
@@ -13,6 +15,7 @@ function NewGame() {
     const selectedDifficulty = useSelector(selectDifficulty)
     const selectedCategory = useSelector(selectCategory)
     const gameIsActive = useSelector(selectIsGameActive)
+    const teamData = useSelector(selectTeamData);
     const [disabled, setDisabled] = useState(true)
     const user = useSelector(selectCurrentUser);
     const options = { year: 'numeric', month: '2-digit', day: '2-digit' };
@@ -29,13 +32,31 @@ function NewGame() {
         setDisabled(true)
 
     },[selectedDifficulty, selectedCategory, localCurrentDate, dateCheck, gameIsActive])
+
+    async function checkForTeammate() {
+        if (teamData.members.partner === undefined) {
+            const team = await getTeam();
+            if (team.members.partner === undefined) {
+                alert('You need a registered teammate to play.');
+                return false;
+            } else {
+                dispatch(setTeamData(team));
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
  
     async function handleGetQuestions() {
-        await getQuestions(selectedDifficulty, selectedCategory).then((questions) => dispatch(replaceQuestionData(questions)));
-
-        dispatch(addQuestionNumber(1));
-        dispatch(setIsGameActive(true));
-        disabled === false ? setDisabled(true) : setDisabled(false)
+        const teammateCheck = await checkForTeammate()
+        if(teammateCheck) {
+            await getQuestions(selectedDifficulty, selectedCategory).then((questions) => dispatch(replaceQuestionData(questions)));
+            dispatch(addQuestionNumber(1));
+            dispatch(setIsGameActive(true));
+            disabled === false ? setDisabled(true) : setDisabled(false)
+        }
+        return
     }
 
     return (
