@@ -1,11 +1,9 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validEmail } from "../../utilities/regex";
 import { registerLocalUser } from "../../apis/auth";
 import { theme } from '../../theme/theme';
-import { selectIsLoggedIn } from "../../features/userData/userDataSlice";
-import { useSelector } from "react-redux";
 
 function Register() {
     const insetColor = theme.palette.inset.main;
@@ -13,7 +11,6 @@ function Register() {
     const mattColor = theme.palette.matt.main;
 
     const navigate = useNavigate();
-    const isLoggedIn = useSelector(selectIsLoggedIn);
 
     const [name, setName] = useState();
     const [email, setEmail] = useState('');
@@ -30,13 +27,6 @@ function Register() {
     const formStyle = { pl: 2, pr: 2, pt: 1, pb: 2, borderRadius: '5px', '& .MuiTextField-root': { mt: 2, width: '100%' }, backgroundColor: mattColor, width: { xs: "90%", sm: "60%", md: "30%" }, mb: 3, opacity: .9
     };
     const formInsetStyle = {padding: 2, width: {md:'90%'}, border: '1px solid black', borderRadius: '5px', backgroundColor: insetColor, mt: 1}
-
-    useEffect(()=> {
-        if(isLoggedIn) {
-            navigate('/game')
-            return;
-        }
-    })
 
     function handleValidate() {
 

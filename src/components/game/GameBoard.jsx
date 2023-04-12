@@ -17,14 +17,14 @@ function GameBoard() {
     const isTeamLoaded = useSelector(selectIsTeamLoaded);
 
     useEffect(()=> {
-        if(!isLoggedIn) {
+/*         if(!isLoggedIn) {
             navigate('/')
             return;
         }
         if(!isTeamLoaded) {
             navigate('/profile')
             return;
-        }
+        } */
         getAllTeamRanks().then((allTeamRanks) => dispatch(setAllTeamRanks(allTeamRanks)));
         getTeamPoints().then((teamPoints) => dispatch(setTeamPoints(teamPoints)));
 

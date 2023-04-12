@@ -1,9 +1,9 @@
 import { Box, Button, InputAdornment, TextField, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validEmail } from "../../utilities/regex";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentUser, selectIsLoggedIn, setCurrentUser } from "../../features/userData/userDataSlice";
+import { selectCurrentUser, setCurrentUser } from "../../features/userData/userDataSlice";
 import { theme } from '../../theme/theme';
 import { checkEmail, checkTeamName, addTeam, addPartner, getTeam } from "../../apis/team";
 import { selectTeamData, setTeamData } from "../../features/userData/teamDataSlice";
@@ -17,7 +17,6 @@ function Profile() {
     const navigate = useNavigate();
     const currentUser = useSelector(selectCurrentUser);
     const teamData = useSelector(selectTeamData);
-    const isLoggedIn = useSelector(selectIsLoggedIn);
 
     const dispatch = useDispatch();
     const isoDate = currentUser.createdAt; //iso date from db
@@ -42,13 +41,6 @@ function Profile() {
     } else {
         existingTeammate = teamData?.members?.lead
     }
-
-    useEffect(()=> {
-        if(!isLoggedIn) {
-            navigate('/')
-            return;
-        }
-    })
 
     const [formMessage, setFormMessage] = useState('none');
     const [visibility, setVisibility] = useState('hidden');
@@ -167,8 +159,7 @@ function Profile() {
         if ( navigator.canShare ) {
             try {
                 await navigator.share({
-                url: window.location.protocol + '//' + window.location.hostname,
-                text: `My Team Trivia Email Address: ${currentUser.email}`
+                text: `My Team Trivia Email Address: ${currentUser.email}`,
                 });
             } catch (error) {
                 console.error('There was an error sharing email:', error);

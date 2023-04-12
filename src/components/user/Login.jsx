@@ -1,10 +1,10 @@
 import { Box, Button, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getUser, loginLocalUser } from "../../apis/auth";
 import { validEmail } from "../../utilities/regex";
-import { useDispatch, useSelector } from "react-redux";
-import { selectIsLoggedIn, setCurrentUser, setIsLoggedIn } from "../../features/userData/userDataSlice";
+import { useDispatch } from "react-redux";
+import { setCurrentUser, setIsLoggedIn } from "../../features/userData/userDataSlice";
 import { getTeam } from "../../apis/team";
 import { setTeamData } from "../../features/userData/teamDataSlice";
 import { getTeamPoints, getAllTeamRanks} from "../../apis/points";
@@ -19,7 +19,6 @@ function Login() {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const isLoggedIn = useSelector(selectIsLoggedIn);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState();
@@ -27,19 +26,11 @@ function Login() {
     const [visibility, setVisibility] = useState('hidden');
     const [passwordErrorStatus, setPasswordErrorStatus] = useState(false);
     const [emailErrorStatus, setEmailErrorStatus] = useState(false);
-    //const [loginDisabled, setLoginDisabled] = useState(true);
     const [showPassword, setShowPassword] = useState(false)
 
     const formStyle = { pl: 2, pr: 2, pt: 1, pb: 2, borderRadius: '5px', '& .MuiTextField-root': { mt: 2, width: '100%' }, backgroundColor: mattColor, width: { xs: "90%", sm: "60%", md: "30%" }, mb: 3, opacity: .9
     };
     const formInsetStyle = {padding: 2, width: {md:'90%'}, border: '1px solid black', borderRadius: '5px', backgroundColor: insetColor, mt: 1}
-
-    useEffect(()=> {
-        if(isLoggedIn) {
-            navigate('/game')
-            return;
-        }
-    })
 
     function handleValidate() {
         if (email === '') {
@@ -50,16 +41,14 @@ function Login() {
             setFormMessage('Invalid email address!')
             setVisibility();
             setEmailErrorStatus(true)
-            //setLoginDisabled(true)
             return false;
         }
 
-        //setLoginDisabled(false)
         return true
     }
 
     function handleKeyDown(e) {
-        if (e.key === 'Enter'/*  && loginDisabled === false */) {
+        if (e.key === 'Enter') {
             handleLogin();
         };
     }
@@ -80,7 +69,6 @@ function Login() {
         if (password.length < 6 ) {
             setFormMessage('Invalid Credentials')
             setVisibility();
-            //setPasswordErrorStatus(true)
             return;
         };
         try {
@@ -172,7 +160,6 @@ function Login() {
                         }}
                     />
                     <Button
-                        /* disabled={loginDisabled} */
                         variant="contained"
                         onClick={handleLogin}
                         sx={{

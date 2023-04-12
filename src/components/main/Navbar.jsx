@@ -45,16 +45,26 @@ function Navbar() {
 
     async function handleLogout() {
         try {
-            await logoutUser();
-            dispatch(resetUserData());
-            dispatch(resetGameData());
-            dispatch(resetQuestionData());
-            dispatch(resetNewGameOptionsData());
-            dispatch(resetTeamData());
-            dispatch(resetPointsData());
-            handleCloseMenu();
-            navigate('/');
+            const logout = await logoutUser()
 
+            if(logout.message === "You have logged out") {
+                new Promise(resolve => {
+                    dispatch(resetUserData());
+                    dispatch(resetGameData());
+                    dispatch(resetQuestionData());
+                    dispatch(resetNewGameOptionsData());
+                    dispatch(resetTeamData());
+                    dispatch(resetPointsData());
+                    handleCloseMenu();
+                    resolve();
+                })
+                .then(() => {
+                    navigate('/');;
+                })
+            } else {
+                throw new Error('Logout failed ')
+            }
+            
         } catch (error) {
             console.log(error)
         }

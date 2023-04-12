@@ -7,6 +7,9 @@ import Login from "../components/user/Login"
 import Register from "../components/user/Register"
 import Profile from "../components/user/Profile"
 import GameBoard from "../components/game/GameBoard"
+import ProtectedRoutes from './ProtectedRoutes';
+import PublicOnlyRoute from './PublicOnlyRoute';
+
 
 function AppRouter() {
 
@@ -15,11 +18,15 @@ function AppRouter() {
             <Box>
                 <Navbar/>
                 <Routes>
-                    <Route path='/' element={<Home/>} />
-                    <Route path='/login' element={<Login/>} />
-                    <Route path='/register' element={<Register/>} />
-                    <Route path='/profile' element={<Profile/>} />
-                    <Route path='/game' element={<GameBoard/>} />       
+                    <Route element={<PublicOnlyRoute />} > 
+                        <Route path='/' element={<Home/>} exact/>
+                        <Route path='/login' element={<Login/>} />
+                        <Route path='/register' element={<Register/>} />
+                    </Route>
+                    <Route element={<ProtectedRoutes/>} > 
+                        <Route path='/profile' element={<Profile/>} />
+                        <Route path='/game' element={<GameBoard/>} /> 
+                    </Route>
                 </Routes>
             </Box>
         </Router>

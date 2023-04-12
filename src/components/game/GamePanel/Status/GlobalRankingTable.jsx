@@ -43,13 +43,9 @@ export default function GlobalRankingTable({teamRanks}) {
 }
 
 GlobalRankingTable.propTypes = {
-    teamRank: PropTypes.number,
-    teamPointsTotal: PropTypes.number, 
-    teamName: PropTypes.string,
+    teamRanks: PropTypes.array,
 };
 
 GlobalRankingTable.defaultProps = {
-    teamRank: 0, 
-    teamPointsTotal: 0,
-    teamName: ''
+    teamRanks: [], 
 };
