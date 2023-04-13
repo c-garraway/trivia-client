@@ -8,7 +8,7 @@ import Register from "../components/user/Register"
 import Profile from "../components/user/Profile"
 import GameBoard from "../components/game/GameBoard"
 import ProtectedRoutes from './ProtectedRoutes';
-import PublicOnlyRoute from './PublicOnlyRoute';
+import PublicOnlyRoutes from './PublicOnlyRoutes';
 
 
 function AppRouter() {
@@ -18,7 +18,7 @@ function AppRouter() {
             <Box>
                 <Navbar/>
                 <Routes>
-                    <Route element={<PublicOnlyRoute />} > 
+                    <Route element={<PublicOnlyRoutes />} > 
                         <Route path='/' element={<Home/>} exact/>
                         <Route path='/login' element={<Login/>} />
                         <Route path='/register' element={<Register/>} />

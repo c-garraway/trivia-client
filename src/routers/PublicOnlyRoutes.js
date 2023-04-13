@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { Navigate, Outlet } from 'react-router-dom'
 import { selectIsLoggedIn } from '../features/userData/userDataSlice';
 
-const PublicOnlyRoute = () => {
+const PublicOnlyRoutes = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
 return (
@@ -11,4 +11,4 @@ return (
   )
 }
 
-export default PublicOnlyRoute;
+export default PublicOnlyRoutes;

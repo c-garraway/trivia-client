@@ -1,9 +1,10 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import { Box, Button, IconButton, InputAdornment, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validEmail } from "../../utilities/regex";
 import { registerLocalUser } from "../../apis/auth";
 import { theme } from '../../theme/theme';
+import { VisibilityOffOutlined, VisibilityOutlined } from "@mui/icons-material";
 
 function Register() {
     const insetColor = theme.palette.inset.main;
@@ -23,6 +24,7 @@ function Register() {
     const [nameErrorStatus, setNameErrorStatus] = useState(false);
     const [emailErrorStatus, setEmailErrorStatus] = useState(false);
     const [loginDisabled, setLoginDisabled] = useState(true);
+    const [showPassword, setShowPassword] = useState(false)
 
     const formStyle = { pl: 2, pr: 2, pt: 1, pb: 2, borderRadius: '5px', '& .MuiTextField-root': { mt: 2, width: '100%' }, backgroundColor: mattColor, width: { xs: "90%", sm: "60%", md: "30%" }, mb: 3, opacity: .9
     };
@@ -148,7 +150,7 @@ function Register() {
                         variant="outlined"
                         id="outlined-password-input"
                         label="Password"
-                        type="password"
+                        type={showPassword ? 'text' : 'password'}
                         size="small"
                         InputLabelProps={{
                             shrink: true,
@@ -160,6 +162,19 @@ function Register() {
                             setPasswordErrorStatus(false)
                         }}
                         helperText="Minimum 6 characters"
+                        InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={() => setShowPassword(!showPassword)}
+                                  edge="end"
+                                >
+                                  {showPassword ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                        }}
                     />
                     <TextField
                         required
@@ -167,7 +182,7 @@ function Register() {
                         variant="outlined"
                         id="outlined-password2-input"
                         label="Confirm Password"
-                        type="password"
+                        type={showPassword ? 'text' : 'password'}
                         size="small"
                         InputLabelProps={{
                             shrink: true,
@@ -179,6 +194,19 @@ function Register() {
                             setPassword2ErrorStatus(false)
                         }}
                         helperText="Minimum 6 characters"
+                        InputProps={{
+                            endAdornment: (
+                              <InputAdornment position="end">
+                                <IconButton
+                                  aria-label="toggle password visibility"
+                                  onClick={() => setShowPassword(!showPassword)}
+                                  edge="end"
+                                >
+                                  {showPassword ? <VisibilityOutlined /> : <VisibilityOffOutlined />}
+                                </IconButton>
+                              </InputAdornment>
+                            ),
+                        }}
                     />
                     <Button
                         disabled={loginDisabled}

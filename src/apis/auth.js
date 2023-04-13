@@ -83,9 +83,13 @@ export const getUser = async () => {
                 },
             }
         )
-            
         const user = await response.json()
-        return user
+
+        if (response.ok) {
+            return user
+        }
+
+        return response
         
     } catch (error) {
         console.log(error)
